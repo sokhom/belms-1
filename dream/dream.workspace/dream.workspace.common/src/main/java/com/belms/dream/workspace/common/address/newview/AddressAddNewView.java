@@ -74,7 +74,6 @@ public class AddressAddNewView extends AbstractSimpleDialog implements SaveEntit
 	}
 
 	private void buildAddressLayout(final AddressInitDataWrapperDto initDataWrapperDto, final VerticalLayout layout) {
-		
 		final Binder<Address> binder = new Binder<>();
 		final Panel addressPanel = new Panel("Addresss Info");
 		layout.addComponent(addressPanel);
