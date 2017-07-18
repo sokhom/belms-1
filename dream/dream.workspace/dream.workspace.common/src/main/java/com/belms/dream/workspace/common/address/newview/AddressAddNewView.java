@@ -5,12 +5,15 @@ import java.util.ArrayList;
 import com.belms.dream.api.dto.address.AddressInitDataWrapperDto;
 import com.belms.dream.api.view.event.SaveEntityListener;
 import com.belms.dream.workspace.common.dialog.ConfirmDialog;
+import com.belms.dream.workspace.common.validator.RequiredValidator;
+import com.belms.dream.workspace.common.validator.TextRequiredValidator;
 import com.belms.dream.workspace.common.window.AbstractSimpleDialog;
 import com.blems.dream.api.model.address.Address;
 import com.blems.dream.api.model.address.AddressType;
 import com.blems.dream.api.model.address.Country;
 import com.blems.dream.api.model.address.State;
 import com.blems.dream.api.model.contact.Contact;
+import com.vaadin.data.Binder;
 import com.vaadin.data.provider.CallbackDataProvider;
 import com.vaadin.icons.VaadinIcons;
 import com.vaadin.ui.Alignment;
@@ -71,6 +74,8 @@ public class AddressAddNewView extends AbstractSimpleDialog implements SaveEntit
 	}
 
 	private void buildAddressLayout(final AddressInitDataWrapperDto initDataWrapperDto, final VerticalLayout layout) {
+		
+		final Binder<Address> binder = new Binder<>();
 		final Panel addressPanel = new Panel("Addresss Info");
 		layout.addComponent(addressPanel);
 		addressPanel.setSizeFull();
@@ -87,16 +92,19 @@ public class AddressAddNewView extends AbstractSimpleDialog implements SaveEntit
 		formLayout.addComponent(addressTypeComboBox);
 		addressTypeComboBox.setRequiredIndicatorVisible(true);
 		addressTypeComboBox.focus();
-
+		binder.forField(addressTypeComboBox).withValidator(new RequiredValidator()).bind(Address::getType, Address::setType);
+		
 		final TextField nameTextField = new TextField("Address Name");
 		nameTextField.setValue("Phanny co. LTD");
 		formLayout.addComponent(nameTextField);
 		nameTextField.setRequiredIndicatorVisible(true);
-
+		binder.forField(nameTextField).withValidator(new TextRequiredValidator()).bind(Address::getName, Address::setName);
+		
 		final TextArea addressTextArea = new TextArea("Address");
 		formLayout.addComponent(addressTextArea);
 		addressTextArea.setRows(2);
 		addressTextArea.setRequiredIndicatorVisible(true);
+		binder.forField(addressTextArea).withValidator(new TextRequiredValidator()).bind(Address::getAddress, Address::setAddress);
 
 		final HorizontalLayout wrap = new HorizontalLayout();
 		formLayout.addComponent(wrap);
@@ -109,6 +117,7 @@ public class AddressAddNewView extends AbstractSimpleDialog implements SaveEntit
 		wrap.addComponent(cityTextField);
 		cityTextField.setWidth(150, Unit.PIXELS);
 		cityTextField.addStyleName(ValoTheme.TEXTFIELD_BORDERLESS);
+		binder.forField(cityTextField).withValidator(new TextRequiredValidator()).bind(Address::getCity, Address::setCity);
 		wrap.addComponent(new Label("/"));
 
 		final ComboBox<State> stateComboBox = new ComboBox<>();
@@ -118,27 +127,31 @@ public class AddressAddNewView extends AbstractSimpleDialog implements SaveEntit
 		stateComboBox.setWidth(150, Unit.PIXELS);
 		stateComboBox.setDataProvider(new CallbackDataProvider<State, String>(
 				query -> initDataWrapperDto.getStates().stream(), qyery -> initDataWrapperDto.getStates().size()));
-
+		binder.forField(stateComboBox).withValidator(new RequiredValidator()).bind(Address::getState, Address::setState);
 		wrap.addComponent(new Label("/"));
-
 		final TextField zipTextField = new TextField();
 		zipTextField.addStyleName(ValoTheme.TEXTFIELD_BORDERLESS);
 		zipTextField.setWidth(100, Unit.PIXELS);
+		binder.forField(zipTextField).withValidator(new TextRequiredValidator()).bind(Address::getZip, Address::setZip);
 		wrap.addComponent(zipTextField);
-
+		
 		final ComboBox<Country> countryComboBox = new ComboBox<>("Country");
 		formLayout.addComponent(countryComboBox);
 		countryComboBox.setDataProvider(
 				new CallbackDataProvider<Country, String>(query -> initDataWrapperDto.getCountries().stream(),
 						qyery -> initDataWrapperDto.getCountries().size()));
 		countryComboBox.setRequiredIndicatorVisible(true);
+		binder.forField(countryComboBox).withValidator(new RequiredValidator()).bind(Address::getCountry, Address::setCountry);
 		
 		final CheckBox residentialAddressCheckBox = new CheckBox("Residential Address");
 		formLayout.addComponent(residentialAddressCheckBox);
+		binder.bind(residentialAddressCheckBox, Address::isResidentialFlag, Address::setResidentialFlag);
 
 		final CheckBox defaultAddress = new CheckBox("Default Address");
 		formLayout.addComponent(defaultAddress);
 		addressPanel.setContent(formLayout);
+		binder.bind(defaultAddress, Address::isDefaultFlag, Address::setDefaultFlag);
+		binder.setBean(address);
 	}
 
 	private void buildContactLayout(final AddressInitDataWrapperDto initDataWrapperDto, final VerticalLayout layout) {
