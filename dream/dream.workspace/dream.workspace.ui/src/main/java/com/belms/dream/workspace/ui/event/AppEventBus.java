@@ -1,13 +1,16 @@
 package com.belms.dream.workspace.ui.event;
 
+import java.io.Serializable;
+
 import com.belms.dream.api.view.event.EventBusProvider;
 import com.belms.dream.workspace.ui.AppUI;
 import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.SubscriberExceptionContext;
 import com.google.common.eventbus.SubscriberExceptionHandler;
 
-public class AppEventBus implements SubscriberExceptionHandler {
+public class AppEventBus implements SubscriberExceptionHandler, Serializable{
 
+	private static final long serialVersionUID = 1L;
 	private final EventBus eventBus = new EventBus(this);
 	private static EventBusProvider eventBusProvider;
 
@@ -24,6 +27,7 @@ public class AppEventBus implements SubscriberExceptionHandler {
 		
 	}
 	
+	
 	@Override
 	public void handleException(final Throwable exception, final SubscriberExceptionContext context) {
 		exception.printStackTrace();
@@ -36,7 +40,6 @@ public class AppEventBus implements SubscriberExceptionHandler {
 				@Override
 				public void unregister(Object object) {
 					AppEventBus.unregesiter(object);
-					
 				}
 				
 				@Override

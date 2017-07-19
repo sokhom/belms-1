@@ -59,18 +59,7 @@ public class CustomerRepo extends AbstractRepo<Customer> {
 		customer.setUrl("nagaworld.com");
 		customer.setDateCreated(new Date());
 		customer.setDateLastModified(new Date());
-
 		customer.setAccount(new Account());
-
-		Address address = new Address();
-		Country country = new Country();
-		country.setName("Cambodia");
-		address.setCountry(country);
-		address.setCity("Phnom Pehn");
-		address.setAddress("#212 St.2232 Sangkat Comkamon, Khan XXXX");
-		List<Address> addresses = new ArrayList<Address>();
-		addresses.add(address);
-		customer.setAddresses(addresses);
 		customer.setCreditLimit(3000);
 		customer.setCurrency(new Currency(2, "MXN", "Mexican Peso"));
 		

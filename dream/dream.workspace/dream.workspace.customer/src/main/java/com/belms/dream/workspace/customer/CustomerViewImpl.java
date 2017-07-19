@@ -36,7 +36,9 @@ public class CustomerViewImpl extends AbstractMainView<Customer, Customer, Custo
 		addTab(new CustomerInfoView(binder, getDataInitWrapper()));
 		addTab(new CustomerDetailView(binder, getDataInitWrapper()));
 		addressView  =new AddressViewImpl(initDataWrapperDto);
+		addressView.setContactHeight(300.0f);
 		addressView.initView();
+		
 		addTab((Component) addressView);
 		
 	}
@@ -45,7 +47,7 @@ public class CustomerViewImpl extends AbstractMainView<Customer, Customer, Custo
 	public void loadData(Customer data) {
 		super.loadData(data);
 		
-		if(data.getAddress() == null) {
+		if(data.getAddresses() == null) {
 			data.setAddresses(new ArrayList<>());
 		}
 		

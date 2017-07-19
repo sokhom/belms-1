@@ -1,5 +1,6 @@
 package com.blems.dream.api.model.address;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.blems.dream.api.model.BasedModel;
@@ -91,6 +92,9 @@ public class Address extends BasedModel {
 	}
 	
 	public List<Contact> getContacts() {
+		if(contacts ==null) {
+			contacts =new ArrayList<>();
+		}
 		return contacts;
 	}
 	public void setContacts(List<Contact> contacts) {

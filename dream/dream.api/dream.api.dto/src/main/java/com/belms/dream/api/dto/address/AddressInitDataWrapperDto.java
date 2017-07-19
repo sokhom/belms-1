@@ -1,5 +1,6 @@
 package com.belms.dream.api.dto.address;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,7 +9,9 @@ import com.blems.dream.api.model.address.Country;
 import com.blems.dream.api.model.address.State;
 import com.blems.dream.api.model.contact.ContactType;
 
-public class AddressInitDataWrapperDto {
+public class AddressInitDataWrapperDto implements Serializable{
+
+	private static final long serialVersionUID = 1L;
 	private List<AddressType> addressTypes;
 	private List<Country> countries;
 	private List<State> states;

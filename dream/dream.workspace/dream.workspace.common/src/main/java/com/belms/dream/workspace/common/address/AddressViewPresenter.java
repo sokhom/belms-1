@@ -6,7 +6,7 @@ import com.blems.dream.api.model.address.Address;
 
 public class AddressViewPresenter implements LoadAddressesListener {
 
-	private final AddressView addressView;
+//	private final AddressView addressView;
 	//private final AddressService addressService;
 	
 //	public AddressViewPresenter(AddressView addressView,AddressService addressService) {
@@ -17,7 +17,7 @@ public class AddressViewPresenter implements LoadAddressesListener {
 //	}
 //	
 	public AddressViewPresenter(final AddressView addressView) {
-		this.addressView = addressView;
+//		this.addressView = addressView;
 	}
 	
 	@Override
