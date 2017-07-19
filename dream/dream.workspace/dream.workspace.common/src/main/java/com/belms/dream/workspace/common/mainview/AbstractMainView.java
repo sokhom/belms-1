@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.belms.dream.api.view.event.EventBusProvider;
-import com.belms.dream.workspace.common.newview.AbstractNewView;
 import com.blems.dream.api.model.DefaultModel;
 import com.blems.dream.api.model.ui.FilterItemList;
 import com.vaadin.data.Binder;
@@ -25,6 +24,7 @@ import com.vaadin.ui.TabSheet;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.Window;
 import com.vaadin.ui.themes.ValoTheme;
 
 public abstract class AbstractMainView<T extends FilterItemList, E extends DefaultModel, W> extends Panel
@@ -49,7 +49,7 @@ public abstract class AbstractMainView<T extends FilterItemList, E extends Defau
 		return eventBusProvider;
 	}
 
-	public abstract AbstractNewView getNewView();
+	public abstract Window getNewView();
 
 	@Override
 	public void initView() {

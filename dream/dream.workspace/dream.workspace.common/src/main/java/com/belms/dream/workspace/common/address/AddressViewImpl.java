@@ -263,6 +263,7 @@ public class AddressViewImpl extends VerticalLayout implements AddressView, Save
 
 		final Grid<Contact> contactGrid = new Grid<>();
 		layout.setContent(contactGrid);
+		contactGrid.addStyleName(ValoTheme.TABLE_SMALL);
 		contactGrid.addColumn(Contact::getName).setCaption("Name");
 		contactGrid.addColumn(Contact::getContact).setCaption("Value");
 		contactGrid.addColumn(Contact::getType).setCaption("Contact Type");

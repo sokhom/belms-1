@@ -10,7 +10,6 @@ public class NavigatorViewType implements Serializable{
 	private static final long serialVersionUID = 1L;
 	private final String id;
 	private final String viewName;
-//	private final Component component;
 	private UIFragmentFactory fragmentFactory;
 	private final Resource icon;
 	private final boolean stateful;

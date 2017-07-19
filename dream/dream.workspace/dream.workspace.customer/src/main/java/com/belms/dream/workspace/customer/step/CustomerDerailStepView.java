@@ -13,8 +13,9 @@ public class CustomerDerailStepView extends AbstractStepView {
 	private final Binder<Customer> binder;
 	private final CustomerInitDataWrapperDto initDataWrapperDto ;
 	
-	public CustomerDerailStepView(final Binder<Customer> binder,final CustomerInitDataWrapperDto initDataWrapperDto) {
-		this.binder = binder ;
+	public CustomerDerailStepView(final Customer customer,final CustomerInitDataWrapperDto initDataWrapperDto) {
+		this.binder = new Binder<>();
+		binder.setBean(customer);
 		this.initDataWrapperDto = initDataWrapperDto;
 	}
 	
@@ -25,7 +26,7 @@ public class CustomerDerailStepView extends AbstractStepView {
 
 	@Override
 	public boolean isValid() {
-		return true;
+		return binder.validate().isOk();
 	}
 
 	@Override

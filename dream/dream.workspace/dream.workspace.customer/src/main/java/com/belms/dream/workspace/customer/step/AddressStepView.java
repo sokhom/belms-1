@@ -1,9 +1,12 @@
 package com.belms.dream.workspace.customer.step;
 
+import java.util.List;
+
 import com.belms.dream.api.dto.address.AddressInitDataWrapperDto;
 import com.belms.dream.workspace.common.address.AddressView;
 import com.belms.dream.workspace.common.address.AddressViewImpl;
 import com.belms.dream.workspace.common.newview.AbstractStepView;
+import com.blems.dream.api.model.address.Address;
 import com.vaadin.ui.Component;
 
 public class AddressStepView extends AbstractStepView {
@@ -11,8 +14,10 @@ public class AddressStepView extends AbstractStepView {
 	private final static String NAME="Address";
 	private final AddressInitDataWrapperDto initDataWrapperDto;
 	private AddressView addressView;
+	private final List<Address> addresses;
 	
-	public AddressStepView(final AddressInitDataWrapperDto initDataWrapperDto) {
+	public AddressStepView(final List<Address> addresses, final AddressInitDataWrapperDto initDataWrapperDto) {
+		this.addresses = addresses;
 		this.initDataWrapperDto = initDataWrapperDto;
 	}
 	
@@ -31,6 +36,7 @@ public class AddressStepView extends AbstractStepView {
 		
 		if(addressView == null){
 			addressView =  new AddressViewImpl(initDataWrapperDto);
+			addressView.setAddresses(addresses);
 			addressView.initView();
 		}
 		return (Component) addressView;

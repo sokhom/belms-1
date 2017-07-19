@@ -8,21 +8,24 @@ import com.belms.dream.api.view.event.EventBusProvider;
 import com.belms.dream.workspace.common.address.AddressView;
 import com.belms.dream.workspace.common.address.AddressViewImpl;
 import com.belms.dream.workspace.common.mainview.AbstractMainView;
-import com.belms.dream.workspace.common.newview.AbstractNewView;
 import com.belms.dream.workspace.customer.subview.CustomerDetailView;
 import com.belms.dream.workspace.customer.subview.CustomerInfoView;
 import com.blems.dream.api.model.customer.Customer;
-import com.vaadin.data.Binder;
 import com.vaadin.ui.Component;
+import com.vaadin.ui.Window;
 
 public class CustomerViewImpl extends AbstractMainView<Customer, Customer, CustomerInitDataWrapperDto> implements CustomerView {
 
 	private static final long serialVersionUID = 1L;
 	private AddressView addressView ;	
 	private AddressInitDataWrapperDto initDataWrapperDto;
+	private CustomerMainLayoutPresenter customerMainLayoutPresenter;
+	
 	public CustomerViewImpl(final EventBusProvider eventBusProvider) {
 		super(eventBusProvider);
-		new CustomerMainLayoutPresenter(this);
+		customerMainLayoutPresenter =new CustomerMainLayoutPresenter(this);
+		this.setFilterListener(customerMainLayoutPresenter);
+		this.setShowItemListener(customerMainLayoutPresenter);
 	}
 
 	
@@ -55,8 +58,11 @@ public class CustomerViewImpl extends AbstractMainView<Customer, Customer, Custo
 	}
 
 	@Override
-	public AbstractNewView getNewView() {
-		return new NewCustomerView(super.getEventBusProvider(),new Binder<Customer>() , getDataInitWrapper(),initDataWrapperDto);
+	public Window getNewView() {
+
+		NewCustomerView customerView = new NewCustomerViewImpl(super.getEventBusProvider() , getDataInitWrapper(),initDataWrapperDto);
+		customerView.setAddNewListener(customerMainLayoutPresenter);
+		return  (Window) customerView;
 	}
 
 
@@ -66,8 +72,6 @@ public class CustomerViewImpl extends AbstractMainView<Customer, Customer, Custo
 		
 	}
 
-
-	
 
 	
 

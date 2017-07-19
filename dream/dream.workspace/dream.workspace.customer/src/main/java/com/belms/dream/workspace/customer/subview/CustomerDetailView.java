@@ -1,6 +1,7 @@
 package com.belms.dream.workspace.customer.subview;
 
 import com.belms.dream.api.dto.customer.CustomerInitDataWrapperDto;
+import com.belms.dream.workspace.common.validator.RequiredValidator;
 import com.blems.dream.api.model.carrier.Carrier;
 import com.blems.dream.api.model.carrier.CarrierService;
 import com.blems.dream.api.model.currency.Currency;
@@ -50,8 +51,10 @@ public class CustomerDetailView extends VerticalLayout{
 		formLayout.addComponent(creditLimitField);
 		
 		final ComboBox<CustomerStatus> statusComboBox = new ComboBox<>("Status");
-		binder.bind(statusComboBox, Customer::getStatus, Customer::setStatus);
+		binder.forField(statusComboBox).withValidator(new RequiredValidator()).bind(Customer::getStatus, Customer::setStatus);
 		statusComboBox.setDataProvider(new CallbackDataProvider<CustomerStatus,String>(query->initDataWrapperDto.getStatusList().stream(), query->initDataWrapperDto.getStatusList().size()));
+		statusComboBox.setRequiredIndicatorVisible(true);
+		
 		
 		formLayout.addComponent(statusComboBox);
 		

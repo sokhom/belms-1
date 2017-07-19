@@ -1,5 +1,6 @@
 package com.belms.dream.workspace.ui.fragment;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -17,8 +18,9 @@ import com.vaadin.ui.Component;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
 
-public class UIFragmentProvider {
+public class UIFragmentProvider implements Serializable{
 
+	private static final long serialVersionUID = 1L;
 	private static Map<String, UIFragmentFactory> map = new HashMap<>();
 	private static Map<String, NavigatorViewType> navigatorViewTyes = new HashMap<>();
 	private static List<NavigatorViewType> navigatorViewTypes;

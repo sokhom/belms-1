@@ -34,6 +34,7 @@ public class CustomerInfoView extends VerticalLayout{
 
 		final TextField nameTextField = new TextField("Name");
 		binder.bind(nameTextField, Customer::getName, Customer::setName);
+		nameTextField.setRequiredIndicatorVisible(true);
 
 		formLayout.addComponent(nameTextField);
 

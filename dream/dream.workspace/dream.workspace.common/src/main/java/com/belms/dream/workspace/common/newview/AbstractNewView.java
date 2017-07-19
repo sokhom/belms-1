@@ -2,6 +2,7 @@ package com.belms.dream.workspace.common.newview;
 
 import java.util.List;
 
+import com.belms.dream.api.view.event.AddnewEntityListener;
 import com.belms.dream.api.view.event.EventBusProvider;
 import com.belms.dream.workspace.common.View;
 import com.google.common.eventbus.Subscribe;
@@ -18,17 +19,17 @@ import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 import com.vaadin.ui.themes.ValoTheme;
 
-public abstract class AbstractNewView extends Window implements View {
+public abstract class AbstractNewView<T> extends Window implements View {
 
 	private static final long serialVersionUID = 1L;
 	private final EventBusProvider eventBusProvider;
 	private final Panel stepViewPanel = new Panel();
 	private int currentStepIndex = 0;
 	private List<StepView> stepViews;
+	private AddnewEntityListener<T> addnewEntityListener; 
 
 	public AbstractNewView(EventBusProvider eventBusProvider) {
 		this.eventBusProvider = eventBusProvider;
-	
 	}
 
 	@Override
@@ -57,6 +58,15 @@ public abstract class AbstractNewView extends Window implements View {
 
 		stepViewChanged();
 	}
+
+	
+	protected void setAddnewEntityListener(AddnewEntityListener<T> addnewEntityListener) {
+		this.addnewEntityListener = addnewEntityListener;
+	}
+	
+	
+	protected abstract T getNewItem();
+	
 
 	private void stepViewChanged() {
 		if (stepViews == null || stepViews.size() == 0) {
@@ -125,6 +135,11 @@ public abstract class AbstractNewView extends Window implements View {
 		// footerLayout.addComponent(nextButton);
 
 		final Button finishButton = new Button("Finish");
+		
+		finishButton.addClickListener(event-> {
+			addnewEntityListener.addNew(getNewItem());
+		});
+		
 		
 		// footerLayout.setComponentAlignment(finishButton,
 		// Alignment.TOP_RIGHT);
