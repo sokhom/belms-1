@@ -1,7 +1,9 @@
 package com.belms.dream.workspace.customer;
 
+import java.util.ArrayList;
+
+import com.belms.dream.api.dto.address.AddressInitDataWrapperDto;
 import com.belms.dream.api.dto.customer.CustomerInitDataWrapperDto;
-import com.belms.dream.api.service.address.AddressService;
 import com.belms.dream.api.view.event.EventBusProvider;
 import com.belms.dream.workspace.common.address.AddressView;
 import com.belms.dream.workspace.common.address.AddressViewImpl;
@@ -16,8 +18,8 @@ import com.vaadin.ui.Component;
 public class CustomerViewImpl extends AbstractMainView<Customer, Customer, CustomerInitDataWrapperDto> implements CustomerView {
 
 	private static final long serialVersionUID = 1L;
-	private AddressView addressView ;
-	private AddressService addressService;	
+	private AddressView addressView ;	
+	private AddressInitDataWrapperDto initDataWrapperDto;
 	public CustomerViewImpl(final EventBusProvider eventBusProvider) {
 		super(eventBusProvider);
 		new CustomerMainLayoutPresenter(this);
@@ -33,7 +35,7 @@ public class CustomerViewImpl extends AbstractMainView<Customer, Customer, Custo
 	protected void buildTabs() {
 		addTab(new CustomerInfoView(binder, getDataInitWrapper()));
 		addTab(new CustomerDetailView(binder, getDataInitWrapper()));
-		addressView  =new AddressViewImpl(this.addressService);
+		addressView  =new AddressViewImpl(initDataWrapperDto);
 		addressView.initView();
 		addTab((Component) addressView);
 		
@@ -42,19 +44,28 @@ public class CustomerViewImpl extends AbstractMainView<Customer, Customer, Custo
 	@Override
 	public void loadData(Customer data) {
 		super.loadData(data);
-		this.addressView.setAccount(data.getAccount().getId());
-	}
-
-	@Override
-	public void setAddressService(AddressService addressService) {
-		this.addressService = addressService;
 		
+		if(data.getAddress() == null) {
+			data.setAddresses(new ArrayList<>());
+		}
+		
+		this.addressView.setAddresses(data.getAddresses());
 	}
 
 	@Override
 	public AbstractNewView getNewView() {
-		return new NewCustomerView( addressService, super.getEventBusProvider(),new Binder<Customer>() , getDataInitWrapper());
+		return new NewCustomerView(super.getEventBusProvider(),new Binder<Customer>() , getDataInitWrapper(),initDataWrapperDto);
 	}
+
+
+	@Override
+	public void setAddressInitDataWrapperDto(AddressInitDataWrapperDto initDataWrapperDto) {
+		this.initDataWrapperDto = initDataWrapperDto;
+		
+	}
+
+
+	
 
 	
 

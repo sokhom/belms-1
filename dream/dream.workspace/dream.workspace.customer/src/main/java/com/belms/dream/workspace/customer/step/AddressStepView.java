@@ -1,6 +1,6 @@
 package com.belms.dream.workspace.customer.step;
 
-import com.belms.dream.api.service.address.AddressService;
+import com.belms.dream.api.dto.address.AddressInitDataWrapperDto;
 import com.belms.dream.workspace.common.address.AddressView;
 import com.belms.dream.workspace.common.address.AddressViewImpl;
 import com.belms.dream.workspace.common.newview.AbstractStepView;
@@ -9,11 +9,11 @@ import com.vaadin.ui.Component;
 public class AddressStepView extends AbstractStepView {
 
 	private final static String NAME="Address";
-	private final AddressService addressService;
+	private final AddressInitDataWrapperDto initDataWrapperDto;
 	private AddressView addressView;
 	
-	public AddressStepView(AddressService addressService) {
-		this.addressService = addressService;
+	public AddressStepView(final AddressInitDataWrapperDto initDataWrapperDto) {
+		this.initDataWrapperDto = initDataWrapperDto;
 	}
 	
 	@Override
@@ -30,7 +30,7 @@ public class AddressStepView extends AbstractStepView {
 	protected Component buildView() {
 		
 		if(addressView == null){
-			addressView =  new AddressViewImpl(addressService);
+			addressView =  new AddressViewImpl(initDataWrapperDto);
 			addressView.initView();
 		}
 		return (Component) addressView;

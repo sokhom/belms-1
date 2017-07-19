@@ -18,12 +18,15 @@ public class CustomerMainLayoutPresenter implements FilterListener, ShowSlectedI
 	public CustomerMainLayoutPresenter(CustomerView layoutView) {
 		ServiceFactory factory = ServiceProvider.get(CustomerService.ID);
 		customerService = (CustomerService) factory.getService();
+		
+		factory = ServiceProvider.get(CustomerService.ID);
+		
 		this.layoutView = layoutView;
 		this.layoutView.setFilterListener(this);
 		this.layoutView.setShowItemListener(this);
 		factory = ServiceProvider.get(AddressService.ID);
+		
 		addressService = (AddressService) factory.getService();
-		this.layoutView.setAddressService(addressService);
 		initData();
 		this.layoutView.initView();
 	}
@@ -32,6 +35,7 @@ public class CustomerMainLayoutPresenter implements FilterListener, ShowSlectedI
 	
 		this.layoutView.setItemListData(customerService.getAll());
 		this.layoutView.setDataInitWrapper(customerService.getInitData());
+		this.layoutView.setAddressInitDataWrapperDto(addressService.getInitData());
 	}
 
 	@Override

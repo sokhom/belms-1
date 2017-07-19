@@ -3,8 +3,8 @@ package com.belms.dream.workspace.customer;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.belms.dream.api.dto.address.AddressInitDataWrapperDto;
 import com.belms.dream.api.dto.customer.CustomerInitDataWrapperDto;
-import com.belms.dream.api.service.address.AddressService;
 import com.belms.dream.api.view.event.EventBusProvider;
 import com.belms.dream.workspace.common.newview.AbstractNewView;
 import com.belms.dream.workspace.common.newview.StepView;
@@ -18,15 +18,17 @@ public class NewCustomerView extends AbstractNewView {
 
 	private static final long serialVersionUID = 1L;
 	private final Binder<Customer> binder;
-	private final CustomerInitDataWrapperDto initDataWrapperDto;
-	private final AddressService addressService;
-	private final static String CAPTION = "<h3><b>New Customer wizard</b></h3>"; 
+	private final CustomerInitDataWrapperDto customerInitDataWrapperDto;
+	private final AddressInitDataWrapperDto addressInitDataWrapperDto;
+	private final static String CAPTION = "<h3><b>New Customer wizard</b></h3>";
 
-	public NewCustomerView(final AddressService addressService, final EventBusProvider eventBusProvider, final Binder<Customer> binder,final CustomerInitDataWrapperDto initDataWrapperDto) {
+	public NewCustomerView(final EventBusProvider eventBusProvider, final Binder<Customer> binder,
+			final CustomerInitDataWrapperDto customerInitDataWrapperDto,
+			final AddressInitDataWrapperDto addressInitDataWrapperDto) {
 		super(eventBusProvider);
 		this.binder = binder;
-		this.initDataWrapperDto = initDataWrapperDto;
-		this.addressService = addressService;
+		this.customerInitDataWrapperDto = customerInitDataWrapperDto;
+		this.addressInitDataWrapperDto = addressInitDataWrapperDto;
 		eventBusProvider.register(this);
 		setCaption(CAPTION);
 		setCaptionAsHtml(true);
@@ -40,8 +42,8 @@ public class NewCustomerView extends AbstractNewView {
 	protected List<StepView> getStepViews() {
 		List<StepView> stepViews = new ArrayList<>();
 		stepViews.add(new CustomerInfoStepView());
-		stepViews.add(new CustomerDerailStepView(binder, initDataWrapperDto));
-		stepViews.add(new AddressStepView(this.addressService));
+		stepViews.add(new CustomerDerailStepView(binder, customerInitDataWrapperDto));
+		stepViews.add(new AddressStepView(addressInitDataWrapperDto));
 		return stepViews;
 	}
 

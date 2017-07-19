@@ -17,6 +17,8 @@ import com.vaadin.data.Binder;
 import com.vaadin.data.provider.CallbackDataProvider;
 import com.vaadin.icons.VaadinIcons;
 import com.vaadin.ui.Alignment;
+import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.FormLayout;
@@ -32,8 +34,6 @@ import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
-import com.vaadin.ui.Button.ClickEvent;
-import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.themes.ValoTheme;
 
 public class AddressAddNewView extends AbstractSimpleDialog implements SaveEntityListener<Contact> {
@@ -44,8 +44,6 @@ public class AddressAddNewView extends AbstractSimpleDialog implements SaveEntit
 	private final Address address;
 	private final Grid<Contact> contactGrid = new Grid<>();
 
-	
-	
 	public AddressAddNewView(final SaveEntityListener<Address> saveEntityListener, OPER_TYPE type,
 			final AddressInitDataWrapperDto initDataWrapperDto) {
 		this.saveEntityListener = saveEntityListener;
@@ -68,8 +66,6 @@ public class AddressAddNewView extends AbstractSimpleDialog implements SaveEntit
 		setHeight(700, Unit.PIXELS);
 		buildAddressLayout(initDataWrapperDto, parent);
 		buildContactLayout(initDataWrapperDto, parent);
-
-		setOkButtonClickListener(event -> saveEntityListener.save(null, getOperationType()));
 
 	}
 
@@ -151,6 +147,19 @@ public class AddressAddNewView extends AbstractSimpleDialog implements SaveEntit
 		addressPanel.setContent(formLayout);
 		binder.bind(defaultAddress, Address::isDefaultFlag, Address::setDefaultFlag);
 		binder.setBean(address);
+		
+		setOkButtonClickListener(event -> {
+			if(!binder.validate().isOk()) {
+				Notification.show("Input data is not valid", Type.ERROR_MESSAGE);
+				return;
+			}
+			saveEntityListener.save(binder.getBean(), getOperationType());
+			binder.setBean(saveEntityListener.getBean(getOperationType()));
+			addressTypeComboBox.focus();
+			if(OPER_TYPE.EDIT == getOperationType()) {
+				close();
+			}
+		});
 	}
 
 	private void buildContactLayout(final AddressInitDataWrapperDto initDataWrapperDto, final VerticalLayout layout) {

@@ -61,9 +61,7 @@ public class ContactAddNewView extends AbstractSimpleDialog {
 		nameTextFiled.focus();
 	
 		binder.forField(nameTextFiled).withValidator(new TextRequiredValidator()).bind(Contact::getName, Contact::setName);
-		
-	
-		
+				
 		final ComboBox<ContactType> contactTypeComboBox = new ComboBox<>("Contact Type");
 		formLayout.addComponent(contactTypeComboBox);
 		contactTypeComboBox.setDataProvider(new CallbackDataProvider<ContactType, String>(query->contactTypes.stream(),query->contactTypes.size()));

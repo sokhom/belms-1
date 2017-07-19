@@ -1,13 +1,15 @@
 package com.belms.dream.workspace.common.address;
 
 
+import java.util.List;
+
 import com.belms.dream.api.dto.address.AddressInitDataWrapperDto;
-import com.belms.dream.api.service.address.AddressService;
 import com.belms.dream.api.view.event.SaveEntityListener;
 import com.belms.dream.workspace.common.address.newview.AddressAddNewView;
 import com.blems.dream.api.model.address.Address;
 import com.blems.dream.api.model.contact.Contact;
 import com.vaadin.data.Binder;
+import com.vaadin.data.provider.CallbackDataProvider;
 import com.vaadin.data.provider.DataProvider;
 import com.vaadin.icons.VaadinIcons;
 import com.vaadin.ui.Alignment;
@@ -33,15 +35,18 @@ public class AddressViewImpl extends VerticalLayout implements AddressView, Save
 	private final ListSelect<Address> addressListSelect = new ListSelect<>();
 	private final Binder<Address> binder = new Binder<>();
 	private AddressInitDataWrapperDto addressInitDataWrapperDto;
-	private LoadAddressesListener addressesListener;
+//	private final List<Address> addresses ;
 	
-	public AddressViewImpl(AddressService addressService) {
-		new AddressViewPresenter(this, addressService);
+	public AddressViewImpl(AddressInitDataWrapperDto addressInitDataWrapperDto) {
+//		new AddressViewPresenter(this);
+		setInitDataWrapperDto(addressInitDataWrapperDto);
 	}
+	
 	
 	@Override
 	public void setAddressListProvider(DataProvider<Address, String> dataProvider) {
 		addressListSelect.setDataProvider(dataProvider);
+		addressListSelect.getDataProvider().refreshAll();
 	}
 
 	private void buildUI() {
@@ -191,10 +196,12 @@ public class AddressViewImpl extends VerticalLayout implements AddressView, Save
 	}
 
 	@Override
-	public void setAccount(int accountId) {
-		if(addressesListener!=null){
-			addressesListener.loaded(accountId);
-		}
+	public void setAddresses(List<Address> addresses) {
+//		if(addressesListener!=null){
+//			addressesListener.loaded(addresses);
+//		}
+		
+		setAddressListProvider(new CallbackDataProvider<Address, String>(query-> addresses.stream(),query-> addresses.size()));
 	}
 
 	@Override
@@ -202,20 +209,20 @@ public class AddressViewImpl extends VerticalLayout implements AddressView, Save
 		buildUI();
 	}
 
-	@Override
-	public void setLoadAddressesListener(LoadAddressesListener addressesListener) {
-		this.addressesListener = addressesListener;
-	}
+//	@Override
+//	public void setLoadAddressesListener(LoadAddressesListener addressesListener) {
+//		this.addressesListener = addressesListener;
+//	}
 
 	@Override
-	public void setInitDataWrapperDto(AddressInitDataWrapperDto addressInitDataWrapperDto) {
+	public void setInitDataWrapperDto(final AddressInitDataWrapperDto addressInitDataWrapperDto) {
 		this.addressInitDataWrapperDto = addressInitDataWrapperDto;
 		
 	}
 
 	@Override
 	public void save(Address bean, OPER_TYPE type) {
-		
+		System.out.println(bean);
 		
 	}
 
