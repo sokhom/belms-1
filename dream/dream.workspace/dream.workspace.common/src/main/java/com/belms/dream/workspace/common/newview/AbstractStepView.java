@@ -7,14 +7,23 @@ public abstract class AbstractStepView implements StepView {
 	private Component cache;
 
 	@Override
-	public Component getStackView() {
+	public Component getView() {
 		if(cache ==null){
 			cache = buildView();
 		}
 		return cache;
 	}
 	
-	
+
+	@Override
+	public void loadData(Object data) {
+		
+	}
+
+
+
 	protected abstract Component buildView();
+
+	
 	
 }

@@ -55,4 +55,9 @@ public class CustomerInfoStepView  extends AbstractStepView {
 		return formLayout;	
 	}
 
+	@Override
+	public boolean validationRequired() {
+		return true;
+	}
+
 }

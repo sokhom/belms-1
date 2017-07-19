@@ -36,10 +36,15 @@ public class AddressStepView extends AbstractStepView {
 		
 		if(addressView == null){
 			addressView =  new AddressViewImpl(initDataWrapperDto);
-			addressView.setAddresses(addresses);
 			addressView.initView();
+			addressView.loadData(addresses);
 		}
 		return (Component) addressView;
+	}
+
+	@Override
+	public boolean validationRequired() {
+		return false;
 	}
 
 }

@@ -3,22 +3,32 @@ package com.belms.dream.workspace.common.mainview;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.belms.dream.api.view.EntryView;
 import com.belms.dream.api.view.event.EventBusProvider;
+import com.belms.dream.api.view.event.RefreshEntityListener;
+import com.belms.dream.api.view.event.SaveEnityListener;
+import com.belms.dream.api.view.event.SaveEntityListener.OPER_TYPE;
+import com.belms.dream.workspace.common.dialog.ConfirmDialog;
 import com.blems.dream.api.model.DefaultModel;
 import com.blems.dream.api.model.ui.FilterItemList;
-import com.vaadin.data.Binder;
 import com.vaadin.data.provider.CallbackDataProvider;
+import com.vaadin.data.provider.DataProvider;
 import com.vaadin.event.ShortcutAction.KeyCode;
 import com.vaadin.event.ShortcutListener;
 import com.vaadin.icons.VaadinIcons;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Grid;
 import com.vaadin.ui.Grid.SelectionMode;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.HorizontalSplitPanel;
 import com.vaadin.ui.MenuBar;
+import com.vaadin.ui.MenuBar.Command;
 import com.vaadin.ui.MenuBar.MenuItem;
+import com.vaadin.ui.Notification;
+import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.TabSheet;
 import com.vaadin.ui.TextField;
@@ -30,15 +40,22 @@ import com.vaadin.ui.themes.ValoTheme;
 public abstract class AbstractMainView<T extends FilterItemList, E extends DefaultModel, W> extends Panel
 		implements MainLayoutView<T, E, W> {
 
+	private OPER_TYPE operType =OPER_TYPE.VIEW;
 	private static final long serialVersionUID = 1L;
 	private FilterListener filterListener;
 	private ShowSlectedItemListener<T> showSlectedItemListener;
+	
+	private SaveEnityListener<E> saveEnityListener;
+	private RefreshEntityListener<E> refreshEntityListener;
+	
 	private List<T> itemList = new ArrayList<>();
 	private W dataInitWrapperDto;
 	private final EventBusProvider eventBusProvider;
 	private final TabSheet tabsheet = new TabSheet();
-
-	protected final Binder<E> binder = new Binder<>();
+	private DataProvider<T, String> searchListDataProvider;
+	private final List<EntryView<E>> entryViews = new ArrayList<>();
+	private E data;
+	
 
 	public AbstractMainView(final EventBusProvider eventBusProvider) {
 		this.eventBusProvider = eventBusProvider;
@@ -49,6 +66,11 @@ public abstract class AbstractMainView<T extends FilterItemList, E extends Defau
 		return eventBusProvider;
 	}
 
+	
+	protected void setOperType(OPER_TYPE type) {
+		this.operType = type;
+	}
+	
 	public abstract Window getNewView();
 
 	@Override
@@ -77,15 +99,81 @@ public abstract class AbstractMainView<T extends FilterItemList, E extends Defau
 		menubar.setWidth(100.0f, Unit.PERCENTAGE);
 		menubar.addStyleName(ValoTheme.MENUBAR_BORDERLESS);
 		menubar.addItem("New", VaadinIcons.FILE_ADD, selectedItem-> UI.getCurrent().addWindow(getNewView()));
-		menubar.addItem("Edit", VaadinIcons.EDIT, selectedItem -> {
-		});
-		final MenuItem saveItem = menubar.addItem("Save", VaadinIcons.CHECK, selectedItem -> {
-		});
+		final MenuItem editItem = menubar.addItem("Edit", VaadinIcons.EDIT, null);
+		final MenuItem saveItem = menubar.addItem("Save", VaadinIcons.CHECK, null);
 		saveItem.setEnabled(false);
+		final MenuItem cancelItem = menubar.addItem("Cancel", VaadinIcons.FILE_REMOVE, null);
+		cancelItem.setEnabled(false);
+		
+		
+		
+		Command command = new Command() {
+		
+			private static final long serialVersionUID = 1L;
 
-		final MenuItem removeItem = menubar.addItem("Remove", VaadinIcons.FILE_REMOVE, selectedItem -> {
-		});
-		removeItem.setEnabled(false);
+			@Override
+			public void menuSelected(MenuItem selectedItem) {
+				if(data==null) {
+					return;
+				}
+				if(editItem.equals(selectedItem)) {
+					if(OPER_TYPE.VIEW == operType ) {
+						setOperType(OPER_TYPE.EDIT);
+						saveItem.setEnabled(true);
+						cancelItem.setEnabled(true);
+						editItem.setEnabled(false);	
+					}
+					
+				}else if(saveItem.equals(selectedItem)) {
+					if(OPER_TYPE.EDIT == operType) {
+						
+						for (EntryView<E> entryView : entryViews) {
+							if(!entryView.isValid()) {
+								tabsheet.setSelectedTab(entryView.getView());
+								Notification.show("Input Data is not valid.", Type.ERROR_MESSAGE);
+								return;
+							}
+						}
+						
+						ConfirmDialog.showDialog("Are you sure to save?", new ClickListener() {
+						
+							private static final long serialVersionUID = 1L;
+
+							@Override
+							public void buttonClick(ClickEvent event) {
+								try {
+									saveEnityListener.save(data);
+									
+									saveItem.setEnabled(false);
+									cancelItem.setEnabled(false);
+									editItem.setEnabled(true);
+									Notification.show("Saved sucessfully", Type.HUMANIZED_MESSAGE);
+								}catch (Exception e) {
+									Notification.show(e.getMessage(), Type.ERROR_MESSAGE);
+								}
+							}
+						});
+						
+						setOperType(OPER_TYPE.VIEW);
+						
+						
+					}
+				}else if(cancelItem .equals(selectedItem)) {
+					loadData(refreshEntityListener.refresh(data));
+					tabsheet.setSelectedTab(0);
+					setOperType(OPER_TYPE.VIEW);
+					saveItem.setEnabled(false);
+					cancelItem.setEnabled(false);
+					editItem.setEnabled(true);
+				}
+					
+			}
+		};
+		
+		editItem.setCommand(command);
+		saveItem.setCommand(command);
+		cancelItem.setCommand(command);
+	
 		return menubar;
 	}
 
@@ -103,8 +191,13 @@ public abstract class AbstractMainView<T extends FilterItemList, E extends Defau
 	
 	}
 	
-	protected void addTab(Component component) {
-		tabsheet.addComponent(component);
+	protected void addTab(EntryView<E> view) {
+		entryViews.add(view);
+		tabsheet.addComponent(view.getView());
+	}
+	
+	protected void addTab(Component view) {
+		tabsheet.addComponent(view);
 	}
 
 	private Component buildItemListLayout() {
@@ -165,9 +258,8 @@ public abstract class AbstractMainView<T extends FilterItemList, E extends Defau
 	private Component buildItemList() {
 		final Grid<T> itemListGrid = new Grid<>();
 		itemListGrid.setSizeFull();
-
-		itemListGrid.setDataProvider(
-				new CallbackDataProvider<>(query -> this.itemList.stream(), query -> this.itemList.size()));
+		searchListDataProvider = new CallbackDataProvider<>(query -> this.itemList.stream(), query -> this.itemList.size());
+		itemListGrid.setDataProvider(searchListDataProvider);
 
 		itemListGrid.setSelectionMode(SelectionMode.SINGLE);
 		itemListGrid.addColumn(FilterItemList::getName).setCaption("Name");
@@ -198,7 +290,11 @@ public abstract class AbstractMainView<T extends FilterItemList, E extends Defau
 
 	@Override
 	public void loadData(E data) {
-		binder.setBean(data);
+		this.data = data;
+		for (EntryView<E> entryView : entryViews) {
+			entryView.loadData(this.data);
+		}
+
 	}
 
 	public void setFilterListener(FilterListener filterListener) {
@@ -216,5 +312,26 @@ public abstract class AbstractMainView<T extends FilterItemList, E extends Defau
 		this.showSlectedItemListener = showSlectedItemListener;
 
 	}
+	
+	@Override
+	public void setSaveEntityListener(SaveEnityListener<E> saveEnityListener) {
+		this.saveEnityListener = saveEnityListener;
+	}
+
+	@Override
+	public void setRefreshEntityListener(RefreshEntityListener<E> refreshEntityListener) {
+		this.refreshEntityListener = refreshEntityListener;
+		
+	}
+
+	@Override
+	public void addNew(T t) {
+//		this.itemList.add(t);
+		searchListDataProvider.refreshAll();
+		
+		
+	}
+	
+	
 
 }

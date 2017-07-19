@@ -1,11 +1,9 @@
 package com.belms.dream.workspace.common.newview;
 
-import com.vaadin.ui.Component;
+import com.belms.dream.api.view.EntryView;
 
-public interface StepView   {
-	
+public interface StepView extends EntryView<Object>  {
 	String getName();
-	Component getStackView();
-	boolean isValid();
+	boolean validationRequired();
 
 }

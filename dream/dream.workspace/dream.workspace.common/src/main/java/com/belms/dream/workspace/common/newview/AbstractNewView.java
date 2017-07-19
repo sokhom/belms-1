@@ -137,7 +137,23 @@ public abstract class AbstractNewView<T> extends Window implements View {
 		final Button finishButton = new Button("Finish");
 		
 		finishButton.addClickListener(event-> {
-			addnewEntityListener.addNew(getNewItem());
+			for (StepView stepView : stepViews) {
+				if(stepView.validationRequired() && !stepView.isValid()) {
+					Notification.show("Invalid data. Saving cannot be fullfilled", Type.ERROR_MESSAGE);
+					return;
+				}
+				
+			}
+			
+			try {
+				addnewEntityListener.addNew(getNewItem());
+				Notification.show("Save sucessfully", Type.HUMANIZED_MESSAGE);
+				close();
+			}catch (Exception e) {
+				Notification.show(e.getMessage(), Type.ERROR_MESSAGE);
+			}
+			
+			
 		});
 		
 		
@@ -153,10 +169,7 @@ public abstract class AbstractNewView<T> extends Window implements View {
 		CssLayout group = new CssLayout(backButton, nextButton, finishButton, cancelButton);
 		group.addStyleName(ValoTheme.LAYOUT_COMPONENT_GROUP);
 		footerLayout.addComponent(group);
-		// footerLayout.setComponentAlignment(cancelButton,
-		// Alignment.TOP_RIGHT);
 	}
-
 	
 	private StepView getCurrentStepView(){
 		
@@ -195,7 +208,7 @@ public abstract class AbstractNewView<T> extends Window implements View {
 	@Subscribe
 	public void setStepView(StepViewSelectedEvent event) {
 		this.stepViewPanel.setCaption(event.getStepView().getName());
-		this.stepViewPanel.setContent(event.getStepView().getStackView());
+		this.stepViewPanel.setContent(event.getStepView().getView());
 	}
 
 	//To to make one time instance, one time call only

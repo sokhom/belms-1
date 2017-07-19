@@ -28,6 +28,13 @@ public class CustomerRepo extends AbstractRepo<Customer> {
 		return customerList.get(id - 1);
 	}
 
+	
+	public Customer add(Customer t) {
+		customerList.add(t);
+		t.setId(customerList.size());
+		return t;
+	}
+	
 	public List<Customer> getAll() {
 		initCustomerList();
 		return customerList;

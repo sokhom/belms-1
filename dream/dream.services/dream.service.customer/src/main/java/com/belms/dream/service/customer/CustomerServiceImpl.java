@@ -12,7 +12,7 @@ public class CustomerServiceImpl implements CustomerService {
 	private CustomerRepo customerRepo = new CustomerRepo();
 	
 	public Customer add(Customer t) {
-		return null;
+		return customerRepo.add(t);
 	}
 
 	public void remove(Customer t) {

@@ -21,6 +21,7 @@ import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.CheckBox;
+import com.vaadin.ui.Component;
 import com.vaadin.ui.FormLayout;
 import com.vaadin.ui.Grid;
 import com.vaadin.ui.Grid.SelectionMode;
@@ -287,17 +288,6 @@ public class AddressViewImpl extends VerticalLayout implements AddressView, Save
 		contactGrid.setDataProvider(contactDataProvider);
 	}
 
-	@Override
-	public void setAddresses(List<Address> addresses) {
-		this.addresses = addresses;
-		if(!addresses.isEmpty()) {
-			addressListSelect.select(addresses.get(0));	
-		}else {
-			binder.setBean(new Address());
-		}
-
-		refresh();
-	}
 
 	
 	private void refresh() {
@@ -339,6 +329,31 @@ public class AddressViewImpl extends VerticalLayout implements AddressView, Save
 	public void setContactHeight(float height) {
 		contactListHeight = height;
 		
+	}
+
+	@Override
+	public boolean isValid() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public Component getView() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void loadData(List<Address> data) {
+		this.addresses = data;
+		if(!addresses.isEmpty()) {
+			addressListSelect.clear();
+			addressListSelect.select(addresses.get(0));	
+		}else {
+			binder.setBean(new Address());
+		}
+
+		refresh();
 	}
 
 }

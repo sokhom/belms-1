@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.belms.dream.api.dto.address.AddressInitDataWrapperDto;
 import com.belms.dream.api.dto.customer.CustomerInitDataWrapperDto;
+import com.belms.dream.api.view.EntryView;
 import com.belms.dream.api.view.event.EventBusProvider;
 import com.belms.dream.workspace.common.address.AddressView;
 import com.belms.dream.workspace.common.address.AddressViewImpl;
@@ -11,7 +12,7 @@ import com.belms.dream.workspace.common.mainview.AbstractMainView;
 import com.belms.dream.workspace.customer.subview.CustomerDetailView;
 import com.belms.dream.workspace.customer.subview.CustomerInfoView;
 import com.blems.dream.api.model.customer.Customer;
-import com.vaadin.ui.Component;
+import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
 public class CustomerViewImpl extends AbstractMainView<Customer, Customer, CustomerInitDataWrapperDto> implements CustomerView {
@@ -26,6 +27,8 @@ public class CustomerViewImpl extends AbstractMainView<Customer, Customer, Custo
 		customerMainLayoutPresenter =new CustomerMainLayoutPresenter(this);
 		this.setFilterListener(customerMainLayoutPresenter);
 		this.setShowItemListener(customerMainLayoutPresenter);
+		this.setSaveEntityListener(customerMainLayoutPresenter);
+		this.setRefreshEntityListener(customerMainLayoutPresenter);
 	}
 
 	
@@ -36,13 +39,14 @@ public class CustomerViewImpl extends AbstractMainView<Customer, Customer, Custo
 	}
 
 	protected void buildTabs() {
-		addTab(new CustomerInfoView(binder, getDataInitWrapper()));
-		addTab(new CustomerDetailView(binder, getDataInitWrapper()));
+		EntryView<Customer> entryView = new CustomerInfoView(getDataInitWrapper());
+		addTab(entryView);
+		entryView =new CustomerDetailView(getDataInitWrapper());
+		addTab(entryView);
 		addressView  =new AddressViewImpl(initDataWrapperDto);
 		addressView.setContactHeight(300.0f);
 		addressView.initView();
-		
-		addTab((Component) addressView);
+		addTab((VerticalLayout)addressView);
 		
 	}
 	
@@ -54,7 +58,7 @@ public class CustomerViewImpl extends AbstractMainView<Customer, Customer, Custo
 			data.setAddresses(new ArrayList<>());
 		}
 		
-		this.addressView.setAddresses(data.getAddresses());
+		this.addressView.loadData(data.getAddresses());
 	}
 
 	@Override
@@ -64,6 +68,7 @@ public class CustomerViewImpl extends AbstractMainView<Customer, Customer, Custo
 		customerView.setAddNewListener(customerMainLayoutPresenter);
 		return  (Window) customerView;
 	}
+
 
 
 	@Override

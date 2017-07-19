@@ -5,12 +5,14 @@ import com.belms.dream.api.service.ServiceProvider;
 import com.belms.dream.api.service.address.AddressService;
 import com.belms.dream.api.service.customer.CustomerService;
 import com.belms.dream.api.view.event.AddnewEntityListener;
+import com.belms.dream.api.view.event.RefreshEntityListener;
+import com.belms.dream.api.view.event.SaveEnityListener;
 import com.belms.dream.workspace.common.mainview.FilterListener;
 import com.belms.dream.workspace.common.mainview.ShowSlectedItemListener;
 import com.blems.dream.api.model.customer.Customer;
 import com.vaadin.ui.Notification;
 
-public class CustomerMainLayoutPresenter implements FilterListener, ShowSlectedItemListener<Customer>, AddnewEntityListener<Customer> {
+public class CustomerMainLayoutPresenter implements FilterListener, ShowSlectedItemListener<Customer>, AddnewEntityListener<Customer>, SaveEnityListener<Customer>, RefreshEntityListener<Customer> {
 	
 	private CustomerView layoutView;
 	private final CustomerService customerService;
@@ -52,8 +54,20 @@ public class CustomerMainLayoutPresenter implements FilterListener, ShowSlectedI
 
 	@Override
 	public void addNew(Customer t) {
-		//Add new operatin
+		customerService.add(t);
+		this.layoutView.addNew(t);
+		System.out.println(t.getName() + " added");
+	}
+
+	@Override
+	public void save(Customer entiry) {
+		customerService.edit(entiry);
 		
+	}
+
+	@Override
+	public Customer refresh(Customer entity) {
+		return customerService.getById(entity.getId());
 	}
 
 	

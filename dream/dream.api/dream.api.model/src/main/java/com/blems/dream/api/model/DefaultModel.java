@@ -3,7 +3,7 @@ package com.blems.dream.api.model;
 import java.io.Serializable;
 import java.util.Date;
 
-public abstract class DefaultModel extends BasedModel implements Serializable  {
+public abstract class DefaultModel extends BasedModel implements Serializable, Cloneable  {
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -42,6 +42,10 @@ public abstract class DefaultModel extends BasedModel implements Serializable  {
 	}
 	public void setLastChangedUserId(int lastChangedUserId) {
 		this.lastChangedUserId = lastChangedUserId;
+	}
+	@Override
+	public Object clone() throws CloneNotSupportedException {
+		return super.clone();
 	}
 	
 	
