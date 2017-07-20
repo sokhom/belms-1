@@ -1,3 +1,7 @@
+/***
+ * @author ngounphanny
+ * 
+ */
 package com.belms.dream.api.view;
 
 import com.vaadin.ui.Component;

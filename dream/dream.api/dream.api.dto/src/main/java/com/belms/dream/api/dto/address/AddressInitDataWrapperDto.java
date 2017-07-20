@@ -1,3 +1,7 @@
+/***
+ * @author ngounphanny
+ * 
+ */
 package com.belms.dream.api.dto.address;
 
 import java.io.Serializable;

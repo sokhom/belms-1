@@ -1,3 +1,8 @@
+/***
+ * @author ngounphanny
+ * 
+ */
+
 package com.belms.dream.workspace.common.newview;
 
 import java.util.List;
@@ -25,7 +30,7 @@ public abstract class AbstractNewView<T> extends Window implements View {
 	private final EventBusProvider eventBusProvider;
 	private final Panel stepViewPanel = new Panel();
 	private int currentStepIndex = 0;
-	private List<StepView> stepViews;
+	private List<StepView<T>> stepViews;
 	private AddnewEntityListener<T> addnewEntityListener; 
 
 	public AbstractNewView(EventBusProvider eventBusProvider) {
@@ -72,7 +77,7 @@ public abstract class AbstractNewView<T> extends Window implements View {
 		if (stepViews == null || stepViews.size() == 0) {
 			return;
 		}
-		eventBusProvider.post(new StepViewSelectedEvent(getCurrentStepView()));
+		eventBusProvider.post(new StepViewSelectedEvent<T>(getCurrentStepView()));
 	}
 
 	private void buildButtons(VerticalLayout layout) {
@@ -82,14 +87,11 @@ public abstract class AbstractNewView<T> extends Window implements View {
 		layout.addComponent(footerLayout);
 		footerLayout.setWidth(100, Unit.PERCENTAGE);
 		footerLayout.setDefaultComponentAlignment(Alignment.TOP_RIGHT);
-		// footerLayout.setSizeUndefined();
-		// footerLayout.setDefaultComponentAlignment(Alignment.BOTTOM_RIGHT);
+	
 		footerLayout.setMargin(false);
 		footerLayout.setSpacing(false);
 
 		final Button backButton = new Button("Back");
-
-		// footerLayout.addComponent(backButton);
 		final Button nextButton = new Button("Next");
 
 		if(currentStepIndex+1 >= stepViews.size() ){
@@ -132,13 +134,14 @@ public abstract class AbstractNewView<T> extends Window implements View {
 			}
 
 		});
-		// footerLayout.addComponent(nextButton);
 
 		final Button finishButton = new Button("Finish");
 		
 		finishButton.addClickListener(event-> {
-			for (StepView stepView : stepViews) {
+			for (StepView<T> stepView : stepViews) {
 				if(stepView.validationRequired() && !stepView.isValid()) {
+					eventBusProvider.post(new StepViewSelectedEvent<T>(stepView));
+					
 					Notification.show("Invalid data. Saving cannot be fullfilled", Type.ERROR_MESSAGE);
 					return;
 				}
@@ -156,22 +159,18 @@ public abstract class AbstractNewView<T> extends Window implements View {
 			
 		});
 		
-		
-		// footerLayout.setComponentAlignment(finishButton,
-		// Alignment.TOP_RIGHT);
 		final Button cancelButton = new Button("Cancel");
 
 		cancelButton.addClickListener(event -> {
 			close();
 		});
-		// footerLayout.addComponent(cancelButton);
 
 		CssLayout group = new CssLayout(backButton, nextButton, finishButton, cancelButton);
 		group.addStyleName(ValoTheme.LAYOUT_COMPONENT_GROUP);
 		footerLayout.addComponent(group);
 	}
 	
-	private StepView getCurrentStepView(){
+	private StepView<T> getCurrentStepView(){
 		
 		if(this.stepViews==null || this.stepViews.size()==0){
 			throw new RuntimeException("No step view setup");
@@ -193,7 +192,7 @@ public abstract class AbstractNewView<T> extends Window implements View {
 		}
 
 		int i = 0;
-		for (StepView stepView : stepViews) {
+		for (StepView<T> stepView : stepViews) {
 			i++;
 			stepItemsLayout.addComponent(new StepItem(this, i, stepView));
 		}
@@ -206,21 +205,20 @@ public abstract class AbstractNewView<T> extends Window implements View {
 	}
 
 	@Subscribe
-	public void setStepView(StepViewSelectedEvent event) {
+	public void setStepView(StepViewSelectedEvent<T> event) {
 		this.stepViewPanel.setCaption(event.getStepView().getName());
 		this.stepViewPanel.setContent(event.getStepView().getView());
 	}
 
-	//To to make one time instance, one time call only
-	protected abstract List<StepView> getStepViews();
+	protected abstract List<StepView<T>> getStepViews();
 
 	private class StepItem extends Label {
 
 		private static final long serialVersionUID = 1L;
 		private static final String STYLE_SELECTED = "selected";
-		private final StepView stepView;
+		private final StepView<T> stepView;
 
-		public StepItem(Window window, int order, StepView stepView) {
+		public StepItem(Window window, int order, StepView<T> stepView) {
 
 			this.stepView = stepView;
 			setPrimaryStyleName("valo-menu-item");
@@ -231,7 +229,7 @@ public abstract class AbstractNewView<T> extends Window implements View {
 		}
 
 		@Subscribe
-		public void stepViewChanged(StepViewSelectedEvent event) {
+		public void stepViewChanged(StepViewSelectedEvent<T> event) {
 			System.out.println(event.getStepView().getName());
 			removeStyleName(STYLE_SELECTED);
 			if (stepView.getName().equals(event.getStepView().getName())) {

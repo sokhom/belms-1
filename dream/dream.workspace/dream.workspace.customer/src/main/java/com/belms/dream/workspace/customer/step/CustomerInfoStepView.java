@@ -1,6 +1,6 @@
 package com.belms.dream.workspace.customer.step;
 
-import com.belms.dream.workspace.common.newview.AbstractStepView;
+import com.belms.dream.workspace.common.newview.StepView;
 import com.belms.dream.workspace.common.validator.TextRequiredValidator;
 import com.blems.dream.api.model.customer.Customer;
 import com.vaadin.data.Binder;
@@ -10,15 +10,16 @@ import com.vaadin.ui.FormLayout;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.themes.ValoTheme;
 
-public class CustomerInfoStepView  extends AbstractStepView {
+public class CustomerInfoStepView  implements StepView<Customer> {
 	
 	private static final String NAME = "Customer Info";
 	
 	private final  Binder<Customer> binder;
+	private final Component component;
 	
-	public CustomerInfoStepView(final Customer customer) {
+	public CustomerInfoStepView() {
 		binder = new Binder<Customer>();
-		binder.setBean(customer);
+		this.component = buildView();
 	}
 	
 	@Override
@@ -31,9 +32,8 @@ public class CustomerInfoStepView  extends AbstractStepView {
 		return binder.validate().isOk();
 	}
 	
-	
-	@Override
-	protected Component buildView(){
+
+	private Component buildView(){
 		final FormLayout formLayout = new FormLayout();
 		formLayout.setSizeFull();
 		formLayout.setSpacing(false);
@@ -59,5 +59,17 @@ public class CustomerInfoStepView  extends AbstractStepView {
 	public boolean validationRequired() {
 		return true;
 	}
+
+	@Override
+	public Component getView() {
+		return component;
+	}
+
+	@Override
+	public void loadData(Customer data) {
+		binder.setBean(data);
+		
+	}
+
 
 }

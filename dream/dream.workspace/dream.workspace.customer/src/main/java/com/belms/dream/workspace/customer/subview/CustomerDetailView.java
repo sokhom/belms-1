@@ -1,3 +1,7 @@
+/***
+ * @author ngounphanny
+ * 
+ */
 package com.belms.dream.workspace.customer.subview;
 
 import com.belms.dream.api.dto.customer.CustomerInitDataWrapperDto;

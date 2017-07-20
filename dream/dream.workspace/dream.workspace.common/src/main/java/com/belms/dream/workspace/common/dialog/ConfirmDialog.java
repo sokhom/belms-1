@@ -1,3 +1,7 @@
+/***
+ * @author ngounphanny
+ * 
+ */
 package com.belms.dream.workspace.common.dialog;
 
 import com.belms.dream.api.view.event.SaveEntityListener.OPER_TYPE;

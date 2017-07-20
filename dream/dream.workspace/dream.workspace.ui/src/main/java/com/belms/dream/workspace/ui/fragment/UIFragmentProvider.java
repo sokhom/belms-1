@@ -1,3 +1,7 @@
+/***
+ * @author ngounphanny
+ * 
+ */
 package com.belms.dream.workspace.ui.fragment;
 
 import java.io.Serializable;

@@ -1,3 +1,7 @@
+/***
+ * @author ngounphanny
+ * 
+ */
 package com.belms.dream.workspace.common.address;
 
 import java.util.ArrayList;
@@ -333,14 +337,12 @@ public class AddressViewImpl extends VerticalLayout implements AddressView, Save
 
 	@Override
 	public boolean isValid() {
-		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 	@Override
 	public Component getView() {
-		// TODO Auto-generated method stub
-		return null;
+		return this;
 	}
 
 	@Override

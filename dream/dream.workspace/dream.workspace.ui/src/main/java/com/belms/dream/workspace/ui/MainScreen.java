@@ -1,3 +1,7 @@
+/***
+ * @author ngounphanny
+ * 
+ */
 package com.belms.dream.workspace.ui;
 
 import com.belms.dream.workspace.ui.fragment.UIFragmentProvider;

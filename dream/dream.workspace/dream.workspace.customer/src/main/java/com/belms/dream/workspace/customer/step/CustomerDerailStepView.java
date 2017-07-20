@@ -7,15 +7,13 @@ import com.belms.dream.workspace.customer.subview.CustomerDetailView;
 import com.blems.dream.api.model.customer.Customer;
 import com.vaadin.ui.Component;
 
-public class CustomerDerailStepView implements StepView {
+public class CustomerDerailStepView implements StepView<Customer> {
 
 	private final static String NAME ="Customer Detail";
 	private  EntryView<Customer> entryView;
 	
-	public CustomerDerailStepView(final Customer customer,final CustomerInitDataWrapperDto initDataWrapperDto) {
-	
+	public CustomerDerailStepView(final CustomerInitDataWrapperDto initDataWrapperDto) {
 		entryView = new CustomerDetailView(initDataWrapperDto);
-		entryView.loadData(customer);
 	}
 
 	@Override
@@ -28,11 +26,6 @@ public class CustomerDerailStepView implements StepView {
 		return entryView.getView();
 	}
 
-	@Override
-	public void loadData(Object data) {
-		// TODO Auto-generated method stub
-		
-	}
 
 	@Override
 	public String getName() {
@@ -42,6 +35,12 @@ public class CustomerDerailStepView implements StepView {
 	@Override
 	public boolean validationRequired() {
 		return true;
+	}
+
+	@Override
+	public void loadData(Customer data) {
+		entryView.loadData(data);
+		
 	}
 	
 }

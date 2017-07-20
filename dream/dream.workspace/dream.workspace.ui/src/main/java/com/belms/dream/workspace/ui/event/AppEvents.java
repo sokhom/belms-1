@@ -1,3 +1,7 @@
+/***
+ * @author ngounphanny
+ * 
+ */
 package com.belms.dream.workspace.ui.event;
 
 import com.belms.dream.workspace.ui.NavigatorViewType;

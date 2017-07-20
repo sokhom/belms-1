@@ -1,3 +1,7 @@
+/***
+ * @author ngounphanny
+ * 
+ */
 package com.belms.dream.workspace.customer;
 
 import com.belms.dream.api.service.ServiceFactory;

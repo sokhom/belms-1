@@ -1,3 +1,7 @@
+/***
+ * @author ngounphanny
+ * 
+ */
 package com.blems.dream.api.model.currency;
 
 import com.blems.dream.api.model.DefaultModel;

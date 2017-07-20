@@ -1,3 +1,7 @@
+/***
+ * @author ngounphanny
+ * 
+ */
 package com.blems.dream.api.model.contact;
 
 import com.blems.dream.api.model.BasedModel;

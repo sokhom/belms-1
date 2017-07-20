@@ -1,3 +1,7 @@
+/***
+ * @author ngounphanny
+ * 
+ */
 package dream.repository.common;
 
 public abstract class AbstractRepo<T> implements Repo<T> {

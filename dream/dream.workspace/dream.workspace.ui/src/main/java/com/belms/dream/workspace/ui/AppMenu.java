@@ -1,3 +1,7 @@
+/***
+ * @author ngounphanny
+ * 
+ */
 package com.belms.dream.workspace.ui;
 
 import com.belms.dream.workspace.ui.authentication.CurrentUser;
@@ -16,13 +20,13 @@ import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.MenuBar;
-import com.vaadin.ui.MenuBar.Command;
 import com.vaadin.ui.MenuBar.MenuItem;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.themes.ValoTheme;
 
-@SuppressWarnings("serial")
 public class AppMenu extends CustomComponent {
+
+	private static final long serialVersionUID = 1L;
 
 	public static final String ID = "app-menu";
 	public static final String REPORTS_BADGE_ID = "dashboard-menu-reports-badge";
@@ -75,30 +79,15 @@ public class AppMenu extends CustomComponent {
 		settingsItem = settings.addItem("", new ThemeResource("img/profile-pic-300px.jpg"), null);
 		settingsItem.setText(user);
 		// updateUserName(null);
-		settingsItem.addItem("Edit Profile", new Command() {
-			@Override
-			public void menuSelected(final MenuItem selectedItem) {
-				// ProfilePreferencesWindow.open(user, false);
-			}
-		});
-		settingsItem.addItem("Preferences", new Command() {
-			@Override
-			public void menuSelected(final MenuItem selectedItem) {
-				// ProfilePreferencesWindow.open(user, true);
-			}
-		});
+		settingsItem.addItem("Edit Profile", selectedItem -> {});
+		settingsItem.addItem("Preferences", selectedItem -> {});
 		settingsItem.addSeparator();
-		settingsItem.addItem("Sign Out", new Command() {
-			@Override
-			public void menuSelected(final MenuItem selectedItem) {
-				AppEventBus.post(new AppEvents.UserLoggedOutEvent());
-			}
-		});
+		settingsItem.addItem("Sign Out", selectedItem -> AppEventBus.post(new AppEvents.UserLoggedOutEvent()));
 		return settings;
 	}
 
 	private Component buildToggleButton() {
-		Button valoMenuToggleButton = new Button("Menu", event->{
+		Button valoMenuToggleButton = new Button("Menu", event -> {
 			if (getCompositionRoot().getStyleName().contains(STYLE_VISIBLE)) {
 				getCompositionRoot().removeStyleName(STYLE_VISIBLE);
 			} else {
@@ -111,54 +100,44 @@ public class AppMenu extends CustomComponent {
 		valoMenuToggleButton.addStyleName(ValoTheme.BUTTON_SMALL);
 		return valoMenuToggleButton;
 	}
-	
+
 	private Component buildMenuItems() {
-        CssLayout menuItemsLayout = new CssLayout();
-        menuItemsLayout.addStyleName("valo-menuitems");
-        
-//        for (AppViewType view : AppViewType.values()) {
-//        	Component menuItemComponent = new ValoMenuItemButton(view);
-//        	menuItemsLayout.addComponent(menuItemComponent);
-//		}
-//        
-        for (NavigatorViewType navigatorViewType : UIFragmentProvider.getMainMenu()) {
-        	Component menuItemComponent = new ValoMenuItemButton(navigatorViewType);;
-        	menuItemsLayout.addComponent(menuItemComponent);
+		CssLayout menuItemsLayout = new CssLayout();
+		menuItemsLayout.addStyleName("valo-menuitems");
+
+		for (NavigatorViewType navigatorViewType : UIFragmentProvider.getMainMenu()) {
+			Component menuItemComponent = new ValoMenuItemButton(navigatorViewType);
+			;
+			menuItemsLayout.addComponent(menuItemComponent);
 		}
-        return menuItemsLayout;
+		return menuItemsLayout;
 	}
-	
-	
+
 	public final class ValoMenuItemButton extends Button {
+		
+		private static final long serialVersionUID = 1L;
 
-        private static final String STYLE_SELECTED = "selected";
+		private static final String STYLE_SELECTED = "selected";
 
-        private final NavigatorViewType view;
+		private final NavigatorViewType view;
 
-        public ValoMenuItemButton(final NavigatorViewType view) {
-            this.view = view;
-            setPrimaryStyleName("valo-menu-item");
-            setIcon(view.getIcon());
-            setCaption(view.getViewName().substring(0, 1).toUpperCase()
-                    + view.getViewName().substring(1));
-            AppEventBus.register(this);
-            addClickListener(new ClickListener() {
-                @Override
-                public void buttonClick(final ClickEvent event) {
-                    UI.getCurrent().getNavigator()
-                            .navigateTo(view.getViewName());
-                }
-            });
+		public ValoMenuItemButton(final NavigatorViewType view) {
+			this.view = view;
+			setPrimaryStyleName("valo-menu-item");
+			setIcon(view.getIcon());
+			setCaption(view.getViewName().substring(0, 1).toUpperCase() + view.getViewName().substring(1));
+			AppEventBus.register(this);
+			addClickListener(event->UI.getCurrent().getNavigator().navigateTo(view.getViewName()));
 
-        }
+		}
 
-        @Subscribe
-        public void postViewChange(final  AppEvents.PostViewChangeEvent event) {
-            removeStyleName(STYLE_SELECTED);
-            if (event.getView().getId().equals(view.getId())) {
-                addStyleName(STYLE_SELECTED);
-            }
-        }
-    }
+		@Subscribe
+		public void postViewChange(final AppEvents.PostViewChangeEvent event) {
+			removeStyleName(STYLE_SELECTED);
+			if (event.getView().getId().equals(view.getId())) {
+				addStyleName(STYLE_SELECTED);
+			}
+		}
+	}
 
 }

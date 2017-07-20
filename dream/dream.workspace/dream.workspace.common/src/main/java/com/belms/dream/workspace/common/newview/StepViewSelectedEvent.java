@@ -1,14 +1,18 @@
+/***
+ * @author ngounphanny
+ * 
+ */
 package com.belms.dream.workspace.common.newview;
 
-public class StepViewSelectedEvent {
+public class StepViewSelectedEvent<T> {
 	
-	private final StepView stepView;
+	private final StepView<T> stepView;
 	
-	public StepViewSelectedEvent(final StepView stepView) {
+	public StepViewSelectedEvent(final StepView<T> stepView) {
 		this.stepView = stepView;
 	}
 
-	public StepView getStepView() {
+	public StepView<T> getStepView() {
 		return stepView;
 	}
 	

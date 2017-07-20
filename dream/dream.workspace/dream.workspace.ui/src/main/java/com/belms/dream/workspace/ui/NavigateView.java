@@ -1,3 +1,8 @@
+
+/***
+ * @author ngounphanny
+ * 
+ */
 package com.belms.dream.workspace.ui;
 
 import com.vaadin.navigator.View;

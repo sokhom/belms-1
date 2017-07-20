@@ -42,11 +42,16 @@ public class NewCustomerViewImpl extends AbstractNewView<Customer> implements Ne
 	}
 
 	@Override
-	protected List<StepView> getStepViews() {
-		List<StepView> stepViews = new ArrayList<>();
-		stepViews.add(new CustomerInfoStepView(customer));
-		stepViews.add(new CustomerDerailStepView(customer, customerInitDataWrapperDto));
-		stepViews.add(new AddressStepView(customer.getAddresses(), addressInitDataWrapperDto));
+	protected List<StepView<Customer>> getStepViews() {
+		List<StepView<Customer>> stepViews = new ArrayList<>();
+		stepViews.add(new CustomerInfoStepView());
+		stepViews.add(new CustomerDerailStepView(customerInitDataWrapperDto));
+		stepViews.add(new AddressStepView(addressInitDataWrapperDto));
+		
+		for (StepView<Customer> stepView : stepViews) {
+			stepView.loadData(customer);
+		}
+		
 		return stepViews;
 	}
 

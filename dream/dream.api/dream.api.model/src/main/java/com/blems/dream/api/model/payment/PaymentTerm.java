@@ -1,3 +1,7 @@
+/***
+ * @author ngounphanny
+ * 
+ */
 package com.blems.dream.api.model.payment;
 
 import com.blems.dream.api.model.DefaultModel;

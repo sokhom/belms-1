@@ -1,3 +1,7 @@
+/***
+ * @author ngounphanny
+ * 
+ */
 package com.belms.dream.workspace.ui.authentication;
 
 import com.vaadin.server.VaadinRequest;
