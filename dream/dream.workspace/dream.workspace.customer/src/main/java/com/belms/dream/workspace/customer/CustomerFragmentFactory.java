@@ -13,6 +13,7 @@ import com.vaadin.ui.Component;
 
 public class CustomerFragmentFactory implements UIFragmentFactory {
 
+	private ViewManaged  viewManaged=null;
 	@Override
 	public UIFragmentInfo getUIFagmentInfo() {
 		UIFragmentInfo fragmentInfo = new UIFragmentInfo();
@@ -22,8 +23,9 @@ public class CustomerFragmentFactory implements UIFragmentFactory {
 		fragmentInfo.setViewLevel(VIEW_LEVEL.LEVEL1);
 		fragmentInfo.setNavigateName("customer");
 		fragmentInfo.setAccessCode("100-001");
-		fragmentInfo.setDisplaySeq(1);
-		fragmentInfo.setNavigate(false);
+		fragmentInfo.setDisplaySeq(3);
+		fragmentInfo.setNavigate(true);
+		fragmentInfo.setSelfManaged(true);
 		return fragmentInfo;
 	}
 
@@ -32,6 +34,16 @@ public class CustomerFragmentFactory implements UIFragmentFactory {
 		
 		System.out.println("create view");
 		return new CustomerViewImpl(eventBusProvider);
+	}
+	
+	
+
+	@Override
+	public void initialSelfManaged(EventBusProvider eventBusProvider) {
+		if(viewManaged==null) {
+			System.out.println("Customer selft managed is activated");
+			viewManaged = new ViewManaged(eventBusProvider);
+		}
 	}
 
 

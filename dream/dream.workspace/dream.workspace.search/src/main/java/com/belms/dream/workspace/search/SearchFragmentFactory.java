@@ -39,4 +39,9 @@ public class SearchFragmentFactory implements UIFragmentFactory {
 		return searchViewImpl;
 	}
 
+	@Override
+	public void initialSelfManaged(EventBusProvider eventBusProvider) {
+
+	}
+
 }

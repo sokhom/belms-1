@@ -18,6 +18,7 @@ import com.belms.dream.api.view.bridge.uifragments.UIFragmentInfo;
 import com.belms.dream.api.view.bridge.uifragments.UIFragmentInfo.VIEW_LEVEL;
 import com.belms.dream.api.view.event.EventBusProvider;
 import com.belms.dream.workspace.ui.NavigatorViewType;
+import com.belms.dream.workspace.ui.event.AppEventBus;
 import com.vaadin.icons.VaadinIcons;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Label;
@@ -114,6 +115,12 @@ public class UIFragmentProvider implements Serializable{
 					VerticalLayout layout = new VerticalLayout(new Label("test"));
 					return layout;
 				}
+
+				@Override
+				public void initialSelfManaged(EventBusProvider eventBusProvider) {
+					
+					
+				}
 			});
 
 			ServiceLoader<UIFragmentFactory> loader = ServiceLoader.load(UIFragmentFactory.class);
@@ -121,6 +128,11 @@ public class UIFragmentProvider implements Serializable{
 			Iterator<UIFragmentFactory> uiFactorys = loader.iterator();
 			while (uiFactorys.hasNext()) {
 				UIFragmentFactory uiFragmentFactory = (UIFragmentFactory) uiFactorys.next();
+				
+				if(uiFragmentFactory.getUIFagmentInfo().isSelfManaged()) {
+					uiFragmentFactory.initialSelfManaged(AppEventBus.getEventBusProvider());
+				}
+				
 				add(uiFragmentFactory);
 			}
 		}

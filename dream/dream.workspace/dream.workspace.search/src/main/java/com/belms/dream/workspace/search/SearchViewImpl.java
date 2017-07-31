@@ -60,7 +60,7 @@ public class SearchViewImpl extends Panel implements SearchView {
 		newMenuItem.addItem("Transfer Order", selectedItem->{});
 		newMenuItem.addSeparator();
 		newMenuItem.addItem("New Customer", selectedItem->{
-			eventBusProvider.post(new OpenViewEvent(OPEN_AS.SUB_WINDOW, "customer" ));
+			eventBusProvider.post(new OpenViewEvent(OPEN_AS.SUB_WINDOW, "new_customer" ));
 		});
 		newMenuItem.addSeparator();
 		newMenuItem.addItem("Picking", selectedItem->{});

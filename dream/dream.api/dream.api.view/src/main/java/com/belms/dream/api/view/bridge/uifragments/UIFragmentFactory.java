@@ -10,4 +10,5 @@ import com.vaadin.ui.Component;
 public interface UIFragmentFactory {
 	UIFragmentInfo getUIFagmentInfo();
 	Component getFragment(EventBusProvider eventBusProvider);
+	void initialSelfManaged(EventBusProvider eventBusProvider);
 }
