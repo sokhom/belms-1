@@ -3,10 +3,13 @@ package com.belms.dream.workspace.search;
 import com.belms.dream.api.view.event.EventBusProvider;
 import com.belms.dream.api.view.event.OpenViewEvent;
 import com.belms.dream.api.view.event.OpenViewEvent.OPEN_AS;
+import com.blems.dream.api.model.ui.FilterItemList;
 import com.vaadin.event.ShortcutAction.KeyCode;
+import com.vaadin.data.provider.CallbackDataProvider;
 import com.vaadin.event.ShortcutListener;
 import com.vaadin.icons.VaadinIcons;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.Grid;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.MenuBar;
 import com.vaadin.ui.MenuBar.MenuItem;
@@ -14,6 +17,7 @@ import com.vaadin.ui.Panel;
 import com.vaadin.ui.TabSheet;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.Grid.SelectionMode;
 import com.vaadin.ui.themes.ValoTheme;
 
 public class SearchViewImpl extends Panel implements SearchView {
@@ -45,8 +49,6 @@ public class SearchViewImpl extends Panel implements SearchView {
 		
 		final HorizontalLayout layout = new HorizontalLayout();
 		root.addComponent(layout);
-		layout.setWidth(100, Unit.PERCENTAGE);
-		layout.setHeight(100,Unit.PIXELS);
 		layout.setWidth(100, Unit.PERCENTAGE);
 		
 		final MenuBar menuBar = new MenuBar();
@@ -114,7 +116,28 @@ public class SearchViewImpl extends Panel implements SearchView {
 	private void buildGrid(VerticalLayout root) {
 		final VerticalLayout layout = new VerticalLayout();
 		root.addComponent(layout);
-		root.setExpandRatio(layout, 1);
+		//root.setExpandRatio(layout, 1);
+		layout.setSizeFull();
+		layout.setMargin(false);
+		layout.setSpacing(false);
+		
+		final Grid<FilterItemList> resultListGrid = new Grid<>();
+		layout.addComponent(resultListGrid);
+		resultListGrid.setSizeFull();
+		layout.setExpandRatio(resultListGrid, 1);
+		
+//		searchListDataProvider = new CallbackDataProvider<>(query -> this.itemList.stream(), query -> this.itemList.size());
+//		itemListGrid.setDataProvider(searchListDataProvider);
+		resultListGrid.setSelectionMode(SelectionMode.SINGLE);
+		resultListGrid.addColumn(FilterItemList::getName).setMaximumWidth(300).setMinimumWidth(100).setCaption("Num");
+		resultListGrid.addColumn(FilterItemList::getDescription).setCaption("Description");
+		resultListGrid.addSelectionListener(event -> {
+			if (event.getFirstSelectedItem().isPresent()) {
+				//this.showSlectedItemListener.itemSelected(event.getFirstSelectedItem().get());
+			}
+
+		});
+		
 		
 	}
 	

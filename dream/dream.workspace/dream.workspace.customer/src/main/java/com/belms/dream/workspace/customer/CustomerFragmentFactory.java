@@ -36,7 +36,6 @@ public class CustomerFragmentFactory implements UIFragmentFactory {
 		return new CustomerViewImpl(eventBusProvider);
 	}
 	
-	
 
 	@Override
 	public void initialSelfManaged(EventBusProvider eventBusProvider) {

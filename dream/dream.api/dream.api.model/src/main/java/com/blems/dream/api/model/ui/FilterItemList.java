@@ -9,5 +9,6 @@ public interface FilterItemList {
 	int getId();
 	String getDescription();
 	String getName();
+	String getObjectName();
 
 }

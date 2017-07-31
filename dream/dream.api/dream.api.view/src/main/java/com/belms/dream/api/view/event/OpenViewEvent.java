@@ -7,7 +7,12 @@ public class OpenViewEvent {
 	public enum OPEN_AS { NORMAL , TAB, SUB_WINDOW  }
 	private OPEN_AS as;
 	private String viewId;
+	private int id;
 	private Component parent;
+	public OpenViewEvent(OPEN_AS as, String viewId, Component parent, int id ) {
+		this(as, viewId,parent);
+		this.id= id;
+	}
 	
 	public OpenViewEvent(OPEN_AS as, String viewId, Component parent ) {
 		this(as, viewId);
@@ -19,11 +24,9 @@ public class OpenViewEvent {
 		this.viewId = viewId;
 	}
 
-
 	public OPEN_AS getAs() {
 		return as;
 	}
-
 
 	public String getViewId() {
 		return viewId;
@@ -32,8 +35,9 @@ public class OpenViewEvent {
 	public Component getParent() {
 		return parent;
 	}
-	
-	
-	
+
+	public int getId() {
+		return id;
+	}
 	
 }
