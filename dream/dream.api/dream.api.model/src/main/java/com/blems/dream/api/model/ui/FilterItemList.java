@@ -10,5 +10,6 @@ public interface FilterItemList {
 	String getDescription();
 	String getName();
 	String getObjectName();
+	String getObjectIndentifier();
 
 }

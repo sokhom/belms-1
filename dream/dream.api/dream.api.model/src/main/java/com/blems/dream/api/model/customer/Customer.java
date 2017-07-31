@@ -20,7 +20,7 @@ public class Customer extends DefaultModel implements FilterItemList  {
 	
 	private static final long serialVersionUID = 1L;
 	
-	public final static String OBJECT_NAME = "customer";
+	public final static String OBJECT_NAME = "Customer";
 	
 	
 	private Account account;
@@ -157,6 +157,10 @@ public class Customer extends DefaultModel implements FilterItemList  {
 	@Override
 	public String getObjectName() {
 		return OBJECT_NAME;
+	}
+	@Override
+	public String getObjectIndentifier() {
+		return "customer";
 	}
 	
 	

@@ -1,15 +1,20 @@
 package com.belms.dream.workspace.search;
 
+import java.util.List;
+
 import com.belms.dream.api.view.event.EventBusProvider;
 import com.belms.dream.api.view.event.OpenViewEvent;
 import com.belms.dream.api.view.event.OpenViewEvent.OPEN_AS;
 import com.blems.dream.api.model.ui.FilterItemList;
-import com.vaadin.event.ShortcutAction.KeyCode;
 import com.vaadin.data.provider.CallbackDataProvider;
+import com.vaadin.data.provider.DataProvider;
+import com.vaadin.event.ShortcutAction.KeyCode;
 import com.vaadin.event.ShortcutListener;
 import com.vaadin.icons.VaadinIcons;
+import com.vaadin.shared.ui.grid.ColumnResizeMode;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Grid;
+import com.vaadin.ui.Grid.SelectionMode;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.MenuBar;
 import com.vaadin.ui.MenuBar.MenuItem;
@@ -17,23 +22,29 @@ import com.vaadin.ui.Panel;
 import com.vaadin.ui.TabSheet;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
-import com.vaadin.ui.Grid.SelectionMode;
 import com.vaadin.ui.themes.ValoTheme;
 
 public class SearchViewImpl extends Panel implements SearchView {
 	private static final long serialVersionUID = 1L;
 	private final TabSheet tabsheet = new TabSheet();
 	private final EventBusProvider eventBusProvider;
+	private OpenViewListener openViewListener;
+
+	private List<FilterItemList> filterItemLists ;
+	private DataProvider<FilterItemList, String> searchListDataProvider;
 
 	public SearchViewImpl(final EventBusProvider eventBusProvider) {
 		this.eventBusProvider = eventBusProvider;
-		new SearchViewPresenter(this);
+		SearchViewPresenter presenter= new SearchViewPresenter(this);
+		openViewListener = presenter;
 	}
 
 	@Override
 	public void initView() {
 		eventBusProvider.register(this);
+		setSizeFull();
 		setContent(tabsheet );
+		tabsheet.setSizeFull();
 		final VerticalLayout mainViewArea = new VerticalLayout();
 		mainViewArea.setCaption("Main");
 		tabsheet.addComponent(mainViewArea);
@@ -116,7 +127,7 @@ public class SearchViewImpl extends Panel implements SearchView {
 	private void buildGrid(VerticalLayout root) {
 		final VerticalLayout layout = new VerticalLayout();
 		root.addComponent(layout);
-		//root.setExpandRatio(layout, 1);
+		root.setExpandRatio(layout, 1);
 		layout.setSizeFull();
 		layout.setMargin(false);
 		layout.setSpacing(false);
@@ -126,11 +137,11 @@ public class SearchViewImpl extends Panel implements SearchView {
 		resultListGrid.setSizeFull();
 		layout.setExpandRatio(resultListGrid, 1);
 		
-//		searchListDataProvider = new CallbackDataProvider<>(query -> this.itemList.stream(), query -> this.itemList.size());
-//		itemListGrid.setDataProvider(searchListDataProvider);
+		searchListDataProvider = new CallbackDataProvider<>(query -> this.filterItemLists.stream(), query -> this.filterItemLists.size());
+		resultListGrid.setDataProvider(searchListDataProvider);
 		resultListGrid.setSelectionMode(SelectionMode.SINGLE);
-		resultListGrid.addColumn(FilterItemList::getName).setMaximumWidth(300).setMinimumWidth(100).setCaption("Num");
-		resultListGrid.addColumn(FilterItemList::getDescription).setCaption("Description");
+		resultListGrid.addColumn(FilterItemList::getName).setMaximumWidth(200).setMinimumWidth(100).setCaption("Num").setWidth(300);
+		resultListGrid.addColumn(FilterItemList::getDescription).setCaption("Description").setExpandRatio(1);
 		resultListGrid.addSelectionListener(event -> {
 			if (event.getFirstSelectedItem().isPresent()) {
 				//this.showSlectedItemListener.itemSelected(event.getFirstSelectedItem().get());
@@ -138,6 +149,26 @@ public class SearchViewImpl extends Panel implements SearchView {
 
 		});
 		
+		
+		resultListGrid.addShortcutListener(new ShortcutListener("Enter", KeyCode.ENTER, null ) {
+			
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void handleAction(Object sender, Object target) {
+				openViewListener.open(resultListGrid.asSingleSelect().getValue());
+			}
+		});
+		
+		
+		resultListGrid.addColumn(FilterItemList::getObjectName).setCaption("Object").setWidth(200).setMaximumWidth(300);
+		resultListGrid.setColumnResizeMode(ColumnResizeMode.ANIMATED);
+		
+	}
+
+	@Override
+	public void setResultList(List<FilterItemList> filterItemLists) {
+		this.filterItemLists  = filterItemLists;
 		
 	}
 	

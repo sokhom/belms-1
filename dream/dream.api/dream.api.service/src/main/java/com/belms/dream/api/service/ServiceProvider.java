@@ -32,6 +32,11 @@ public class ServiceProvider {
 		}
 	}
 
+	
+	public static Service<?> getService(String serviceId){
+		return get(serviceId).getService();
+	}
+	
 	public static ServiceFactory get(String serviceId) {
 		if (serviceProvider == null) {
 			serviceProvider = new ServiceProvider();
