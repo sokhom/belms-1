@@ -138,6 +138,7 @@ public class AppMenu extends CustomComponent {
 				addStyleName(STYLE_SELECTED);
 			}
 		}
+		
 	}
 
 }

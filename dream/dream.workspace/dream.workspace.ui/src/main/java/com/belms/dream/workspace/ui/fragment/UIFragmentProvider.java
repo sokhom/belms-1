@@ -6,6 +6,7 @@ package com.belms.dream.workspace.ui.fragment;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -62,7 +63,20 @@ public class UIFragmentProvider implements Serializable{
 					navigatorViewTyes.put(navigatorViewType.getViewName(), navigatorViewType);
 				}
 			}
+			
+			navigatorViewTypes.sort(new Comparator<NavigatorViewType>() {
+
+				@Override
+				public int compare(NavigatorViewType a, NavigatorViewType b) {
+					
+					int comp =  a.getFragmentFactory().getUIFagmentInfo().getDisplaySeq() - b.getFragmentFactory().getUIFagmentInfo().getDisplaySeq();
+					return comp>0? 1: comp<0 ? -1: 0; 
+				}
+			});
 		}
+		
+		
+		
 		return navigatorViewTypes;
 	}
 

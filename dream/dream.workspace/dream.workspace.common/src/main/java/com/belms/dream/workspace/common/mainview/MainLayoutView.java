@@ -29,6 +29,4 @@ public interface MainLayoutView<T extends FilterItemList, E extends DefaultModel
 	
 	void addNew(T t);
 	
-	
-	
 }

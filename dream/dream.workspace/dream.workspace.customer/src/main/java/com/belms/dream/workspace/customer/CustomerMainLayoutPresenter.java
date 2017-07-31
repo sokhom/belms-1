@@ -26,11 +26,8 @@ public class CustomerMainLayoutPresenter implements FilterListener, ShowSlectedI
 		ServiceFactory factory = ServiceProvider.get(CustomerService.ID);
 		customerService = (CustomerService) factory.getService();
 		factory = ServiceProvider.get(CustomerService.ID);
-		
 		this.layoutView = layoutView;
-		
 		factory = ServiceProvider.get(AddressService.ID);
-		
 		addressService = (AddressService) factory.getService();
 		initData();
 		this.layoutView.initView();
