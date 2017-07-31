@@ -1,20 +1,22 @@
 package com.belms.dream.api.view.event;
 
+import com.blems.dream.api.model.ui.FilterItemList;
 import com.vaadin.ui.Component;
+import com.vaadin.ui.TabSheet;
 
 public class OpenViewEvent {
 	
 	public enum OPEN_AS { NORMAL , TAB, SUB_WINDOW  }
 	private OPEN_AS as;
 	private String viewId;
-	private int id;
-	private Component parent;
-	public OpenViewEvent(OPEN_AS as, String viewId, Component parent, int id ) {
+	private FilterItemList  filterItemList;
+	private TabSheet parent;
+	public OpenViewEvent(OPEN_AS as, String viewId, TabSheet parent, FilterItemList  filterItemList) {
 		this(as, viewId,parent);
-		this.id= id;
+		this.filterItemList= filterItemList;
 	}
 	
-	public OpenViewEvent(OPEN_AS as, String viewId, Component parent ) {
+	public OpenViewEvent(OPEN_AS as, String viewId, TabSheet parent ) {
 		this(as, viewId);
 		this.parent = parent;
 	}
@@ -32,12 +34,14 @@ public class OpenViewEvent {
 		return viewId;
 	}
 
-	public Component getParent() {
+	public TabSheet getParent() {
 		return parent;
 	}
 
-	public int getId() {
-		return id;
+	public FilterItemList getFilterItemList() {
+		return filterItemList;
 	}
+
+	
 	
 }

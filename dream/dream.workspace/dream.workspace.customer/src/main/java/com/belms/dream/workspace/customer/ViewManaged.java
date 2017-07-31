@@ -8,6 +8,8 @@ import com.belms.dream.api.view.event.EventBusProvider;
 import com.belms.dream.api.view.event.OpenViewEvent;
 import com.belms.dream.api.view.event.OpenViewEvent.OPEN_AS;
 import com.google.common.eventbus.Subscribe;
+import com.vaadin.ui.Panel;
+import com.vaadin.ui.TabSheet.Tab;
 import com.vaadin.ui.UI;
 
 public class ViewManaged {
@@ -28,8 +30,36 @@ public class ViewManaged {
 			factory = ServiceProvider.get(AddressService.ID);
 			AddressService addressService = (AddressService) factory.getService();
 			 UI.getCurrent().addWindow(new NewCustomerViewImpl(eventBusProvider, customerService.getInitData(), addressService.getInitData()));
+			 
+			 return;
+		}
+		
+		
+		if("view_customer".equals(event.getViewId()) && OPEN_AS.TAB == event.getAs() ) {
+			
+			
+			String id =String.format("customer_%d", event.getFilterItemList().getId());
+			
+			for (int i = 0; i < event.getParent().getComponentCount(); i++) {
+
+				Tab tab = event.getParent().getTab(i);
+				if(tab!=null && id.equals(tab.getId())) {
+					event.getParent().setSelectedTab(tab);
+					return;
+				}
+				
+			}
+			final Panel panel = new CustomerViewImpl(eventBusProvider);
+			panel.setCaption(String.format("Customer-%s", event.getFilterItemList().getName()));
+			event.getParent().addComponent(panel);
+			Tab tab = event.getParent().getTab(panel);
+			tab.setId(id);
+			tab.setClosable(true);
+			event.getParent().setSelectedTab(tab);
 		}
 	}
+	
+	
 	
 
 }
