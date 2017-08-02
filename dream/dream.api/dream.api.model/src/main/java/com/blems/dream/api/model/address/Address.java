@@ -9,6 +9,7 @@ import java.util.List;
 
 import com.blems.dream.api.model.BasedModel;
 import com.blems.dream.api.model.account.Account;
+import com.blems.dream.api.model.common.ObjectType;
 import com.blems.dream.api.model.contact.Contact;
 
 public class Address extends BasedModel {
@@ -21,12 +22,11 @@ public class Address extends BasedModel {
 	private String city;
 	private String address;
 	private String zip;
-	private AddressType type;
+	private ObjectType type;
 	private int locationGroupId;
 	private boolean defaultFlag;
 	private boolean residentialFlag;
 	private List<Contact> contacts;
-	
 	
 	public Account getAccount() {
 		return account;
@@ -70,10 +70,11 @@ public class Address extends BasedModel {
 	public void setZip(String zip) {
 		this.zip = zip;
 	}
-	public AddressType getType() {
+	
+	public ObjectType getType() {
 		return type;
 	}
-	public void setType(AddressType type) {
+	public void setType(ObjectType type) {
 		this.type = type;
 	}
 	public int getLocationGroupId() {

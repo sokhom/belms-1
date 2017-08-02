@@ -14,6 +14,8 @@
   	<module>dream.service.employee</module>
   	<module>dream.service.customer</module>
   	<module>dream.service.common</module>
+  	<module>dream.service.endpoint</module>
+  	<module>dream.service.test</module>
   </modules>
   <dependencyManagement>
   	<dependencies>
@@ -38,6 +40,16 @@
   			<version>0.0.1-SNAPSHOT</version>
   			<type>pom</type>
   		</dependency>
+  		<dependency>
+  			<groupId>com.belms</groupId>
+  			<artifactId>dream.repository.common</artifactId>
+  			<version>0.0.1-SNAPSHOT</version>
+  		</dependency>
+  		<dependency>
+  			<groupId>com.belms</groupId>
+  			<artifactId>dream.repository.customer</artifactId>
+  			<version>0.0.1-SNAPSHOT</version>
+  		</dependency>
   	</dependencies>
   </dependencyManagement>
   <dependencies>
@@ -51,8 +63,11 @@
   	</dependency>
   	<dependency>
   		<groupId>com.belms</groupId>
-  		<artifactId>dream.repository.customer</artifactId>
-  		<version>0.0.1-SNAPSHOT</version>
+  		<artifactId>dream.repository.common</artifactId>
+  	</dependency>
+  	<dependency>
+  		<groupId>com.belms</groupId>
+  		<artifactId>dream.repository.customer</artifactId>  		
   	</dependency>
   </dependencies>
 </project>

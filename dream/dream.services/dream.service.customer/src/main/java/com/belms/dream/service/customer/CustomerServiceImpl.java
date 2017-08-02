@@ -7,13 +7,20 @@ package com.belms.dream.service.customer;
 import java.util.List;
 
 import com.belms.dream.api.dto.customer.CustomerInitDataWrapperDto;
+import com.belms.dream.api.service.AbstractService;
 import com.belms.dream.api.service.customer.CustomerService;
 import com.belms.dream.repository.customer.CustomerRepo;
 import com.blems.dream.api.model.customer.Customer;
 
-public class CustomerServiceImpl implements CustomerService {
+public class CustomerServiceImpl extends AbstractService implements CustomerService {
 
-	private CustomerRepo customerRepo = new CustomerRepo();
+	
+	private final CustomerRepo customerRepo;
+	
+	
+	public CustomerServiceImpl() {
+		customerRepo = new CustomerRepo(getSqlSession()); 
+	}
 	
 	public Customer add(Customer t) {
 		return customerRepo.add(t);

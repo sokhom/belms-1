@@ -8,7 +8,11 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.ibatis.session.SqlSession;
+
 import com.belms.dream.api.dto.customer.CustomerInitDataWrapperDto;
+import com.belms.dream.repository.common.AbstractRepo;
+import com.belms.dream.repository.customer.mapper.CustomerMapper;
 import com.blems.dream.api.model.account.Account;
 import com.blems.dream.api.model.address.Address;
 import com.blems.dream.api.model.address.Country;
@@ -20,9 +24,11 @@ import com.blems.dream.api.model.customer.CustomerStatus;
 import com.blems.dream.api.model.payment.PaymentTerm;
 import com.blems.dream.api.model.ship.ShipTerm;
 
-import dream.repository.common.AbstractRepo;
-
 public class CustomerRepo extends AbstractRepo<Customer> {
+
+	public CustomerRepo(SqlSession session) {
+		super(session);
+	}
 
 	List<Customer> customerList;
 
@@ -34,14 +40,17 @@ public class CustomerRepo extends AbstractRepo<Customer> {
 
 	
 	public Customer add(Customer t) {
+		
+	
 		customerList.add(t);
 		t.setId(customerList.size());
 		return t;
 	}
 	
 	public List<Customer> getAll() {
-		initCustomerList();
-		return customerList;
+		//initCustomerList();
+		CustomerMapper customerMapper =  getSqlSession().getMapper(CustomerMapper.class);
+		return customerMapper.selectAll();
 	}
 
 	public CustomerInitDataWrapperDto getInitData() {

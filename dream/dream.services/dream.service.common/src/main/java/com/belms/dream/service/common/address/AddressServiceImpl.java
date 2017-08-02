@@ -7,15 +7,19 @@ package com.belms.dream.service.common.address;
 import java.util.List;
 
 import com.belms.dream.api.dto.address.AddressInitDataWrapperDto;
+import com.belms.dream.api.service.AbstractService;
 import com.belms.dream.api.service.address.AddressService;
+import com.belms.dream.repository.common.address.AddressRepo;
+import com.belms.dream.repository.common.address.AddressRepoImpl;
 import com.blems.dream.api.model.address.Address;
 
-import dream.repository.common.address.AddressRepo;
-import dream.repository.common.address.AddressRepoImpl;
-
-public class AddressServiceImpl implements AddressService {
+public class AddressServiceImpl extends AbstractService implements AddressService {
 	
-	private final AddressRepo  addressRepo = new AddressRepoImpl();
+	private final AddressRepo  addressRepo ;
+	
+	public AddressServiceImpl() {
+		addressRepo = new AddressRepoImpl(getSqlSession());
+	}
 
 	public Address add(Address t) {
 		// TODO Auto-generated method stub

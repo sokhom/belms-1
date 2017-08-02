@@ -5,13 +5,14 @@
 package com.blems.dream.api.model.payment;
 
 import com.blems.dream.api.model.DefaultModel;
+import com.blems.dream.api.model.common.ObjectType;
 
 public class PaymentTerm extends DefaultModel{
 
 	private static final long serialVersionUID = 1L;
 	
 	
-	private PaymentTermType type;
+	private ObjectType type;
 	private boolean defaultTerm;
 	
 	private int netDays;
@@ -29,11 +30,12 @@ public class PaymentTerm extends DefaultModel{
 		setName(name);
 	}
 	
-	public PaymentTermType getType() {
+	
+	public ObjectType getType() {
 		return type;
 	}
 
-	public void setType(PaymentTermType type) {
+	public void setType(ObjectType type) {
 		this.type = type;
 	}
 

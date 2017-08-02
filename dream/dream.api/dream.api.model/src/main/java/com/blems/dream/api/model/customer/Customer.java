@@ -6,16 +6,20 @@ package com.blems.dream.api.model.customer;
 
 import java.util.List;
 
+import org.apache.ibatis.type.Alias;
+
 import com.blems.dream.api.model.DefaultModel;
 import com.blems.dream.api.model.account.Account;
 import com.blems.dream.api.model.address.Address;
 import com.blems.dream.api.model.carrier.Carrier;
 import com.blems.dream.api.model.carrier.CarrierService;
+import com.blems.dream.api.model.common.ObjectStatus;
 import com.blems.dream.api.model.currency.Currency;
 import com.blems.dream.api.model.payment.PaymentTerm;
 import com.blems.dream.api.model.ship.ShipTerm;
 import com.blems.dream.api.model.ui.FilterItemList;
 
+@Alias("Customer")
 public class Customer extends DefaultModel implements FilterItemList  {
 	
 	private static final long serialVersionUID = 1L;
@@ -30,7 +34,7 @@ public class Customer extends DefaultModel implements FilterItemList  {
 	private PaymentTerm defultPaymentTerm;
 	private int defaultSalePersonId;
 	private ShipTerm defaultShipTerm;
-	private CustomerStatus status;
+	private ObjectStatus status;
 	private String url;
 	private String note;
 	private double creditLimit;
@@ -83,10 +87,10 @@ public class Customer extends DefaultModel implements FilterItemList  {
 		this.defaultShipTerm = defaultShipTerm;
 	}
 	
-	public CustomerStatus getStatus() {
+	public ObjectStatus getStatus() {
 		return status;
 	}
-	public void setStatus(CustomerStatus status) {
+	public void setStatus(ObjectStatus status) {
 		this.status = status;
 	}
 	public String getUrl() {

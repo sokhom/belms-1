@@ -2,21 +2,26 @@
  * @author ngounphanny
  * 
  */
-package dream.repository.common.address;
+package com.belms.dream.repository.common.address;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.ibatis.session.SqlSession;
+
 import com.belms.dream.api.dto.address.AddressInitDataWrapperDto;
+import com.belms.dream.repository.common.AbstractRepo;
 import com.blems.dream.api.model.address.Address;
 import com.blems.dream.api.model.address.AddressType;
 import com.blems.dream.api.model.address.Country;
 import com.blems.dream.api.model.address.State;
 import com.blems.dream.api.model.contact.ContactType;
 
-import dream.repository.common.AbstractRepo;
-
 public class AddressRepoImpl extends AbstractRepo<Address> implements AddressRepo {
+
+	public AddressRepoImpl(SqlSession session) {
+		super(session);
+	}
 
 	public List<Address> getAddressesByAccount(int accountId) {
 		

@@ -11,9 +11,9 @@ import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import com.belms.dream.repositories.employee.persistence.EmployeeMapper;
 
 public class EmployeeRepo {
-	private String resource = "D:/dev/Java/config/repositories/employee/persistence/configuration.xml";
 	private SqlSessionFactory sessionFactory;
 
+	private String resource = "D:/dev/Java/config/repositories/employee/persistence/configuration.xml";
 	public SqlSessionFactory getSessionFactory() {
 
 		

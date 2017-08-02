@@ -2,7 +2,7 @@
  * @author ngounphanny
  * 
  */
-package dream.repository.common;
+package com.belms.dream.repository.common;
 
 import java.util.List;
 
