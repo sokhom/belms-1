@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+		"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="com.belms.dream.repository.customer.mapper.CustomerMapper">
+	
+	<resultMap type="Customer" id="CustomerResult">
+		<id 	property="id" column="id"/>
+		<result property="name" column="name"/>
+		<result property="url" column="url"/>
+		<result property="note" column="note"/>
+		<result property="activeFlag" column="activeFlag"/>
+		<result property="dateCreated" column="dateCreated"/>
+		<result property="dateLastModified" column="dateLastModified"/>
+		<result property="lastChangedUserId" column="lastChangedUserId"/>
+		<result property="toBeEmailed" column="toBeEmailed"/>
+		<result property="toBePrinted" column="toBePrinted"/>
+		<association property="status" resultMap="com.belms.dream.repository.common.mapper.ObjectMapper.ObjectStatusResult"/>
+	</resultMap>
+
+	<select id="selectAll" resultMap="CustomerResult">
+		SELECT 
+			cust.id,
+			cust.activeFlag,
+			cust.name,
+			cust.url,
+			cust.note,
+			cust.creditLimit,
+			cust.toBeEmailed,
+			cust.toBePrinted,
+			cust.dateCreated,
+			cust.dateLastModified,
+			cust.lastChangedUserId,
+			ot.id statusId,
+			ot.name statusName
+		FROM customer cust
+			INNER JOIN object_status ot on cust.statusId=ot.id and ot.objectId=1
+	</select>
+	
+	
+	<insert id="insert" parameterType="Customer" useGeneratedKeys="true" keyProperty="id">
+  		insert into students(name,email,addr_id, phone)
+  		values(#{name},#{email},#{address.addrId},#{phone})
+  	</insert>
+	
+</mapper>

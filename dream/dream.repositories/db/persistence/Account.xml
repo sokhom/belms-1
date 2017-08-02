@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+		"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="com.belms.dream.repository.common.mapper.AccountMapper">
+	
+	<insert id="insert" parameterType="Account" useGeneratedKeys="true" keyProperty="id"  keyColumn="id">
+		select * from account(typeId)
+		values(10)
+        <selectKey keyProperty="id" resultType="int" order="AFTER">
+            SELECT LAST_INSERT_ID();
+        </selectKey>
+	</insert>
+	
+</mapper>

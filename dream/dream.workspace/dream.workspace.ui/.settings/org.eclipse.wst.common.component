@@ -26,10 +26,10 @@
         <dependent-module archiveName="dream.service.customer-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/dream.service.customer/dream.service.customer">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module archiveName="dream.repository.customer-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/dream.repository.customer/dream.repository.customer">
+        <dependent-module archiveName="dream.repository.common-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/dream.repository.common/dream.repository.common">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module archiveName="dream.repository.common-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/dream.repository.common/dream.repository.common">
+        <dependent-module archiveName="dream.repository.customer-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/dream.repository.customer/dream.repository.customer">
             <dependency-type>uses</dependency-type>
         </dependent-module>
         <dependent-module archiveName="dream.service.common-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/dream.service.common/dream.service.common">

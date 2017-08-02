@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+		"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="com.belms.dream.repository.common.mapper.ObjectMapper">
+	
+	<resultMap type="ObjectStatus" id="ObjectStatusResult">
+		<id 	property="id" column="statusId"/>
+		<result property="name" column="statusName"/>
+	</resultMap>
+	
+	<resultMap type="ObjectType" id="ObjectTypeResult">
+		<id 	property="id" column="id"/>
+		<result property="name" column="name"/>
+	</resultMap>
+	
+</mapper>
