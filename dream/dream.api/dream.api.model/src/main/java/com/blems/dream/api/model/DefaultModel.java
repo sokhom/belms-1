@@ -30,12 +30,18 @@ public abstract class DefaultModel extends BasedModel implements Serializable, C
 		this.activeFlag = activeFlag;
 	}
 	public Date getDateCreated() {
+		if(dateCreated==null) {
+			dateCreated = new Date();
+		}
 		return dateCreated;
 	}
 	public void setDateCreated(Date dateCreated) {
 		this.dateCreated = dateCreated;
 	}
 	public Date getDateLastModified() {
+		if(dateLastModified ==null) {
+			dateLastModified = new Date();
+		}
 		return dateLastModified;
 	}
 	public void setDateLastModified(Date dateLastModified) {

@@ -11,6 +11,12 @@ public class ObjectStatus extends BasedModel2 {
 	
 	private ObjectName objectName;
 
+	public ObjectStatus() {}
+	
+	public ObjectStatus(int id) {
+		setId(id);
+	}
+	
 	public ObjectName getObjectName() {
 		return objectName;
 	}

@@ -4,8 +4,11 @@
  */
 package com.blems.dream.api.model.carrier;
 
+import org.apache.ibatis.type.Alias;
+
 import com.blems.dream.api.model.BasedModel;
 
+@Alias("CarrierService")
 public class CarrierService extends BasedModel {
 	
 	private static final long serialVersionUID = 1L;

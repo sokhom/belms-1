@@ -12,12 +12,16 @@ import org.apache.ibatis.session.SqlSession;
 
 import com.belms.dream.api.dto.customer.CustomerInitDataWrapperDto;
 import com.belms.dream.repository.common.AbstractRepo;
+import com.belms.dream.repository.common.mapper.AccountMapper;
+import com.belms.dream.repository.common.mapper.AddressMapper;
+import com.belms.dream.repository.common.mapper.ContactMapper;
 import com.belms.dream.repository.customer.mapper.CustomerMapper;
 import com.blems.dream.api.model.account.Account;
 import com.blems.dream.api.model.address.Address;
 import com.blems.dream.api.model.address.Country;
 import com.blems.dream.api.model.carrier.Carrier;
 import com.blems.dream.api.model.carrier.CarrierService;
+import com.blems.dream.api.model.contact.Contact;
 import com.blems.dream.api.model.currency.Currency;
 import com.blems.dream.api.model.customer.Customer;
 import com.blems.dream.api.model.customer.CustomerStatus;
@@ -33,17 +37,42 @@ public class CustomerRepo extends AbstractRepo<Customer> {
 	List<Customer> customerList;
 
 	public Customer getById(int id) {
-		// Mock
-		initCustomerList();
-		return customerList.get(id - 1);
+		CustomerMapper customerMapper = getSqlSession().getMapper(CustomerMapper.class);
+		return customerMapper.selectCustomerById(id);
 	}
 
 	
 	public Customer add(Customer t) {
 		
-	
-		customerList.add(t);
-		t.setId(customerList.size());
+		try {
+			
+			AccountMapper accountMapper = getSqlSession().getMapper(AccountMapper.class);
+			Account account = new Account();
+			accountMapper.insert(account);
+			t.setAccount(account);
+			CustomerMapper customerMapper = getSqlSession().getMapper(CustomerMapper.class);
+			customerMapper.insert(t);
+			AddressMapper addressMapper = getSqlSession().getMapper(AddressMapper.class);
+			ContactMapper contactMapper = getSqlSession().getMapper(ContactMapper.class);
+			for (Address address : t.getAddresses()) {
+				address.setAccount(account);
+				addressMapper.insert(address);
+				
+				for (Contact contact: address.getContacts()) {
+					contact.setAccount(account);
+					contact.setAddress(address);
+					contactMapper.insert(contact);
+				}
+				
+			}
+			getSqlSession().commit();
+		}catch (Exception e) {
+			getSqlSession().rollback();
+			System.out.println(e);
+		}finally {
+			getSqlSession().close();
+		}
+		
 		return t;
 	}
 	

@@ -67,7 +67,7 @@ public class CustomerDetailView extends VerticalLayout implements EntryView<Cust
 		formLayout.addComponent(statusComboBox);
 		
 		final ComboBox<PaymentTerm> paymentTermComboBox = new ComboBox<PaymentTerm>("Default Payment Term");
-		binder.forField(paymentTermComboBox).withValidator(new RequiredValidator()).bind(Customer::getDefultPaymentTerm, Customer::setDefultPaymentTerm);
+		binder.forField(paymentTermComboBox).withValidator(new RequiredValidator()).bind(Customer::getDefaultPaymentTerm, Customer::setDefaultPaymentTerm);
 		paymentTermComboBox.setDataProvider(new CallbackDataProvider<PaymentTerm,String>(query->initDataWrapperDto.getPaymentTerms().parallelStream(),query->initDataWrapperDto.getPaymentTerms().size()));
 		formLayout.addComponent(paymentTermComboBox);
 		paymentTermComboBox.setRequiredIndicatorVisible(true);

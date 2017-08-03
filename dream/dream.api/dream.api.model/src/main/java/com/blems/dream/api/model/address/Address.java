@@ -7,11 +7,14 @@ package com.blems.dream.api.model.address;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.ibatis.type.Alias;
+
 import com.blems.dream.api.model.BasedModel;
 import com.blems.dream.api.model.account.Account;
 import com.blems.dream.api.model.common.ObjectType;
 import com.blems.dream.api.model.contact.Contact;
 
+@Alias("Address")
 public class Address extends BasedModel {
 
 	private static final long serialVersionUID = 1L;

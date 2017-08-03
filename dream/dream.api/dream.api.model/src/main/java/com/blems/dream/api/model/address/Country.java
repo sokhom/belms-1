@@ -4,8 +4,11 @@
  */
 package com.blems.dream.api.model.address;
 
+import org.apache.ibatis.type.Alias;
+
 import com.blems.dream.api.model.BasedModel;
 
+@Alias("Country")
 public class Country extends BasedModel {
 
 	/**

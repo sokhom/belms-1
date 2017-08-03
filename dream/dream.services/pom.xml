@@ -16,6 +16,7 @@
   	<module>dream.service.common</module>
   	<module>dream.service.endpoint</module>
   	<module>dream.service.test</module>
+  	<module>dream.service.po</module>
   </modules>
   <dependencyManagement>
   	<dependencies>

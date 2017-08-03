@@ -4,14 +4,17 @@
  */
 package com.blems.dream.api.model.ship;
 
+import org.apache.ibatis.type.Alias;
+
 import com.blems.dream.api.model.BasedModel;
 
+@Alias("ShipTerm")
 public class ShipTerm extends BasedModel{
 
 	private static final long serialVersionUID = 1L;
 	private String name;
 	private boolean activeFlag;
-	private boolean readOnly;
+	private boolean readOnlyFlag;
 	
 	public ShipTerm() {}
 	
@@ -32,11 +35,13 @@ public class ShipTerm extends BasedModel{
 	public void setActiveFlag(boolean activeFlag) {
 		this.activeFlag = activeFlag;
 	}
-	public boolean isReadOnly() {
-		return readOnly;
+
+	public boolean isReadOnlyFlag() {
+		return readOnlyFlag;
 	}
-	public void setReadOnly(boolean readOnly) {
-		this.readOnly = readOnly;
+
+	public void setReadOnlyFlag(boolean readOnlyFlag) {
+		this.readOnlyFlag = readOnlyFlag;
 	}
 
 	@Override

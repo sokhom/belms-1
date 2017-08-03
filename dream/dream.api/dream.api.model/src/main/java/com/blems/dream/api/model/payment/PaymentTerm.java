@@ -4,9 +4,12 @@
  */
 package com.blems.dream.api.model.payment;
 
+import org.apache.ibatis.type.Alias;
+
 import com.blems.dream.api.model.DefaultModel;
 import com.blems.dream.api.model.common.ObjectType;
 
+@Alias("PaymentTerm")
 public class PaymentTerm extends DefaultModel{
 
 	private static final long serialVersionUID = 1L;

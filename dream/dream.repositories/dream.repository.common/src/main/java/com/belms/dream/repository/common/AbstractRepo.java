@@ -6,14 +6,22 @@ package com.belms.dream.repository.common;
 
 import org.apache.ibatis.session.SqlSession;
 
-public abstract class AbstractRepo<T> implements Repo<T> {
+import com.belms.dream.repository.common.mapper.ObjectMapper;
+import com.blems.dream.api.model.BasedModel;
+
+public abstract class AbstractRepo<T extends BasedModel> implements Repo<T> {
 	
 	private final SqlSession session;
+	private  ObjectMapper<T> objectMapper;
 	
 	public AbstractRepo(SqlSession session) {
 		this.session = session;
 	}
 	
+	public AbstractRepo(SqlSession session,ObjectMapper<T> objectMapper) {
+		this(session);
+		this.objectMapper = objectMapper;
+	}
 	
 	public T getById(int id) {
 		
@@ -21,8 +29,16 @@ public abstract class AbstractRepo<T> implements Repo<T> {
 	}
 	
 	public T add(T t) {
-		// TODO Auto-generated method stub
-		return null;
+		try {
+			getObjectMapper().insert(t);
+			getSqlSession().commit();
+		}catch (Exception e) {
+			System.err.println(e);
+			getSqlSession().rollback();
+		}finally {
+			getSqlSession().close();
+		}
+		return t;
 	}
 
 	public void remove(T t) {
@@ -55,5 +71,15 @@ public abstract class AbstractRepo<T> implements Repo<T> {
 	}
 	
 
+	private ObjectMapper<T> getObjectMapper(){
+		if(this.objectMapper == null) {
+			throw new RuntimeException("No object mapper provided");
+		}
+		return this.objectMapper;
+	}
+	
+	protected void setObjectMapper( ObjectMapper<T> objectMapper) {
+		this.objectMapper = objectMapper;
+	}
 
 }

@@ -28,10 +28,9 @@ public class Customer extends DefaultModel implements FilterItemList  {
 	
 	
 	private Account account;
-	private int carrierServiceId;
 	private CarrierService carrierService;
 	private Carrier defaultCarrier;
-	private PaymentTerm defultPaymentTerm;
+	private PaymentTerm defaultPaymentTerm;
 	private int defaultSalePersonId;
 	private ShipTerm defaultShipTerm;
 	private ObjectStatus status;
@@ -50,12 +49,6 @@ public class Customer extends DefaultModel implements FilterItemList  {
 		this.account = account;
 	}
 
-	public int getCarrierServiceId() {
-		return carrierServiceId;
-	}
-	public void setCarrierServiceId(int carrierServiceId) {
-		this.carrierServiceId = carrierServiceId;
-	}
 	public CarrierService getCarrierService() {
 		return carrierService;
 	}
@@ -68,11 +61,11 @@ public class Customer extends DefaultModel implements FilterItemList  {
 	public void setDefaultCarrier(Carrier defaultCarrier) {
 		this.defaultCarrier = defaultCarrier;
 	}
-	public PaymentTerm getDefultPaymentTerm() {
-		return defultPaymentTerm;
+	public PaymentTerm getDefaultPaymentTerm() {
+		return defaultPaymentTerm;
 	}
-	public void setDefultPaymentTerm(PaymentTerm defultPaymentTerm) {
-		this.defultPaymentTerm = defultPaymentTerm;
+	public void setDefaultPaymentTerm(PaymentTerm defaultPaymentTerm) {
+		this.defaultPaymentTerm = defaultPaymentTerm;
 	}
 	public int getDefaultSalePersonId() {
 		return defaultSalePersonId;
