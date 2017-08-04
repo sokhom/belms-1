@@ -2,11 +2,11 @@
  * @author ngounphanny
  * 
  */
-package com.belms.dream.repository.common;
+package com.blems.dream.api.model;
 
 import java.util.List;
 
-public interface Repo<T> {
+public interface Repo<T extends BasedModel> {
 	T add(T t);
 	void remove(T t);
 	T edit(T t);

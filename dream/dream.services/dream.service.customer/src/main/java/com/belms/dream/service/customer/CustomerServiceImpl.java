@@ -4,15 +4,14 @@
  */
 package com.belms.dream.service.customer;
 
-import java.util.List;
-
 import com.belms.dream.api.dto.customer.CustomerInitDataWrapperDto;
 import com.belms.dream.api.service.AbstractService;
 import com.belms.dream.api.service.customer.CustomerService;
 import com.belms.dream.repository.customer.CustomerRepo;
+import com.blems.dream.api.model.Repo;
 import com.blems.dream.api.model.customer.Customer;
 
-public class CustomerServiceImpl extends AbstractService implements CustomerService {
+public class CustomerServiceImpl extends AbstractService<Customer> implements CustomerService {
 
 	
 	private final CustomerRepo customerRepo;
@@ -22,27 +21,32 @@ public class CustomerServiceImpl extends AbstractService implements CustomerServ
 		customerRepo = new CustomerRepo(getSqlSession()); 
 	}
 	
-	public Customer add(Customer t) {
-		return customerRepo.add(t);
-	}
-
-	public void remove(Customer t) {
-		
-	}
-	public List<Customer> getAll() {
-		return customerRepo.getAll();
-	}
-
-	public Customer getById(int id) {
-		return customerRepo.getById(id);
-	}
-
-	public void edit(Customer t) {
-		
-	}
+	
 
 	public CustomerInitDataWrapperDto getInitData() {
 		return customerRepo.getInitData();
 	}
+
+
+
+	@Override
+	protected Repo<Customer> getRepo() {
+		return customerRepo;
+	}
+
+
+
+	public void process(Customer object) {
+		
+	}
+
+
+
+	public <E> void process(E object) {
+		
+		
+	}
+
+
 
 }

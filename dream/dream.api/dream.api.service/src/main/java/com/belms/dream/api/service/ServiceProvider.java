@@ -13,6 +13,7 @@ import java.util.ServiceLoader;
 import org.apache.ibatis.session.SqlSession;
 
 import com.belms.dream.api.service.ServiceFactory;
+import com.blems.dream.api.model.BasedModel;
 import com.blems.dream.api.repo.SqlSessionFactoryMngt;
 
 public class ServiceProvider {
@@ -57,8 +58,13 @@ public class ServiceProvider {
 		return serviceFactories;
 	}
 
-	public static Service<?> getService(String serviceId){
+	
+	public static ProcessingService getProcessingService(String serviceId) {
 		return get(serviceId).getService();
+	}
+	
+	public static <E,T extends BasedModel>LookupService<E,T> getLookupService(String serviceId){
+		return get(serviceId).getLookupService();
 	}
 	
 	public static ServiceFactory get(String serviceId) {

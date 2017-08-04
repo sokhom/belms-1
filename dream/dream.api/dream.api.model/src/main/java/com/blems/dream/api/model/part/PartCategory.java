@@ -1,14 +1,10 @@
-package com.blems.dream.api.model.location;
+package com.blems.dream.api.model.part;
 
-import org.apache.ibatis.type.Alias;
+import com.blems.dream.api.model.BasedModel2;
 
-import com.blems.dream.api.model.DefaultModel;
-
-@Alias("LocationGroup")
-public class LocationGroup extends DefaultModel {
-
+public class PartCategory extends BasedModel2 {
 	private static final long serialVersionUID = 1L;
-	
+
 	private String description;
 
 	public String getDescription() {
@@ -18,5 +14,5 @@ public class LocationGroup extends DefaultModel {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	
+
 }

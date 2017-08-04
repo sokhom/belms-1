@@ -3,8 +3,8 @@ package com.belms.dream.service.common.setup;
 import java.util.List;
 
 import com.belms.dream.api.service.CrudOper;
-import com.belms.dream.repository.common.Repo;
 import com.blems.dream.api.model.BasedModel;
+import com.blems.dream.api.model.Repo;
 
 public class CrudOperImpl<T extends BasedModel> implements CrudOper<T>  {
 

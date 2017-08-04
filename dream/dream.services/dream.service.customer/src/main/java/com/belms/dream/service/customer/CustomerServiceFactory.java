@@ -4,30 +4,29 @@
  */
 package com.belms.dream.service.customer;
 
-import com.belms.dream.api.service.Service;
+import com.belms.dream.api.service.LookupService;
+import com.belms.dream.api.service.ProcessingService;
 import com.belms.dream.api.service.ServiceFactory;
-import com.belms.dream.api.service.customer.CustomerService;
-import com.blems.dream.api.model.customer.Customer;
+import com.blems.dream.api.model.BasedModel;
 
 public class CustomerServiceFactory implements ServiceFactory{
 	
-	Service<Customer> service;
-	
-	public String getId() {
+	public static final String ID = "CUSTOMER_PROCESSING_SERVICE";
 
-		return CustomerService.ID;
+	public String getId() {
+		return ID;
 	}
-	public Service<Customer> getService() {
-		
-		if(service == null){
-			service = new CustomerServiceImpl();
-			System.out.println("create custoomer service");	
-		}else{
-			System.out.println("load cache service");
-		}
-		
-		return service;
+
+	public ProcessingService getService() {
+		return new CustomerProcessingService();
 	}
+
+	@SuppressWarnings("unchecked")
+	public <E, T extends BasedModel> LookupService<E, T> getLookupService() {
+		return (LookupService<E, T>) new CustomerLookupService();
+	}
+
+	
 	
 
 }

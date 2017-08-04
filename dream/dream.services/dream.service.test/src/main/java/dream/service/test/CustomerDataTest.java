@@ -4,6 +4,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.belms.dream.api.dto.customer.CustomerInitDataWrapperDto;
+import com.belms.dream.api.service.LookupService;
+import com.belms.dream.api.service.ProcessingService;
+import com.belms.dream.api.service.Service;
 import com.belms.dream.api.service.ServiceProvider;
 import com.belms.dream.api.service.customer.CustomerService;
 import com.belms.dream.api.service.setup.SetupService;
@@ -22,7 +26,7 @@ import com.blems.dream.api.model.ship.ShipTerm;
 public class CustomerDataTest {
 	
 	private void saveCustomer() {
-		CustomerService customerService = (CustomerService) ServiceProvider.getService(CustomerService.ID);
+		CustomerService customerService = (CustomerService) ServiceProvider.getLookupService(CustomerService.ID);
 		Customer customer = new Customer();
 		customer.setActiveFlag(true);
 		customer.setCarrierService(new CarrierService(1, "Next Day Air"));
@@ -67,13 +71,16 @@ public class CustomerDataTest {
 	
 	
 	private Customer searchCustomer(int id) {
-		CustomerService customerService = (CustomerService) ServiceProvider.getService(CustomerService.ID);
+		
+		LookupService<CustomerInitDataWrapperDto, Customer> lookupService = ServiceProvider.getLookupService(CustomerService.ID);
+	
+		CustomerService customerService = (CustomerService) ServiceProvider.getLookupService(CustomerService.ID);
 		return customerService.getById(id);
 	}
 	
 	public static void main(String[] args) throws SQLException {
 		
-		SetupService service = (SetupService) ServiceProvider.getService(SetupService.ID);
+		SetupService service = (SetupService) ServiceProvider.getLookupService(SetupService.ID);
 		service.locationCrudOper().findById(1);
 		
 		CustomerDataTest customerDataTest = new CustomerDataTest();

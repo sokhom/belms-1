@@ -51,6 +51,11 @@
   			<artifactId>dream.repository.customer</artifactId>
   			<version>0.0.1-SNAPSHOT</version>
   		</dependency>
+  		<dependency>
+  			<groupId>com.belms</groupId>
+  			<artifactId>dream.repository.po</artifactId>
+  			<version>0.0.1-SNAPSHOT</version>
+  		</dependency>
   	</dependencies>
   </dependencyManagement>
   <dependencies>
@@ -69,6 +74,10 @@
   	<dependency>
   		<groupId>com.belms</groupId>
   		<artifactId>dream.repository.customer</artifactId>  		
+  	</dependency>
+  	<dependency>
+  		<groupId>com.belms</groupId>
+  		<artifactId>dream.repository.po</artifactId>
   	</dependency>
   </dependencies>
 </project>

@@ -4,10 +4,13 @@
  */
 package com.belms.dream.repository.common;
 
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 
 import com.belms.dream.repository.common.mapper.ObjectMapper;
 import com.blems.dream.api.model.BasedModel;
+import com.blems.dream.api.model.Repo;
 
 public abstract class AbstractRepo<T extends BasedModel> implements Repo<T> {
 	
@@ -25,9 +28,30 @@ public abstract class AbstractRepo<T extends BasedModel> implements Repo<T> {
 	
 	public T getById(int id) {
 		
+		try {
+			return getObjectMapper().selectById(id);
+		}catch (Exception e) {
+			System.err.println(e);
+		}finally{
+			getSqlSession().close();
+		}
+		
 		return null;
 	}
 	
+	
+	public List<T> getAll() {
+		try {
+			return getObjectMapper().selectAll();
+		}catch (Exception e) {
+			System.err.println(e);
+		}finally{
+			getSqlSession().close();
+		}
+		
+		return null;
+	}
+
 	public T add(T t) {
 		try {
 			getObjectMapper().insert(t);
@@ -42,13 +66,27 @@ public abstract class AbstractRepo<T extends BasedModel> implements Repo<T> {
 	}
 
 	public void remove(T t) {
-		// TODO Auto-generated method stub
-		
+		try {
+			getObjectMapper().delete(t);
+			getSqlSession().commit();
+		}catch (Exception e) {
+			getSqlSession().rollback();
+		}finally{
+			getSqlSession().close();
+		}
+			
 	}
 
 	public T edit(T t) {
-		// TODO Auto-generated method stub
-		return null;
+		try {
+			getObjectMapper().update(t);
+			getSqlSession().commit();
+		}catch (Exception e) {
+			getSqlSession().rollback();
+		}finally{
+			getSqlSession().close();
+		}
+		return t;
 	}
 	
 	

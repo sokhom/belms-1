@@ -13,7 +13,7 @@ public class LocationTest {
 	private SetupService service;
 	@Before
 	public void setUp() throws Exception {
-		service = (SetupService) ServiceProvider.getService(SetupService.ID);
+		service = (SetupService) ServiceProvider.getLookupService(SetupService.ID);
 	}
 
 	@Test

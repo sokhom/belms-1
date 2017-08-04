@@ -4,9 +4,9 @@
  */
 package com.belms.dream.service.employee;
 
-import com.belms.dream.api.service.Service;
+import com.belms.dream.api.service.LookupService;
+import com.belms.dream.api.service.ProcessingService;
 import com.belms.dream.api.service.ServiceFactory;
-import com.blems.dream.api.model.Employee;
 
 public class EmployeeServiceFactory implements ServiceFactory {
 	
@@ -15,10 +15,20 @@ public class EmployeeServiceFactory implements ServiceFactory {
 	public String getId() {
 		return EMPOYEE_SERIVCE;
 	}
-	
-	public Service<Employee> getService() {
+
+	public ProcessingService getService() {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	public LookupService getLookupService() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+//	public Service<Employee> getService() {
+//		// TODO Auto-generated method stub
+//		return null;
+//	}
 
 }

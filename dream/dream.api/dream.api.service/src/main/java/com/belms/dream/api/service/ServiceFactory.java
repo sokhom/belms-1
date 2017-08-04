@@ -4,8 +4,11 @@
  */
 package com.belms.dream.api.service;
 
+import com.blems.dream.api.model.BasedModel;
+
 public interface ServiceFactory {
 	String getId();
-	Service<?> getService();
+	ProcessingService getService();
+	<E,T extends BasedModel>LookupService<E,T> getLookupService();
 	
 }
