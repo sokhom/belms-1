@@ -59,7 +59,7 @@ public class CustomerDetailView extends VerticalLayout implements EntryView<Cust
 		formLayout.addComponent(creditLimitField);
 		
 		final ComboBox<CustomerStatus> statusComboBox = new ComboBox<>("Status");
-		binder.forField(statusComboBox).withValidator(new RequiredValidator()).bind(Customer::getStatus, Customer::setStatus);
+//		binder.forField(statusComboBox).withValidator(new RequiredValidator()).bind(Customer::getStatus, Customer::setStatus);
 		statusComboBox.setDataProvider(new CallbackDataProvider<CustomerStatus,String>(query->initDataWrapperDto.getStatusList().stream(), query->initDataWrapperDto.getStatusList().size()));
 		statusComboBox.setRequiredIndicatorVisible(true);
 		
