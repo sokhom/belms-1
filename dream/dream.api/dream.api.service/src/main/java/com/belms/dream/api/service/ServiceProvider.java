@@ -12,7 +12,6 @@ import java.util.ServiceLoader;
 
 import org.apache.ibatis.session.SqlSession;
 
-import com.belms.dream.api.service.ServiceFactory;
 import com.blems.dream.api.model.BasedModel;
 import com.blems.dream.api.repo.SqlSessionFactoryMngt;
 

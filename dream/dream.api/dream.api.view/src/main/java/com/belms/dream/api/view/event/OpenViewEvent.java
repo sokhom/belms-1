@@ -1,7 +1,6 @@
 package com.belms.dream.api.view.event;
 
 import com.blems.dream.api.model.ui.FilterItemList;
-import com.vaadin.ui.Component;
 import com.vaadin.ui.TabSheet;
 
 public class OpenViewEvent {

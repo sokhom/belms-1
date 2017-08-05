@@ -24,7 +24,7 @@ public class CustomerFragmentFactory implements UIFragmentFactory {
 		fragmentInfo.setNavigateName("customer");
 		fragmentInfo.setAccessCode("100-001");
 		fragmentInfo.setDisplaySeq(3);
-		fragmentInfo.setNavigate(true);
+		fragmentInfo.setNavigate(false);
 		fragmentInfo.setSelfManaged(true);
 		return fragmentInfo;
 	}

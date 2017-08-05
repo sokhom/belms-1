@@ -3,7 +3,9 @@ package com.blems.dream.api.model.po;
 import java.util.Date;
 import java.util.List;
 
-import com.blems.dream.api.model.DefaultModel;
+import org.apache.ibatis.type.Alias;
+
+import com.blems.dream.api.model.BasedModel3;
 import com.blems.dream.api.model.address.Country;
 import com.blems.dream.api.model.address.State;
 import com.blems.dream.api.model.carrier.Carrier;
@@ -14,7 +16,8 @@ import com.blems.dream.api.model.payment.PaymentTerm;
 import com.blems.dream.api.model.ship.ShipTerm;
 import com.blems.dream.api.model.vendor.Vendor;
 
-public class Po extends DefaultModel {
+@Alias("Po")
+public class Po extends BasedModel3 {
 
 	private static final long serialVersionUID = 1L;
 	

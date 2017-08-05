@@ -8,8 +8,8 @@ import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 
-import com.belms.dream.repository.common.mapper.ObjectMapper;
 import com.blems.dream.api.model.BasedModel;
+import com.blems.dream.api.model.ObjectMapper;
 import com.blems.dream.api.model.Repo;
 
 public abstract class AbstractRepo<T extends BasedModel> implements Repo<T> {
@@ -67,7 +67,7 @@ public abstract class AbstractRepo<T extends BasedModel> implements Repo<T> {
 
 	public void remove(T t) {
 		try {
-			getObjectMapper().delete(t);
+			getObjectMapper().remove(t);
 			getSqlSession().commit();
 		}catch (Exception e) {
 			getSqlSession().rollback();
@@ -108,6 +108,10 @@ public abstract class AbstractRepo<T extends BasedModel> implements Repo<T> {
 		getSqlSession().close();
 	}
 	
+
+	public List<T> search(String value) {
+		return null;
+	}
 
 	private ObjectMapper<T> getObjectMapper(){
 		if(this.objectMapper == null) {

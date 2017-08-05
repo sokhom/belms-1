@@ -8,20 +8,19 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.blems.dream.api.model.address.AddressType;
 import com.blems.dream.api.model.address.Country;
 import com.blems.dream.api.model.address.State;
-import com.blems.dream.api.model.contact.ContactType;
+import com.blems.dream.api.model.common.ObjectType;
 
 public class AddressInitDataWrapperDto implements Serializable{
 
 	private static final long serialVersionUID = 1L;
-	private List<AddressType> addressTypes;
+	private List<ObjectType> addressTypes;
 	private List<Country> countries;
 	private List<State> states;
-	private List<ContactType> contactTypes;
+	private List<ObjectType> contactTypes;
 	
-	public void addAddressType(AddressType addressType){
+	public void addAddressType(ObjectType addressType){
 		if(addressTypes == null ){
 			addressTypes = new ArrayList<>();
 		}
@@ -44,7 +43,7 @@ public class AddressInitDataWrapperDto implements Serializable{
 	}
 	
 	
-	public void addContactType(ContactType contactType){
+	public void addContactType(ObjectType contactType){
 		if(contactTypes==null){
 			contactTypes = new ArrayList<>();
 		}
@@ -52,12 +51,7 @@ public class AddressInitDataWrapperDto implements Serializable{
 		contactTypes.add(contactType);
 	}
 	
-	public List<AddressType> getAddressTypes() {
-		return addressTypes;
-	}
-	public void setAddressTypes(List<AddressType> addressTypes) {
-		this.addressTypes = addressTypes;
-	}
+	
 	public List<Country> getCountries() {
 		return countries;
 	}
@@ -71,13 +65,23 @@ public class AddressInitDataWrapperDto implements Serializable{
 		this.states = states;
 	}
 
-	public List<ContactType> getContactTypes() {
+	public List<ObjectType> getAddressTypes() {
+		return addressTypes;
+	}
+
+	public void setAddressTypes(List<ObjectType> addressTypes) {
+		this.addressTypes = addressTypes;
+	}
+
+	public List<ObjectType> getContactTypes() {
 		return contactTypes;
 	}
 
-	public void setContactTypes(List<ContactType> contactTypes) {
+	public void setContactTypes(List<ObjectType> contactTypes) {
 		this.contactTypes = contactTypes;
 	}
+
+	
 	
 	
 

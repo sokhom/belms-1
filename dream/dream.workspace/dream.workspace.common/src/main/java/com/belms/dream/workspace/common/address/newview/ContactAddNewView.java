@@ -11,8 +11,8 @@ import com.belms.dream.api.view.event.SaveEntityListener.OPER_TYPE;
 import com.belms.dream.workspace.common.validator.RequiredValidator;
 import com.belms.dream.workspace.common.validator.TextRequiredValidator;
 import com.belms.dream.workspace.common.window.AbstractSimpleDialog;
+import com.blems.dream.api.model.common.ObjectType;
 import com.blems.dream.api.model.contact.Contact;
-import com.blems.dream.api.model.contact.ContactType;
 import com.vaadin.data.Binder;
 import com.vaadin.data.provider.CallbackDataProvider;
 import com.vaadin.ui.CheckBox;
@@ -27,14 +27,14 @@ import com.vaadin.ui.themes.ValoTheme;
 public class ContactAddNewView extends AbstractSimpleDialog {
 
 	private static final long serialVersionUID = 1L;
-	private final List<ContactType> contactTypes;
+	private final List<ObjectType> contactTypes;
 	private final SaveEntityListener<Contact> saveEntityListener;
 	
-	public ContactAddNewView(SaveEntityListener<Contact> saveEntityListener,  List<ContactType> contactTypes) {
+	public ContactAddNewView(SaveEntityListener<Contact> saveEntityListener,  List<ObjectType> contactTypes) {
 		this(saveEntityListener, OPER_TYPE.ADD, contactTypes);
 	}
 	
-	public ContactAddNewView(SaveEntityListener<Contact> saveEntityListener,OPER_TYPE type ,  List<ContactType> contactTypes) {
+	public ContactAddNewView(SaveEntityListener<Contact> saveEntityListener,OPER_TYPE type ,  List<ObjectType> contactTypes) {
 		this.saveEntityListener = saveEntityListener;
 		this.contactTypes = contactTypes;
 		setOpterationType(type);
@@ -66,9 +66,9 @@ public class ContactAddNewView extends AbstractSimpleDialog {
 	
 		binder.forField(nameTextFiled).withValidator(new TextRequiredValidator()).bind(Contact::getName, Contact::setName);
 				
-		final ComboBox<ContactType> contactTypeComboBox = new ComboBox<>("Contact Type");
+		final ComboBox<ObjectType> contactTypeComboBox = new ComboBox<>("Contact Type");
 		formLayout.addComponent(contactTypeComboBox);
-		contactTypeComboBox.setDataProvider(new CallbackDataProvider<ContactType, String>(query->contactTypes.stream(),query->contactTypes.size()));
+		contactTypeComboBox.setDataProvider(new CallbackDataProvider<ObjectType, String>(query->contactTypes.stream(),query->contactTypes.size()));
 		contactTypeComboBox.setRequiredIndicatorVisible(true);
 		binder.forField(contactTypeComboBox).withValidator(new RequiredValidator()).bind(Contact::getType, Contact::setType);
 		

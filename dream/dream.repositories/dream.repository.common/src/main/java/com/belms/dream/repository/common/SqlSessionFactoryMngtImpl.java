@@ -12,7 +12,7 @@ import com.blems.dream.api.repo.SqlSessionFactoryMngt;
 public class SqlSessionFactoryMngtImpl implements SqlSessionFactoryMngt {
 
 	private SqlSessionFactory sessionFactory;
-	private String resource = "D:/dev/Java/config/repositories/employee/persistence/configuration.xml";
+	private String resource = "E:\\dev\\resources\\projectconfig\\config\\repositories\\configuration.xml";
 
 	public SqlSessionFactory getSessionFactory() {
 

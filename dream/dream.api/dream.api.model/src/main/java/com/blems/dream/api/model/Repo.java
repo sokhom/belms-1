@@ -12,4 +12,6 @@ public interface Repo<T extends BasedModel> {
 	T edit(T t);
 	List<T> getAll();
 	T getById(int id); 
+	
+	List<T> search(String value);
 }

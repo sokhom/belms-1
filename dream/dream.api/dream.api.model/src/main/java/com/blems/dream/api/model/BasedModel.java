@@ -10,7 +10,7 @@ import java.io.Serializable;
 public abstract class BasedModel implements Serializable {
 
 	public enum OPER {
-		NEW, EDIT, DELETE, NONE
+		ADD, EDIT, DELETE, NONE
 	};
 
 	private static final long serialVersionUID = 1L;

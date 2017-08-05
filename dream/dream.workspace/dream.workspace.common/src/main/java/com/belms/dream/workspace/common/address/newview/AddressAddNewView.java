@@ -13,9 +13,9 @@ import com.belms.dream.workspace.common.validator.RequiredValidator;
 import com.belms.dream.workspace.common.validator.TextRequiredValidator;
 import com.belms.dream.workspace.common.window.AbstractSimpleDialog;
 import com.blems.dream.api.model.address.Address;
-import com.blems.dream.api.model.address.AddressType;
 import com.blems.dream.api.model.address.Country;
 import com.blems.dream.api.model.address.State;
+import com.blems.dream.api.model.common.ObjectType;
 import com.blems.dream.api.model.contact.Contact;
 import com.vaadin.data.Binder;
 import com.vaadin.data.provider.CallbackDataProvider;
@@ -84,13 +84,16 @@ public class AddressAddNewView extends AbstractSimpleDialog implements SaveEntit
 		formLayout.addStyleName(ValoTheme.FORMLAYOUT_LIGHT);
 		formLayout.setSizeFull();
 
-		final ComboBox<AddressType> addressTypeComboBox = new ComboBox<AddressType>("Address Type");
+		final ComboBox<ObjectType> addressTypeComboBox = new ComboBox<>("Address Type");
+		
+		
 		addressTypeComboBox.setDataProvider(
-				new CallbackDataProvider<AddressType, String>(query -> initDataWrapperDto.getAddressTypes().stream(),
+				new CallbackDataProvider<ObjectType, String>(query -> initDataWrapperDto.getAddressTypes().stream(),
 						query -> initDataWrapperDto.getAddressTypes().size()));
 		formLayout.addComponent(addressTypeComboBox);
 		addressTypeComboBox.setRequiredIndicatorVisible(true);
 		addressTypeComboBox.focus();
+		
 		binder.forField(addressTypeComboBox).withValidator(new RequiredValidator()).bind(Address::getType, Address::setType);
 		
 		final TextField nameTextField = new TextField("Address Name");

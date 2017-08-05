@@ -12,9 +12,9 @@ import com.belms.dream.api.view.event.SaveEntityListener;
 import com.belms.dream.workspace.common.address.newview.AddressAddNewView;
 import com.belms.dream.workspace.common.dialog.ConfirmDialog;
 import com.blems.dream.api.model.address.Address;
-import com.blems.dream.api.model.address.AddressType;
 import com.blems.dream.api.model.address.Country;
 import com.blems.dream.api.model.address.State;
+import com.blems.dream.api.model.common.ObjectType;
 import com.blems.dream.api.model.contact.Contact;
 import com.vaadin.data.Binder;
 import com.vaadin.data.provider.CallbackDataProvider;
@@ -174,12 +174,12 @@ public class AddressViewImpl extends VerticalLayout implements AddressView, Save
 
 		final TextField addressTypeTextField = new TextField("Address Type");
 		formLayout.addComponent(addressTypeTextField);
-		binder.forField(addressTypeTextField).withConverter(null, new SerializableFunction<AddressType, String>() {
+		binder.forField(addressTypeTextField).withConverter(null, new SerializableFunction<ObjectType, String>() {
 			private static final long serialVersionUID = 1L;
 			@Override
-			public String apply(AddressType t) {
+			public String apply(ObjectType t) {
 				
-				return t==null? "": t.toString();
+				return t==null? "": t.getName();
 			}
 		}).bind(Address::getType, null);
 		addressTypeTextField.setReadOnly(true);
