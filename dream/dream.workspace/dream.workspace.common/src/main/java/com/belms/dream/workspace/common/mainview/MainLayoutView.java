@@ -4,8 +4,6 @@
  */
 package com.belms.dream.workspace.common.mainview;
 
-import java.util.List;
-
 import com.belms.dream.api.view.event.EventBusProvider;
 import com.belms.dream.api.view.event.RefreshEntityListener;
 import com.belms.dream.api.view.event.SaveEnityListener;
@@ -13,20 +11,14 @@ import com.belms.dream.workspace.common.View;
 import com.blems.dream.api.model.DefaultModel;
 import com.blems.dream.api.model.ui.FilterItemList;
 
-public interface MainLayoutView<T extends FilterItemList, E extends DefaultModel, W> extends View{
+public interface MainLayoutView<T extends DefaultModel, E> extends View{
 	
-	void setItemListData(List<T> itemList);
-	void loadData(E data);
-	void setFilterListener(FilterListener filterListener);
-	void setShowItemListener(ShowSlectedItemListener<T> showSlectedItemListener);
-	
-	void setSaveEntityListener(SaveEnityListener<E> saveEnityListener);
-	void setRefreshEntityListener(RefreshEntityListener<E> refreshEntityListener);
-	
-	void setDataInitWrapper(W data);
-	W getDataInitWrapper();
+	void loadData(T data);	
+	void setSaveEntityListener(SaveEnityListener<T> saveEnityListener);
+	void setRefreshEntityListener(RefreshEntityListener<T> refreshEntityListener);
+	void setDataInitWrapper(E data);
+	E getDataInitWrapper();
 	EventBusProvider getEventBusProvider();
-	
-	void addNew(T t);
+	FilterItemList getSelectedItem();
 	
 }
