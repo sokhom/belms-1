@@ -16,23 +16,30 @@ import com.belms.dream.workspace.common.mainview.AbstractMainView;
 import com.belms.dream.workspace.customer.subview.CustomerDetailView;
 import com.belms.dream.workspace.customer.subview.CustomerInfoView;
 import com.blems.dream.api.model.customer.Customer;
+import com.blems.dream.api.model.ui.FilterItemList;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
-public class CustomerViewImpl extends AbstractMainView<Customer, Customer, CustomerInitDataWrapperDto> implements CustomerView {
+public class CustomerViewImpl extends AbstractMainView<Customer, CustomerInitDataWrapperDto> implements CustomerView {
 
 	private static final long serialVersionUID = 1L;
 	private AddressView addressView ;	
-	private AddressInitDataWrapperDto initDataWrapperDto;
+	private AddressInitDataWrapperDto addressInitDataWrapperDto;
 	private CustomerMainLayoutPresenter customerMainLayoutPresenter;
+	private FilterItemList filterItemList;
 	
-	public CustomerViewImpl(final EventBusProvider eventBusProvider) {
+	public CustomerViewImpl(final EventBusProvider eventBusProvider, FilterItemList filterItemList) {
 		super(eventBusProvider);
+		this.filterItemList = filterItemList;
 		customerMainLayoutPresenter =new CustomerMainLayoutPresenter(this);
-		this.setFilterListener(customerMainLayoutPresenter);
-		this.setShowItemListener(customerMainLayoutPresenter);
+		
 		this.setSaveEntityListener(customerMainLayoutPresenter);
 		this.setRefreshEntityListener(customerMainLayoutPresenter);
+		
+	}
+	
+	public CustomerViewImpl(final EventBusProvider eventBusProvider) {
+		this(eventBusProvider, null);
 	}
 
 	
@@ -47,7 +54,7 @@ public class CustomerViewImpl extends AbstractMainView<Customer, Customer, Custo
 		addTab(entryView);
 		entryView =new CustomerDetailView(getDataInitWrapper());
 		addTab(entryView);
-		addressView  =new AddressViewImpl(initDataWrapperDto);
+		addressView  =new AddressViewImpl(addressInitDataWrapperDto);
 		addressView.setContactHeight(300.0f);
 		addressView.initView();
 		addTab((VerticalLayout)addressView);
@@ -68,17 +75,20 @@ public class CustomerViewImpl extends AbstractMainView<Customer, Customer, Custo
 	@Override
 	public Window getNewView() {
 
-		NewCustomerView customerView = new NewCustomerViewImpl(super.getEventBusProvider() , getDataInitWrapper(),initDataWrapperDto);
+		NewCustomerView customerView = new NewCustomerViewImpl(super.getEventBusProvider() , getDataInitWrapper(),addressInitDataWrapperDto);
 		customerView.setAddNewListener(customerMainLayoutPresenter);
 		return  (Window) customerView;
 	}
 
-
-
 	@Override
 	public void setAddressInitDataWrapperDto(AddressInitDataWrapperDto initDataWrapperDto) {
-		this.initDataWrapperDto = initDataWrapperDto;
+		this.addressInitDataWrapperDto = initDataWrapperDto;
 		
+	}
+
+	@Override
+	public FilterItemList getSelectedItem() {
+		return filterItemList;
 	}
 
 

@@ -49,7 +49,7 @@ public class ViewManaged {
 				}
 				
 			}
-			final Panel panel = new CustomerViewImpl(eventBusProvider);
+			final Panel panel = new CustomerViewImpl(eventBusProvider, event.getFilterItemList());
 			panel.setCaption(String.format("Customer-%s", event.getFilterItemList().getName()));
 			event.getParent().addComponent(panel);
 			Tab tab = event.getParent().getTab(panel);
