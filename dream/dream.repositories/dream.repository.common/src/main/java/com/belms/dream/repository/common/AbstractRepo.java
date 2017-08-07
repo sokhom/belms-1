@@ -21,9 +21,9 @@ public abstract class AbstractRepo<T extends BasedModel> implements Repo<T> {
 		this.session = session;
 	}
 	
-	public AbstractRepo(SqlSession session,ObjectMapper<T> objectMapper) {
+	public <E extends ObjectMapper<T>> AbstractRepo(SqlSession session,Class<E> mapperClass) {
 		this(session);
-		this.objectMapper = objectMapper;
+		this.objectMapper = session.getMapper(mapperClass);
 	}
 	
 	public T getById(int id) {

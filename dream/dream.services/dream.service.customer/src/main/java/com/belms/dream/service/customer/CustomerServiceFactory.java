@@ -17,13 +17,16 @@ public class CustomerServiceFactory implements ServiceFactory{
 		return ID;
 	}
 
-	public ProcessingService getService() {
-		return new CustomerProcessingService();
-	}
+	
 
 	@SuppressWarnings("unchecked")
 	public <E, T extends BasedModel> LookupService<E, T> getLookupService() {
 		return (LookupService<E, T>) new CustomerLookupService();
+	}
+
+	@SuppressWarnings("unchecked")
+	public <T extends BasedModel> ProcessingService<T> getService() {
+		return  (ProcessingService<T>) new CustomerProcessingService();
 	}
 
 	

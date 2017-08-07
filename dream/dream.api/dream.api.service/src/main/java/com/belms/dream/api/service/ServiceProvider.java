@@ -58,8 +58,8 @@ public class ServiceProvider {
 	}
 
 	
-	public static ProcessingService getProcessingService(String serviceId) {
-		return get(serviceId).getService();
+	public static <T extends BasedModel>ProcessingService<T> getProcessingService(String serviceId) {
+		return  get(serviceId).getService();
 	}
 	
 	public static <E,T extends BasedModel>LookupService<E,T> getLookupService(String serviceId){

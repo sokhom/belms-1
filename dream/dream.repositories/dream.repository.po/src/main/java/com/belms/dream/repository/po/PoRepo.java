@@ -1,20 +1,17 @@
 package com.belms.dream.repository.po;
 
-import java.util.List;
-
 import org.apache.ibatis.session.SqlSession;
 
 import com.belms.dream.repository.common.AbstractRepo;
+import com.belms.dream.repository.po.mapper.PoMapper;
 import com.blems.dream.api.model.po.Po;
 
 public class PoRepo extends AbstractRepo<Po> {
+	
 
 	public PoRepo(SqlSession session) {
-		super(session);
+		super(session, PoMapper.class);
 	}
 
-	public List<Po> getAll() {
-		return null;
-	}
 
 }

@@ -7,21 +7,17 @@ import com.belms.dream.repository.po.PoRepo;
 import com.blems.dream.api.model.Repo;
 import com.blems.dream.api.model.po.Po;
 
-public class PoProcessingService  extends AbstractProcessService<Po> implements ProcessingService {
+public class PoProcessingService  extends AbstractProcessService<Po> implements ProcessingService<Po> {
 
 	private Repo<Po> poRepo;
 	
 	public PoProcessingService() {
 		poRepo = new PoRepo(ServiceProvider.newSession());
 	}
-	
+
 	@Override
 	protected Repo<Po> getRepo() {
-		
 		return poRepo;
 	}
-
-	
-
 
 }

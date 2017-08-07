@@ -12,11 +12,15 @@ public class SetupServiceFactory implements ServiceFactory {
 		return SetupService.ID;
 	}
 
-	public ProcessingService getService() {
+	
+
+	public <E, T extends BasedModel> LookupService<E, T> getLookupService() {
 		return null;
 	}
 
-	public <E, T extends BasedModel> LookupService<E, T> getLookupService() {
+
+	public <T extends BasedModel> ProcessingService<T> getService() {
+		// TODO Auto-generated method stub
 		return null;
 	}
 	

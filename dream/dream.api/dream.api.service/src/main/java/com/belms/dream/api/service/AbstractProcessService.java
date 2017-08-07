@@ -9,8 +9,8 @@ public abstract class AbstractProcessService<T extends BasedModel> {
 
 	private SqlSession sqlSession = null;
 
-	@SuppressWarnings("unchecked")
-	public void process(BasedModel object) {
+	public void process(T object) {
+		
 		sqlSession = ServiceProvider.newSession();
 		try {
 			takeAction((T) object);
@@ -25,19 +25,31 @@ public abstract class AbstractProcessService<T extends BasedModel> {
 	}
 
 	protected abstract Repo<T> getRepo();
+	
+	
+	
+	/**
+	 * 
+	 * @param serviceId : specify for general services
+	 * @return
+	 */
 
 	protected SqlSession getSqlSession() {
 		return sqlSession;
 	}
-
+	
 	protected void takeAction(T t) {
+				
+		
+		Repo<T> repo =  getRepo() ;
+		
 		
 		if (BasedModel.OPER.ADD == t.getOper()) {
-			getRepo().add(t);
+			repo.add(t);
 		} else if (BasedModel.OPER.EDIT == t.getOper()) {
-			getRepo().edit(t);
+			repo.edit(t);
 		} else if (BasedModel.OPER.DELETE == t.getOper()) {
-			getRepo().remove(t);
+			repo.remove(t);
 		}
 	}
 

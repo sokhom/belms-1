@@ -13,13 +13,16 @@ public class PoServiceFactory  implements ServiceFactory{
 		return ID;
 	}
 
-	public ProcessingService getService() {
-		return new PoProcessingService();
-	}
 
 	@SuppressWarnings("unchecked")
 	public <E, T extends BasedModel> LookupService<E, T> getLookupService() {
 		return (LookupService<E, T>) new PoLookupService();
+	}
+
+
+	@SuppressWarnings("unchecked")
+	public <T extends BasedModel> ProcessingService<T> getService() {
+		return (ProcessingService<T>) new PoProcessingService();
 	}
 
 }

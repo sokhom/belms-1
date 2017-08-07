@@ -32,16 +32,10 @@ import com.blems.dream.api.model.ship.ShipTerm;
 public class CustomerRepo extends AbstractRepo<Customer> {
 
 	public CustomerRepo(SqlSession session) {
-		super(session);
+		super(session, CustomerMapper.class);
 	}
 
 	List<Customer> customerList;
-
-	public Customer getById(int id) {
-		CustomerMapper customerMapper = getSqlSession().getMapper(CustomerMapper.class);
-		return customerMapper.selectCustomerById(id);
-	}
-
 	
 	public Customer add(Customer t) {
 		

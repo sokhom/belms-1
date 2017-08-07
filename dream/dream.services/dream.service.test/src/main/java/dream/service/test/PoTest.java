@@ -10,13 +10,15 @@ import com.blems.dream.api.model.carrier.Carrier;
 import com.blems.dream.api.model.common.ObjectStatus;
 import com.blems.dream.api.model.currency.Currency;
 import com.blems.dream.api.model.location.LocationGroup;
+import com.blems.dream.api.model.payment.PaymentTerm;
 import com.blems.dream.api.model.po.Po;
+import com.blems.dream.api.model.vendor.Vendor;
 
 public class PoTest {
-	private ProcessingService service;
+	private ProcessingService<Po> service;
 	@Before
 	public void setUp() throws Exception {
-		service = ServiceProvider.getProcessingService(ServiceIds.PO_SERVICE_ID);
+		service =  ServiceProvider.getProcessingService(ServiceIds.PO_SERVICE_ID);
 	}
 
 	@Test
@@ -40,6 +42,9 @@ public class PoTest {
 		Carrier carrier = new Carrier(1, "Will");
 		po.setCarrier(carrier);
 		
+		po.setPaymentTerm(new PaymentTerm(1, "COD"));
+		
+		po.setVendor(new Vendor());
 		
 		service.process(po);
 	}

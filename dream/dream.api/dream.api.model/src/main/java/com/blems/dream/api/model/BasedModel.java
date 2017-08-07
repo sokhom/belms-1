@@ -16,6 +16,7 @@ public abstract class BasedModel implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private int id;
+	private String serviceId;
 	private OPER oper = OPER.NONE;
 
 	public int getId() {
@@ -34,4 +35,15 @@ public abstract class BasedModel implements Serializable {
 		this.oper = oper;
 	}
 
+	public String getServiceId() {
+		return serviceId;
+	}
+
+	public void setServiceId(String serviceId) {
+		this.serviceId = serviceId;
+	}
+
+	
+	
+	
 }

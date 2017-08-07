@@ -17,12 +17,16 @@ public class AddressServiceFactory implements ServiceFactory {
 		return ID;
 	}
 
-	public ProcessingService getService() {
-		return null;
-	}
+
 
 	@SuppressWarnings("unchecked")
 	public <E, T extends BasedModel> LookupService<E, T> getLookupService() {
 		return (LookupService<E, T>) new AddressLookupService();
+	}
+
+
+
+	public <T extends BasedModel> ProcessingService<T> getService() {
+		return null;
 	}
 }
