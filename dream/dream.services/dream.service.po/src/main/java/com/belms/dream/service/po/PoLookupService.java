@@ -13,7 +13,7 @@ public class PoLookupService implements LookupService<PoInitDataWrapperDto, Po> 
 	private static PoRepo poRepo;
 	
 	public PoLookupService() {
-		poRepo = new PoRepo(ServiceProvider.newSession());
+		poRepo = new PoRepo(()->ServiceProvider.newSession(),false);
 	}
 	
 	public PoInitDataWrapperDto getInitData() {

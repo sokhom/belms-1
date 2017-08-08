@@ -9,13 +9,18 @@ import com.blems.dream.api.model.common.ObjectStatus;
 import com.blems.dream.api.model.currency.Currency;
 import com.blems.dream.api.model.payment.PaymentTerm;
 import com.blems.dream.api.model.ship.ShipTerm;
+import com.blems.dream.api.model.tax.TaxRate;
 
+/**
+ * @author ngounphanny
+ *
+ */
 @Alias("Vendor")
 public class Vendor extends DefaultModel {
 	private static final long serialVersionUID = 1L;
 	private Account account;
 	private ObjectStatus status;
-	private String node;
+	private String note;
 	private Currency currency;
 	private double currencyRate;
 	private double creditLimit;
@@ -25,6 +30,16 @@ public class Vendor extends DefaultModel {
 	private ShipTerm defaultShipTerm;
 	private Carrier defaultCarrier;
 	private String url;
+	private TaxRate taxRate;
+	
+	public Vendor() {
+	
+	}
+	
+	public Vendor(int id) {
+		super(id);
+	}
+	
 	public Account getAccount() {
 		return account;
 	}
@@ -37,11 +52,13 @@ public class Vendor extends DefaultModel {
 	public void setStatus(ObjectStatus status) {
 		this.status = status;
 	}
-	public String getNode() {
-		return node;
+	
+
+	public String getNote() {
+		return note;
 	}
-	public void setNode(String node) {
-		this.node = node;
+	public void setNote(String note) {
+		this.note = note;
 	}
 	public Currency getCurrency() {
 		return currency;
@@ -96,6 +113,12 @@ public class Vendor extends DefaultModel {
 	}
 	public void setUrl(String url) {
 		this.url = url;
+	}
+	public TaxRate getTaxRate() {
+		return taxRate;
+	}
+	public void setTaxRate(TaxRate taxRate) {
+		this.taxRate = taxRate;
 	}
 	
 	

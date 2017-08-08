@@ -4,12 +4,13 @@
  */
 package com.belms.dream.service.common.address;
 
+import com.belms.dream.api.service.AbstractServiceFactory;
 import com.belms.dream.api.service.LookupService;
 import com.belms.dream.api.service.ProcessingService;
 import com.belms.dream.api.service.ServiceFactory;
 import com.blems.dream.api.model.BasedModel;
 
-public class AddressServiceFactory implements ServiceFactory {
+public class AddressServiceFactory extends AbstractServiceFactory implements ServiceFactory {
 
 	public final static String ID = "ADDRESS_SERVICE";
 	

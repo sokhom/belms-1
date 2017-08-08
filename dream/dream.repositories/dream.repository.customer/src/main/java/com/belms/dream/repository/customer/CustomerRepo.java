@@ -9,10 +9,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.apache.ibatis.session.SqlSession;
-
 import com.belms.dream.api.dto.customer.CustomerInitDataWrapperDto;
 import com.belms.dream.repository.common.AbstractRepo;
+import com.belms.dream.repository.common.SqlSessionProvider;
 import com.belms.dream.repository.common.mapper.AccountMapper;
 import com.belms.dream.repository.common.mapper.AddressMapper;
 import com.belms.dream.repository.common.mapper.ContactMapper;
@@ -31,8 +30,8 @@ import com.blems.dream.api.model.ship.ShipTerm;
 
 public class CustomerRepo extends AbstractRepo<Customer> {
 
-	public CustomerRepo(SqlSession session) {
-		super(session, CustomerMapper.class);
+	public CustomerRepo(SqlSessionProvider sqlSessionProvider) {
+		super(sqlSessionProvider, session->session.getMapper(CustomerMapper.class));
 	}
 
 	List<Customer> customerList;

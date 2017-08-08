@@ -11,6 +11,16 @@ public class LocationGroup extends DefaultModel {
 	
 	private String description;
 
+	
+	public LocationGroup() {
+	
+	}
+	
+	public LocationGroup(int id) {
+		super(id);
+	}
+	
+	
 	public String getDescription() {
 		return description;
 	}

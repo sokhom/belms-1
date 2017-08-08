@@ -14,26 +14,35 @@ import com.blems.dream.api.model.Repo;
 
 public abstract class AbstractRepo<T extends BasedModel> implements Repo<T> {
 	
-	private final SqlSession session;
+	private SqlSession session;
+	private final SqlSessionProvider sqlSessionProvider;
+	private ObjectMapperProvider<T> mapperProvider;
 	private  ObjectMapper<T> objectMapper;
+	private boolean manualTran;
 	
-	public AbstractRepo(SqlSession session) {
-		this.session = session;
+	public AbstractRepo(SqlSessionProvider sqlSessionProvider) {
+		this(sqlSessionProvider, null, false);
 	}
 	
-	public <E extends ObjectMapper<T>> AbstractRepo(SqlSession session,Class<E> mapperClass) {
-		this(session);
-		this.objectMapper = session.getMapper(mapperClass);
+	public AbstractRepo(SqlSessionProvider sqlSessionProvider, ObjectMapperProvider<T> mapperProvider){
+		this(sqlSessionProvider, mapperProvider, false);
 	}
 	
+	public AbstractRepo(SqlSessionProvider sqlSessionProvider, ObjectMapperProvider<T> mapperProvider, boolean manualTran) {
+		this.sqlSessionProvider = sqlSessionProvider;
+		this.mapperProvider = mapperProvider;
+		this.manualTran = manualTran;
+	}
+	
+
 	public T getById(int id) {
-		
 		try {
 			return getObjectMapper().selectById(id);
+			
 		}catch (Exception e) {
 			System.err.println(e);
 		}finally{
-			getSqlSession().close();
+			close();
 		}
 		
 		return null;
@@ -42,11 +51,11 @@ public abstract class AbstractRepo<T extends BasedModel> implements Repo<T> {
 	
 	public List<T> getAll() {
 		try {
-			return getObjectMapper().selectAll();
+			getObjectMapper().selectAll();
 		}catch (Exception e) {
 			System.err.println(e);
 		}finally{
-			getSqlSession().close();
+			close();
 		}
 		
 		return null;
@@ -55,12 +64,12 @@ public abstract class AbstractRepo<T extends BasedModel> implements Repo<T> {
 	public T add(T t) {
 		try {
 			getObjectMapper().insert(t);
-			getSqlSession().commit();
+			commit();
 		}catch (Exception e) {
 			System.err.println(e);
-			getSqlSession().rollback();
+			rollback();
 		}finally {
-			getSqlSession().close();
+			close();
 		}
 		return t;
 	}
@@ -68,9 +77,9 @@ public abstract class AbstractRepo<T extends BasedModel> implements Repo<T> {
 	public void remove(T t) {
 		try {
 			getObjectMapper().remove(t);
-			getSqlSession().commit();
+			commit();
 		}catch (Exception e) {
-			getSqlSession().rollback();
+			rollback();
 		}finally{
 			getSqlSession().close();
 		}
@@ -80,34 +89,55 @@ public abstract class AbstractRepo<T extends BasedModel> implements Repo<T> {
 	public T edit(T t) {
 		try {
 			getObjectMapper().update(t);
-			getSqlSession().commit();
+			commit();
 		}catch (Exception e) {
-			getSqlSession().rollback();
+			rollback();
 		}finally{
-			getSqlSession().close();
+			close();
 		}
 		return t;
 	}
 	
-	
-	protected SqlSession getSqlSession() {
+	@Override
+	public SqlSession getSqlSession() {
+		if(session == null) {
+			session = sqlSessionProvider.newSession();
+		}
 		return session;
 	}
 
+	protected void setObjectMapperProvider(ObjectMapperProvider<T> mapperProvider) {
+		this.mapperProvider = mapperProvider;
+	}
+	
+	protected ObjectMapper<T> getMapper(){
+		if(objectMapper==null) {
+			objectMapper = mapperProvider.getMapper(getSqlSession());
+		}
+		return objectMapper;
+	}
 	
 	protected void flush() {
+		if(manualTran) return;
 		getSqlSession().flushStatements();
 	}
 	
 	
 	protected void commit() {
+		if(manualTran) return;
 		getSqlSession().commit();
 	}
 	
 	protected void close() {
+		if(manualTran) return;
 		getSqlSession().close();
 	}
 	
+	
+	protected void rollback() {
+		if(manualTran) return;
+		getSqlSession().rollback();
+	}
 
 	public List<T> search(String value) {
 		return null;
@@ -115,13 +145,22 @@ public abstract class AbstractRepo<T extends BasedModel> implements Repo<T> {
 
 	private ObjectMapper<T> getObjectMapper(){
 		if(this.objectMapper == null) {
-			throw new RuntimeException("No object mapper provided");
+			if(this.mapperProvider!=null) {
+				 this.objectMapper = this.mapperProvider.getMapper(getSqlSession());
+			}else {
+				throw new RuntimeException("No object mapper provided");
+			}
 		}
 		return this.objectMapper;
 	}
 	
-	protected void setObjectMapper( ObjectMapper<T> objectMapper) {
+	public void setObjectMapper( ObjectMapper<T> objectMapper) {
 		this.objectMapper = objectMapper;
 	}
+	
+	public <E extends ObjectMapper<T>> void setMapperClass(Class<E> mapperClass){
+		this.objectMapper = getSqlSession().getMapper(mapperClass);
+	 }
+	
 
 }

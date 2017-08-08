@@ -1,45 +1,41 @@
 package com.belms.dream.service.common;
 
+import com.belms.dream.api.service.AbstractServiceFactory;
 import com.belms.dream.api.service.LookupService;
 import com.belms.dream.api.service.ProcessingService;
 import com.belms.dream.api.service.ServiceFactory;
+import com.belms.dream.api.service.ServiceIds;
+import com.belms.dream.api.service.ServiceProvider;
+import com.belms.dream.repository.vendor.VendorRepo;
 import com.blems.dream.api.model.BasedModel;
 import com.blems.dream.api.model.vendor.Vendor;
 
-public class DefaultServiceFactory implements ServiceFactory {
 
-	public static final String ID = "DEFAULT_SERVICE";
+public class DefaultServiceFactory extends AbstractServiceFactory implements ServiceFactory {
 
 	public String getId() {
-		return ID;
+		return ServiceIds.DEFAULT_SERVICE_ID;
 	}
 
+	@SuppressWarnings("unchecked")
 	public <T extends BasedModel> ProcessingService<T> getService() {
-	
-		return new TestType<T>();
 
+		if (ServiceIds.VENDOR_SERVICE_ID.equalsIgnoreCase(getSubServiceId())) {
+			DefaultProcessingService<Vendor> defaultProcessingService= new DefaultProcessingService<>(new VendorRepo(()->ServiceProvider.newSession()));
+			return (ProcessingService<T>) defaultProcessingService;
+		}
+		throw new RuntimeException(String.format("The service (%s - %s) is not be provided",
+				ServiceIds.DEFAULT_SERVICE_ID, getSubServiceId()));
 	}
 
+	@SuppressWarnings("unchecked")
 	public <E, T extends BasedModel> LookupService<E, T> getLookupService() {
-		// TODO Auto-generated method stub
+	
+		if (ServiceIds.VENDOR_SERVICE_ID.equalsIgnoreCase(getSubServiceId())) {
+			DefaultLookupService<Object, Vendor> defaultLookupService=	new DefaultLookupService<>(new VendorRepo(()->ServiceProvider.newSession()));
+			return (LookupService<E, T>) defaultLookupService;
+		}
 		return null;
 	}
 
-	public static void main(String[] args) {
-		ServiceFactory factory = new DefaultServiceFactory();
-
-		ProcessingService<Vendor> processingService = factory.getService();
-		processingService.process(new Vendor());
-	}
-
-	public class TestType<T> implements  ProcessingService<T>{
-
-		public void process(T object) {
-			System.out.println(object.getClass());
-			//new DefaultProcessingService<Vendor>(VendorMapper.class);
-			
-		}
-		
-	}
-	
 }

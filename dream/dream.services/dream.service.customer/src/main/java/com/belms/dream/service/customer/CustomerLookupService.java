@@ -13,7 +13,7 @@ public class CustomerLookupService implements LookupService<CustomerInitDataWrap
 	private final CustomerRepo customerRepo;
 	
 	public CustomerLookupService() {
-		customerRepo = new CustomerRepo(ServiceProvider.newSession());
+		customerRepo = new CustomerRepo(()->ServiceProvider.newSession());
 	}
 	
 	public CustomerInitDataWrapperDto getInitData() {

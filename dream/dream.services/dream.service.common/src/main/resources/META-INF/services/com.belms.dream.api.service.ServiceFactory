@@ -1,2 +1,3 @@
 com.belms.dream.service.common.address.AddressServiceFactory
 com.belms.dream.service.common.setup.SetupServiceFactory
+com.belms.dream.service.common.DefaultServiceFactory

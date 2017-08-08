@@ -7,10 +7,10 @@ package com.belms.dream.repository.common.address;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.ibatis.session.SqlSession;
-
 import com.belms.dream.api.dto.address.AddressInitDataWrapperDto;
 import com.belms.dream.repository.common.AbstractRepo;
+import com.belms.dream.repository.common.SqlSessionProvider;
+import com.belms.dream.repository.common.mapper.AddressMapper;
 import com.blems.dream.api.model.address.Address;
 import com.blems.dream.api.model.address.Country;
 import com.blems.dream.api.model.address.State;
@@ -18,8 +18,8 @@ import com.blems.dream.api.model.common.ObjectType;
 
 public class AddressRepoImpl extends AbstractRepo<Address> implements AddressRepo {
 
-	public AddressRepoImpl(SqlSession session) {
-		super(session);
+	public AddressRepoImpl(SqlSessionProvider sqlSessionProvider) {
+		super(sqlSessionProvider, session->session.getMapper(AddressMapper.class) );
 	}
 
 	public List<Address> getAddressesByAccount(int accountId) {

@@ -6,6 +6,7 @@ package com.belms.dream.service.customer;
 
 import com.belms.dream.api.dto.customer.CustomerInitDataWrapperDto;
 import com.belms.dream.api.service.AbstractService;
+import com.belms.dream.api.service.ServiceProvider;
 import com.belms.dream.api.service.customer.CustomerService;
 import com.belms.dream.repository.customer.CustomerRepo;
 import com.blems.dream.api.model.Repo;
@@ -18,7 +19,7 @@ public class CustomerServiceImpl extends AbstractService<Customer> implements Cu
 	
 	
 	public CustomerServiceImpl() {
-		customerRepo = new CustomerRepo(getSqlSession()); 
+		customerRepo = new CustomerRepo(()->ServiceProvider.newSession()); 
 	}
 	
 	

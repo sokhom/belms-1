@@ -4,15 +4,18 @@
  */
 package com.blems.dream.api.model.currency;
 
+import org.apache.ibatis.type.Alias;
+
 import com.blems.dream.api.model.DefaultModel;
 
+@Alias("Currency")
 public class Currency extends DefaultModel {
 
 	private static final long serialVersionUID = 1L;
 	
 	private String code;
 	private double rate;
-	private boolean homeCurrency;
+	private boolean homeCurrencyFlag;
 	
 	
 	public Currency() {
@@ -38,12 +41,15 @@ public class Currency extends DefaultModel {
 	public void setRate(double rate) {
 		this.rate = rate;
 	}
-	public boolean isHomeCurrency() {
-		return homeCurrency;
+	
+	public boolean isHomeCurrencyFlag() {
+		return homeCurrencyFlag;
 	}
-	public void setHomeCurrency(boolean homeCurrency) {
-		this.homeCurrency = homeCurrency;
+
+	public void setHomeCurrencyFlag(boolean homeCurrencyFlag) {
+		this.homeCurrencyFlag = homeCurrencyFlag;
 	}
+
 	@Override
 	public String toString() {
 		return String.format("%s (%s)", getName(), getCode());

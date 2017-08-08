@@ -16,7 +16,7 @@ public class AddressLookupService implements LookupService<AddressInitDataWrappe
 	
 	
 	public AddressLookupService() {
-		addressRepo = new AddressRepoImpl(ServiceProvider.newSession());
+		addressRepo = new AddressRepoImpl(()->ServiceProvider.newSession());
 	}
 	
 	public AddressInitDataWrapperDto getInitData() {

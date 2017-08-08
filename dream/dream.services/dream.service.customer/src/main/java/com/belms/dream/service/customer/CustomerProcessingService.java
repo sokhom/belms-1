@@ -10,6 +10,6 @@ import com.blems.dream.api.model.customer.Customer;
 public class CustomerProcessingService extends AbstractProcessService<Customer> implements ProcessingService<Customer> {
 	@Override
 	protected Repo<Customer> getRepo() {
-		return new CustomerRepo(ServiceProvider.newSession());
+		return new CustomerRepo(()->ServiceProvider.newSession());
 	}
 }

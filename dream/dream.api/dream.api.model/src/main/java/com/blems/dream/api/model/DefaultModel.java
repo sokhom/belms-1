@@ -17,6 +17,13 @@ public abstract class DefaultModel extends BasedModel implements Serializable, C
 	private Date dateLastModified;
 	private int lastChangedUserId;
 	
+	public DefaultModel() {
+	}
+	
+	public DefaultModel(int id) {
+		super(id);
+	}
+	
 	public String getName() {
 		return name;
 	}

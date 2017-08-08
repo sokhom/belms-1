@@ -6,27 +6,18 @@ import com.blems.dream.api.model.BasedModel;
 import com.blems.dream.api.model.Repo;
 
 public abstract class AbstractProcessService<T extends BasedModel> {
-
-	private SqlSession sqlSession = null;
-
 	public void process(T object) {
-		
-		sqlSession = ServiceProvider.newSession();
-		try {
-			takeAction((T) object);
-			sqlSession.commit();
-		} catch (Exception e) {
-			sqlSession.rollback();
-		} finally {
-			sqlSession.close();
-			sqlSession = null;
+		Repo<T> repo =  getRepo() ;
+		if (BasedModel.OPER.ADD == object.getOper()) {
+			repo.add(object);
+		} else if (BasedModel.OPER.EDIT == object.getOper()) {
+			repo.edit(object);
+		} else if (BasedModel.OPER.DELETE == object.getOper()) {
+			repo.remove(object);
 		}
-
 	}
 
 	protected abstract Repo<T> getRepo();
-	
-	
 	
 	/**
 	 * 
@@ -35,22 +26,7 @@ public abstract class AbstractProcessService<T extends BasedModel> {
 	 */
 
 	protected SqlSession getSqlSession() {
-		return sqlSession;
-	}
-	
-	protected void takeAction(T t) {
-				
-		
-		Repo<T> repo =  getRepo() ;
-		
-		
-		if (BasedModel.OPER.ADD == t.getOper()) {
-			repo.add(t);
-		} else if (BasedModel.OPER.EDIT == t.getOper()) {
-			repo.edit(t);
-		} else if (BasedModel.OPER.DELETE == t.getOper()) {
-			repo.remove(t);
-		}
+		return getRepo().getSqlSession();
 	}
 
 }
