@@ -21,7 +21,7 @@ public class Po extends BasedModel3 {
 
 	private static final long serialVersionUID = 1L;
 	
-	private String num;
+	private int num;
 	private LocationGroup locationGroup;
 	private ObjectStatus status;
 	private int buyerId;
@@ -51,11 +51,13 @@ public class Po extends BasedModel3 {
 
 	private List<PoItem> items;
 
-	public String getNum() {
+	
+
+	public int getNum() {
 		return num;
 	}
 
-	public void setNum(String num) {
+	public void setNum(int num) {
 		this.num = num;
 	}
 

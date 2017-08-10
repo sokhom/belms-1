@@ -2,6 +2,8 @@ package com.blems.dream.api.model.po;
 
 import java.util.Date;
 
+import org.apache.ibatis.type.Alias;
+
 import com.blems.dream.api.model.BasedModel;
 import com.blems.dream.api.model.common.ObjectStatus;
 import com.blems.dream.api.model.common.ObjectType;
@@ -10,6 +12,7 @@ import com.blems.dream.api.model.part.Part;
 import com.blems.dream.api.model.tax.TaxRate;
 import com.blems.dream.api.model.uom.Uom;
 
+@Alias("PoItem")
 public class PoItem extends BasedModel {
 
 	private static final long serialVersionUID = 1L;
@@ -25,9 +28,9 @@ public class PoItem extends BasedModel {
 	private String partNum;
 	private String vendorPartNum;
 	private Uom uom;
-	private double qtyToFullFill;
+	private double qtyToFulfill;
 	private double qtyPicked;
-	private double qtyFullFilled;
+	private double qtyFulfilled;
 	private double unitCost;
 	private TaxRate taxRate;
 	private double taxRateValue;
@@ -124,13 +127,7 @@ public class PoItem extends BasedModel {
 		this.uom = uom;
 	}
 
-	public double getQtyToFullFill() {
-		return qtyToFullFill;
-	}
-
-	public void setQtyToFullFill(double qtyToFullFill) {
-		this.qtyToFullFill = qtyToFullFill;
-	}
+	
 
 	public double getQtyPicked() {
 		return qtyPicked;
@@ -140,12 +137,22 @@ public class PoItem extends BasedModel {
 		this.qtyPicked = qtyPicked;
 	}
 
-	public double getQtyFullFilled() {
-		return qtyFullFilled;
+	
+
+	public double getQtyToFulfill() {
+		return qtyToFulfill;
 	}
 
-	public void setQtyFullFilled(double qtyFullFilled) {
-		this.qtyFullFilled = qtyFullFilled;
+	public void setQtyToFulfill(double qtyToFulfill) {
+		this.qtyToFulfill = qtyToFulfill;
+	}
+
+	public double getQtyFulfilled() {
+		return qtyFulfilled;
+	}
+
+	public void setQtyFulfilled(double qtyFulfilled) {
+		this.qtyFulfilled = qtyFulfilled;
 	}
 
 	public double getUnitCost() {

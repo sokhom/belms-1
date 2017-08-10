@@ -1,4 +1,4 @@
-package com.belms.dream.repository.common.mapper;
+package com.belms.dream.repository.vendor.mapper;
 
 import com.blems.dream.api.model.ObjectMapper;
 import com.blems.dream.api.model.vendor.Vendor;

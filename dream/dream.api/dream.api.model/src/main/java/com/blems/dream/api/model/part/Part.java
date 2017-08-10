@@ -1,5 +1,7 @@
 package com.blems.dream.api.model.part;
 
+import org.apache.ibatis.type.Alias;
+
 import com.blems.dream.api.model.DefaultModel;
 import com.blems.dream.api.model.bom.Bom;
 import com.blems.dream.api.model.coa.ChartAccount;
@@ -7,6 +9,7 @@ import com.blems.dream.api.model.common.ObjectType;
 import com.blems.dream.api.model.product.Product;
 import com.blems.dream.api.model.uom.Uom;
 
+@Alias("Part")
 public class Part extends DefaultModel {
 	private static final long serialVersionUID = 1L;
 
@@ -34,10 +37,19 @@ public class Part extends DefaultModel {
 	private Uom sizeUom;
 	private float weight;
 	private Uom weightUom;
-	private boolean alwaysManufacture;
-	private boolean pickedInUomPart;
+	private boolean alwaysManufactureFlag;
+	private boolean pickedInUomFlag;
 	private float stdCost;
 
+	
+	public Part() {
+	
+	}
+	
+	public Part(int id) {
+		super(id);
+	}
+	
 	public String getNum() {
 		return num;
 	}
@@ -215,20 +227,20 @@ public class Part extends DefaultModel {
 		this.weightUom = weightUom;
 	}
 
-	public boolean isAlwaysManufacture() {
-		return alwaysManufacture;
+	public boolean isAlwaysManufactureFlag() {
+		return alwaysManufactureFlag;
 	}
 
-	public void setAlwaysManufacture(boolean alwaysManufacture) {
-		this.alwaysManufacture = alwaysManufacture;
+	public void setAlwaysManufactureFlag(boolean alwaysManufactureFlag) {
+		this.alwaysManufactureFlag = alwaysManufactureFlag;
 	}
 
-	public boolean isPickedInUomPart() {
-		return pickedInUomPart;
+	public boolean isPickedInUomFlag() {
+		return pickedInUomFlag;
 	}
 
-	public void setPickedInUomPart(boolean pickedInUomPart) {
-		this.pickedInUomPart = pickedInUomPart;
+	public void setPickedInUomFlag(boolean pickedInUomFlag) {
+		this.pickedInUomFlag = pickedInUomFlag;
 	}
 
 	public float getStdCost() {

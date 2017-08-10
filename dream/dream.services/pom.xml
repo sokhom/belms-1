@@ -17,6 +17,7 @@
   	<module>dream.service.endpoint</module>
   	<module>dream.service.test</module>
   	<module>dream.service.po</module>
+  	<module>dream.service.inventory</module>
   </modules>
   <dependencyManagement>
   	<dependencies>
@@ -56,6 +57,11 @@
   			<artifactId>dream.repository.po</artifactId>
   			<version>0.0.1-SNAPSHOT</version>
   		</dependency>
+  		<dependency>
+  			<groupId>com.belms</groupId>
+  			<artifactId>dream.repository.inventory</artifactId>
+  			<version>0.0.1-SNAPSHOT</version>
+  		</dependency>
   	</dependencies>
   </dependencyManagement>
   <dependencies>
@@ -78,6 +84,10 @@
   	<dependency>
   		<groupId>com.belms</groupId>
   		<artifactId>dream.repository.po</artifactId>
+  	</dependency>
+  	<dependency>
+  		<groupId>com.belms</groupId>
+  		<artifactId>dream.repository.inventory</artifactId>
   	</dependency>
   </dependencies>
 </project>

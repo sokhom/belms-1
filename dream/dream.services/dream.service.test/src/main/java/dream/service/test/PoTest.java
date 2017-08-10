@@ -1,5 +1,8 @@
 package dream.service.test;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -10,11 +13,15 @@ import com.blems.dream.api.model.BasedModel.OPER;
 import com.blems.dream.api.model.address.Country;
 import com.blems.dream.api.model.carrier.Carrier;
 import com.blems.dream.api.model.common.ObjectStatus;
+import com.blems.dream.api.model.common.ObjectType;
 import com.blems.dream.api.model.currency.Currency;
 import com.blems.dream.api.model.location.LocationGroup;
+import com.blems.dream.api.model.part.Part;
 import com.blems.dream.api.model.payment.PaymentTerm;
 import com.blems.dream.api.model.po.Po;
+import com.blems.dream.api.model.po.PoItem;
 import com.blems.dream.api.model.ship.ShipTerm;
+import com.blems.dream.api.model.uom.Uom;
 import com.blems.dream.api.model.vendor.Vendor;
 
 public class PoTest {
@@ -56,7 +63,7 @@ public class PoTest {
 		po.setCurrencyRate(1);
 		po.setCustomerSo("Customer SO");
 		po.setLocationGroup(new LocationGroup(2));
-		po.setNum("po0001");
+		po.setNum(1);
 		po.setOper(OPER.ADD);
 		po.setPaymentTerm(new PaymentTerm(1, "COD"));
 		po.setShipTerm(new ShipTerm(10, "Prepaid & Billed"));
@@ -71,6 +78,31 @@ public class PoTest {
 		po.setVendorCountry(new Country(1, "USD"));
 		po.setVendorSo("Vendor SO");
 		po.setVendorZip("vendor zip");
+		
+		
+		List<PoItem> items = new ArrayList<>();
+	
+		po.setItems(items);
+		
+		PoItem item = new PoItem();
+		items.add(item);
+		
+		item.setDescription("Part1");
+		item.setOper(OPER.ADD);
+		item.setPart(new Part());
+		item.setPo(po);
+		item.setNote("Note");
+		item.setPartNum("part001");
+		item.setQtyToFulfill(10);
+		item.setRepairFlag(false);
+		item.setSeq(1);
+		item.setStatus(new ObjectStatus(10)); //enter
+		item.setUnitCost(10.1);
+		item.setTotalCost(10.10);
+		item.setType(new ObjectType(10)); //purchase
+		item.setVendorPartNum("v-part-0001");
+		item.setUom(new Uom(1));
+	
 		
 		service.process(po);
 	}

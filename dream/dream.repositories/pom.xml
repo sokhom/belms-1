@@ -13,6 +13,7 @@
 		<module>dream.repository.customer</module>
 		<module>dream.repository.common</module>
 		<module>dream.repository.po</module>
+		<module>dream.repository.inventory</module>
 	</modules>
 
 	<dependencyManagement>

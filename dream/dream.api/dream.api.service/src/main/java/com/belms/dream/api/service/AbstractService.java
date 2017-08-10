@@ -9,21 +9,18 @@ import com.blems.dream.api.model.Repo;
 
 public abstract class AbstractService<T extends BasedModel> {
 	
-	private SqlSession session;
+
+	protected SqlSession sqlSession ;
+	
+	public void setSqlSession(SqlSession sqlSession) {
+		this.sqlSession = sqlSession;
+		
+	}
+	
+	
 	
 	protected abstract Repo<T> getRepo();
 	
-	protected SqlSession getSqlSession() {
-		
-		if(session==null) {
-			session = ServiceProvider.newSession();
-		}
-		return session;
-	}
-	
-	public void setSqlSession(SqlSession sqlSession) {
-		this.session= sqlSession;
-	}
 	
 	public T add(T t) {
 		return getRepo().add(t);

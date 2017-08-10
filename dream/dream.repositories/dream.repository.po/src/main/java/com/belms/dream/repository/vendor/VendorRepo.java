@@ -3,7 +3,7 @@ package com.belms.dream.repository.vendor;
 import com.belms.dream.repository.common.AbstractRepo;
 import com.belms.dream.repository.common.SqlSessionProvider;
 import com.belms.dream.repository.common.mapper.AccountMapper;
-import com.belms.dream.repository.common.mapper.VendorMapper;
+import com.belms.dream.repository.vendor.mapper.VendorMapper;
 import com.blems.dream.api.model.account.Account;
 import com.blems.dream.api.model.common.ObjectType;
 import com.blems.dream.api.model.vendor.Vendor;
