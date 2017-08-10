@@ -1,8 +1,11 @@
 package com.belms.dream.api.service;
 
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 
 import com.belms.dream.api.service.action.Action;
+import com.belms.dream.api.service.security.Authorize;
 import com.blems.dream.api.model.BasedModel;
 import com.blems.dream.api.model.Repo;
 
@@ -49,6 +52,12 @@ public abstract class AbstractProcessService<T extends BasedModel> {
 	
 	protected Action getAction() {
 		return action;
+	}
+	
+	protected void setAuthrizeToActions(List<Action> actions ,Authorize authorize) {
+		for (Action action : actions) {
+			action.setAuthorize(authorize);
+		}
 	}
 	protected abstract Repo<T> getRepo();
 	
