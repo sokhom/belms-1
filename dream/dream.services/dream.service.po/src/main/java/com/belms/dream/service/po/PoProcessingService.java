@@ -67,7 +67,11 @@ public class PoProcessingService  extends AbstractProcessService<Po> implements 
 		}
 	}
 
-	
+
+	@Override
+	protected boolean isValid() {
+		return super.isValid();
+	}
 
 	@Override
 	public List<Action> getValidActions(Po object, Authorize authorize) {
