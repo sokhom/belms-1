@@ -35,6 +35,9 @@
         <dependent-module archiveName="dream.repository.po-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/dream.repository.po/dream.repository.po">
             <dependency-type>uses</dependency-type>
         </dependent-module>
+        <dependent-module archiveName="dream.repository.inventory-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/dream.repository.inventory/dream.repository.inventory">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
         <dependent-module archiveName="dream.service.common-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/dream.service.common/dream.service.common">
             <dependency-type>uses</dependency-type>
         </dependent-module>
