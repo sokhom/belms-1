@@ -6,6 +6,8 @@ import java.io.IOException;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 
 import com.blems.dream.api.repo.SqlSessionFactoryMngt;
 
@@ -31,6 +33,16 @@ public class SqlSessionFactoryMngtImpl implements SqlSessionFactoryMngt {
 
 	public SqlSession newSession() {
 		return getSessionFactory().openSession();
+	}
+
+	@Override
+	public SessionFactory getHibernateSessionFactory() {
+		return null;
+	}
+
+	@Override
+	public Session getSession() {
+		return null;
 	}
 
 }

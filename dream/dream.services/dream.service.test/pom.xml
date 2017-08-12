@@ -44,5 +44,10 @@
 			<artifactId>dream.service.po</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
+		<dependency>
+			<groupId>com.belms</groupId>
+			<artifactId>dream.service.inventory</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
 	</dependencies>
 </project>

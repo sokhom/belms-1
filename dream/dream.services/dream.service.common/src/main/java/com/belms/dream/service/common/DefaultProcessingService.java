@@ -40,6 +40,12 @@ public class DefaultProcessingService<T extends BasedModel> extends AbstractProc
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	protected boolean isValid() {
+		// TODO Auto-generated method stub
+		return false;
+	}
 	
 
 }

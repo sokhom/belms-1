@@ -21,6 +21,43 @@ public class Po extends BasedModel3 {
 
 	private static final long serialVersionUID = 1L;
 	
+	
+	private static final int STATUS_BID_REQUEST_ID= 10;
+	private static final String STATUS_BID_REQUEST_NAME= "Bid Request";
+	public static final ObjectStatus STATUS_BID_REQUEST= new ObjectStatus(STATUS_BID_REQUEST_ID, STATUS_BID_REQUEST_NAME);
+	
+	private static final int STATUS_ISSUED_ID = 20;
+	private static final String STATUS_ISSUED_NAME = "Issued";
+	public static final ObjectStatus STATUS_ISSUED= new ObjectStatus(STATUS_ISSUED_ID, STATUS_ISSUED_NAME);
+	
+	private static final int STATUS_PICKING_ID = 30;
+	private static final String STATUS_PICKING_NAME = "Picking";
+	public static final ObjectStatus STATUS_PICKING= new ObjectStatus(STATUS_PICKING_ID, STATUS_PICKING_NAME);
+	
+	private static final int STATUS_PARTIAL_ID = 40;
+	private static final String STATUS_PARTIAL_NAME = "Partial"; 
+	public static final ObjectStatus STATUS_PARTIAL= new ObjectStatus(STATUS_PARTIAL_ID, STATUS_PARTIAL_NAME);
+	
+	private static final int STATUS_PICKED_ID = 50;
+	private static final String STATUS_PICKED_NAME = "Picked"; 
+	public static final ObjectStatus STATUS_PICKED= new ObjectStatus(STATUS_PICKED_ID, STATUS_PICKED_NAME);
+	
+	private static final int STATUS_SHIPPED_ID = 60;
+	private static final String STATUS_SHIPPED_NAME = "Shipped";
+	public static final ObjectStatus STATUS_SHIPPED= new ObjectStatus(STATUS_SHIPPED_ID, STATUS_SHIPPED_NAME);
+	
+	private static final int STATUS_FULFILLED_ID = 70;
+	private static final String STATUS_FULFILLED_NAME = "Fulfilled";
+	public static final ObjectStatus STATUS_FULFILLED= new ObjectStatus(STATUS_FULFILLED_ID, STATUS_FULFILLED_NAME);
+	
+	private static final int STATUS_CLOSED_SHORT_ID = 80;
+	private static final String STATUS_CLOSED_SHORT_NAME = "Closed Short";
+	public static final ObjectStatus  STATUS_CLOSED_SHORT= new ObjectStatus(STATUS_CLOSED_SHORT_ID, STATUS_CLOSED_SHORT_NAME);
+	
+	private static final int STATUS_VOID_ID = 90;
+	private static final String STATUS_VOID_NAME = "Void";
+	public static final ObjectStatus   STATUS_VOID= new ObjectStatus(STATUS_VOID_ID, STATUS_VOID_NAME);
+	
 	private int num;
 	private LocationGroup locationGroup;
 	private ObjectStatus status;

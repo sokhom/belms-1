@@ -64,10 +64,6 @@ public abstract class AbstractProcessService<T extends BasedModel> {
 		}
 	}
 
-	protected boolean isValid() {
-		return false;
-	}
-
 	protected abstract Repo<T> getRepo();
 
 	/**
@@ -77,6 +73,11 @@ public abstract class AbstractProcessService<T extends BasedModel> {
 	 * @return
 	 */
 
+	protected boolean isValid() {
+		
+		return false;
+	}
+	
 	protected SqlSession getSqlSession() {
 		return getRepo().getSqlSession();
 	}
@@ -84,6 +85,5 @@ public abstract class AbstractProcessService<T extends BasedModel> {
 	public T getObject() {
 		return object;
 	}
-
 	
 }

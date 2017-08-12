@@ -4,7 +4,9 @@ import java.util.Date;
 
 import org.apache.ibatis.type.Alias;
 
+import com.blems.dream.api.model.AutoCalc;
 import com.blems.dream.api.model.BasedModel;
+import com.blems.dream.api.model.BasedModel.OPER;
 import com.blems.dream.api.model.common.ObjectStatus;
 import com.blems.dream.api.model.common.ObjectType;
 import com.blems.dream.api.model.customer.Customer;
@@ -13,9 +15,26 @@ import com.blems.dream.api.model.tax.TaxRate;
 import com.blems.dream.api.model.uom.Uom;
 
 @Alias("PoItem")
-public class PoItem extends BasedModel {
+public class PoItem extends BasedModel implements AutoCalc {
 
 	private static final long serialVersionUID = 1L;
+	
+	
+	public static final ObjectStatus STATUS_ITEM_ENTERED = new ObjectStatus(10, "Enterd");
+	public static final ObjectStatus STATUS_ITEM_PICKING = new ObjectStatus(10, "Picking");
+	public static final ObjectStatus STATUS_ITEM_PARTIAL = new ObjectStatus(10, "Partial");
+	public static final ObjectStatus STATUS_ITEM_PICKED = new ObjectStatus(10, "Picked");
+	public static final ObjectStatus STATUS_ITEM_SHIPPED = new ObjectStatus(10, "Shipped");
+	public static final ObjectStatus STATUS_ITEM_FULFILLED = new ObjectStatus(10, "Fulfilled");
+	public static final ObjectStatus STATUS_ITEM_CLOSED_SHORT = new ObjectStatus(10, "Closed Short");
+	public static final ObjectStatus STATUS_ITEM_VOID = new ObjectStatus(10, "Void");
+	
+	public static final ObjectType TYPE_PURCHASE = new  ObjectType(10, "Purchase");
+	public static final ObjectType TYPE_MISC_PURCHASE = new  ObjectType(11, "Misc. Purchase");
+	public static final ObjectType TYPE_CREDIT_RETURN = new  ObjectType(20, "Credit Return");
+	public static final ObjectType TYPE_MISC_CREDIT = new  ObjectType(20, "Misc. Credit");
+	public static final ObjectType TYPE_OUT_SOURCE = new  ObjectType(20, "Out Sourced");
+	
 
 	private Po po;
 	private Customer customer;
@@ -209,6 +228,29 @@ public class PoItem extends BasedModel {
 
 	public void setSeq(int seq) {
 		this.seq = seq;
+	}
+	
+	public  PoItem initData(Part part) {
+		PoItem item = new PoItem();
+		item.setDescription(part.getName());
+		item.setOper(OPER.ADD);
+		item.setPart(part);
+		item.setPartNum(part.getNum());
+		item.setQtyToFulfill(1);
+		item.setRepairFlag(false);
+		item.setSeq(1);
+		item.setStatus(STATUS_ITEM_ENTERED); //enter
+		item.setUnitCost(0);
+		item.setTotalCost(0);
+		item.setType(TYPE_PURCHASE); //purchase
+		item.setUom(part.getUom());
+		return item;
+	}
+
+	@Override
+	public void calc() {
+		setTotalCost(this.getQtyToFulfill() * this.getUnitCost());
+		
 	}
 
 }

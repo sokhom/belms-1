@@ -28,4 +28,10 @@ public class CustomerProcessingService extends AbstractProcessService<Customer> 
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	protected boolean isValid() {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }

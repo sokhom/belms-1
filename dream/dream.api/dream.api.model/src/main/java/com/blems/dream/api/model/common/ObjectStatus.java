@@ -21,6 +21,12 @@ public class ObjectStatus extends BasedModel2 {
 		setId(id);
 	}
 	
+	
+	public ObjectStatus(int id, String name) {
+		this(id);
+		setName(name);
+	}
+	
 	public ObjectName getObjectName() {
 		return objectName;
 	}
@@ -32,4 +38,16 @@ public class ObjectStatus extends BasedModel2 {
 	public static ObjectStatus get(int id) {
 		return new ObjectStatus(id);
 	}
+
+	@Override
+	public boolean equals(Object obj)
+	{
+		if(obj instanceof ObjectStatus) {
+			ObjectStatus objectStatus = (ObjectStatus)obj;
+			return this.getId() == objectStatus.getId();
+		}
+		return super.equals(obj);
+	}
+	
+	
 }
