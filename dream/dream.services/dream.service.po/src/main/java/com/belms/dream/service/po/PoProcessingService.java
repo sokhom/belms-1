@@ -60,12 +60,14 @@ public class PoProcessingService extends AbstractProcessService<Po> implements P
 						item.setStatus(PoItem.STATUS_ITEM_ENTERED);
 					}
 				}
-				
 			}
+			
+			
 			super.process(object);
 			session.commit();
 		} catch (Exception e) {
 			session.rollback();
+			throw e;
 		} finally {
 			session.close();
 		}
@@ -76,8 +78,30 @@ public class PoProcessingService extends AbstractProcessService<Po> implements P
 		
 		if(SAVE_ACTION.equals(getAction())) {
 			if(Po.STATUS_FULFILLED.equals(this.getObject().getStatus()) || Po.STATUS_VOID.equals(this.getObject().getStatus())) {
-				throw new RuntimeException(String.format("Save operation is denied when Po status is", getObject().getStatus().getName()));
+				throw new RuntimeException(String.format("Save operation is denied with status - %s", getObject().getStatus().getName()));
 			}
+			
+			boolean save = false;
+			
+			save = this.getObject().getOper()!=OPER.NONE;
+			if(!save) {
+				for (PoItem item : this.getObject().getItems()) {
+					if(item.getOper() != OPER.NONE) {
+						save = true ;
+						break;
+					}
+				}
+			}
+			
+			if(!save) {
+				throw new RuntimeException("No data have been changed to be saved");
+			}
+			
+		}else if(ISSUE_ACTION.equals(getAction())) {
+			if(this.getObject().getStatus() !=null || !Po.STATUS_BID_REQUEST.equals(this.getObject().getStatus())){
+				throw new RuntimeException(String.format("Save operation is denied with status - %s", getObject().getStatus().getName()));
+			}
+			
 		}
 		
 		return true;
@@ -98,8 +122,10 @@ public class PoProcessingService extends AbstractProcessService<Po> implements P
 		} else {
 			Po po = getRepo().getById(object.getId());
 			if (Po.STATUS_BID_REQUEST.equals(po.getStatus())) {
+				actions.add(SAVE_ACTION);
 				actions.add(ISSUE_ACTION);
 			} else if (Po.STATUS_ISSUED.equals(po.getStatus())) {
+				actions.add(SAVE_ACTION);
 				actions.add(ISSUE_ACTION);
 			}
 		}

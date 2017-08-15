@@ -2,6 +2,8 @@ package dream.service.test;
 
 import org.junit.Test;
 
+import com.belms.dream.api.dto.part.PartInitWrapperDto;
+import com.belms.dream.api.service.LookupService;
 import com.belms.dream.api.service.ProcessingService;
 import com.belms.dream.api.service.ServiceIds;
 import com.belms.dream.api.service.ServiceProvider;
@@ -12,7 +14,7 @@ import com.blems.dream.api.model.uom.Uom;
 
 public class PartTest {
 
-	@Test
+	
 	public void addPart() {
 		ProcessingService<Part> processingService = ServiceProvider.get(ServiceIds.DEFAULT_SERVICE_ID).setSubServiceId(ServiceIds.PART_SERVICE_ID).getService();
 		
@@ -24,7 +26,6 @@ public class PartTest {
 		part.setDetails("details");
 		part.setHeight(10);
 		part.setLen(10);
-		part.setName("Part 1");
 		part.setNum("part 001");
 		part.setOper(OPER.ADD);
 		part.setPickedInUomFlag(true);
@@ -40,5 +41,12 @@ public class PartTest {
 		
 		processingService.process(part);
 		
+	}
+	
+	@Test
+	public void getPart() {
+		LookupService<PartInitWrapperDto, Part>  partLookupService = ServiceProvider.get(ServiceIds.DEFAULT_SERVICE_ID).setSubServiceId(ServiceIds.PART_SERVICE_ID).getLookupService();
+		Part part =partLookupService.getDataItemById(1);
+		System.out.println(part.getNum());
 	}
 }

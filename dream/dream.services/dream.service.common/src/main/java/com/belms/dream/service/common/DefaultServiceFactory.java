@@ -1,5 +1,6 @@
 package com.belms.dream.service.common;
 
+import com.belms.dream.api.dto.part.PartInitWrapperDto;
 import com.belms.dream.api.service.AbstractServiceFactory;
 import com.belms.dream.api.service.LookupService;
 import com.belms.dream.api.service.ProcessingService;
@@ -9,6 +10,7 @@ import com.belms.dream.api.service.ServiceProvider;
 import com.belms.dream.repository.inventory.mapper.PartMapper;
 import com.belms.dream.repository.vendor.VendorRepo;
 import com.blems.dream.api.model.BasedModel;
+import com.blems.dream.api.model.part.Part;
 import com.blems.dream.api.model.vendor.Vendor;
 
 
@@ -37,8 +39,15 @@ public class DefaultServiceFactory extends AbstractServiceFactory implements Ser
 		if (ServiceIds.VENDOR_SERVICE_ID.equalsIgnoreCase(getSubServiceId())) {
 			DefaultLookupService<Object, Vendor> defaultLookupService=	new DefaultLookupService<>(new VendorRepo(()->ServiceProvider.newSession()));
 			return (LookupService<E, T>) defaultLookupService;
+		}else if(ServiceIds.PART_SERVICE_ID.equalsIgnoreCase(getSubServiceId())) {
+			DefaultLookupService<PartInitWrapperDto, Part> defaultLookupService=	new DefaultLookupService<>(PartMapper.class);
+			return (LookupService<E, T>) defaultLookupService;
 		}
-		return null;
+		
+		
+		throw new RuntimeException(String.format("The service (%s - %s) is not be provided",
+				ServiceIds.DEFAULT_SERVICE_ID, getSubServiceId()));
+		
 	}
 
 }

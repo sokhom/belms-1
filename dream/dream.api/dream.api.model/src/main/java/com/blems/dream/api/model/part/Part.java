@@ -2,7 +2,7 @@ package com.blems.dream.api.model.part;
 
 import org.apache.ibatis.type.Alias;
 
-import com.blems.dream.api.model.DefaultModel;
+import com.blems.dream.api.model.BasedModel3;
 import com.blems.dream.api.model.bom.Bom;
 import com.blems.dream.api.model.coa.ChartAccount;
 import com.blems.dream.api.model.common.ObjectType;
@@ -10,9 +10,11 @@ import com.blems.dream.api.model.product.Product;
 import com.blems.dream.api.model.uom.Uom;
 
 @Alias("Part")
-public class Part extends DefaultModel {
+public class Part extends BasedModel3 {
 	private static final long serialVersionUID = 1L;
 
+	
+	private boolean activeFlag;
 	private String num;
 	private String description;
 	private String details;
@@ -40,12 +42,18 @@ public class Part extends DefaultModel {
 	private boolean alwaysManufactureFlag;
 	private boolean pickedInUomFlag;
 	private float stdCost;
-
 	
 	public Part() {
 	
 	}
 	
+	public boolean isActiveFlag() {
+		return activeFlag;
+	}
+	public void setActiveFlag(boolean activeFlag) {
+		this.activeFlag = activeFlag;
+	}
+
 	public Part(int id) {
 		super(id);
 	}

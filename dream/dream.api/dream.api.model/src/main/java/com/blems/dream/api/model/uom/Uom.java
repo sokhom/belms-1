@@ -6,6 +6,7 @@ import com.blems.dream.api.model.common.ObjectType;
 public class Uom extends DefaultModel{
 
 	private static final long serialVersionUID = 1L;
+	private boolean defaultFlag;
 	private String code;
 	private String description;
 	private ObjectType type;
@@ -19,6 +20,15 @@ public class Uom extends DefaultModel{
 		super(id);
 	}
 	
+	
+	public boolean isDefaultFlag() {
+		return defaultFlag;
+	}
+
+	public void setDefaultFlag(boolean defaultFlag) {
+		this.defaultFlag = defaultFlag;
+	}
+
 	public String getCode() {
 		return code;
 	}

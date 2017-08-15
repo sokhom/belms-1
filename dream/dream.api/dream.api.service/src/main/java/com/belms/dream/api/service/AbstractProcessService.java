@@ -40,7 +40,7 @@ public abstract class AbstractProcessService<T extends BasedModel> {
 
 	protected void edit(T object) {
 		if (BasedModel.OPER.EDIT == object.getOper()) {
-			getRepo().add(object);
+			getRepo().edit(object);
 		}
 	}
 

@@ -92,6 +92,7 @@ public abstract class AbstractRepo<T extends BasedModel> implements Repo<T> {
 			commit();
 		}catch (Exception e) {
 			rollback();
+			throw e;
 		}finally{
 			close();
 		}

@@ -6,7 +6,6 @@ import org.apache.ibatis.type.Alias;
 
 import com.blems.dream.api.model.AutoCalc;
 import com.blems.dream.api.model.BasedModel;
-import com.blems.dream.api.model.BasedModel.OPER;
 import com.blems.dream.api.model.common.ObjectStatus;
 import com.blems.dream.api.model.common.ObjectType;
 import com.blems.dream.api.model.customer.Customer;
@@ -35,7 +34,6 @@ public class PoItem extends BasedModel implements AutoCalc {
 	public static final ObjectType TYPE_MISC_CREDIT = new  ObjectType(20, "Misc. Credit");
 	public static final ObjectType TYPE_OUT_SOURCE = new  ObjectType(20, "Out Sourced");
 	
-
 	private Po po;
 	private Customer customer;
 	private ObjectStatus status;
@@ -230,21 +228,19 @@ public class PoItem extends BasedModel implements AutoCalc {
 		this.seq = seq;
 	}
 	
-	public  PoItem initData(Part part) {
-		PoItem item = new PoItem();
-		item.setDescription(part.getName());
-		item.setOper(OPER.ADD);
-		item.setPart(part);
-		item.setPartNum(part.getNum());
-		item.setQtyToFulfill(1);
-		item.setRepairFlag(false);
-		item.setSeq(1);
-		item.setStatus(STATUS_ITEM_ENTERED); //enter
-		item.setUnitCost(0);
-		item.setTotalCost(0);
-		item.setType(TYPE_PURCHASE); //purchase
-		item.setUom(part.getUom());
-		return item;
+	public  void initData(Part part) {
+		this.setDescription(part.getDescription());
+		this.setOper(OPER.ADD);
+		this.setPart(part);
+		this.setPartNum(part.getNum());
+		this.setQtyToFulfill(1);
+		this.setRepairFlag(false);
+		this.setSeq(1);
+		this.setStatus(STATUS_ITEM_ENTERED); //enter
+		this.setUnitCost(0);
+		this.setTotalCost(0);
+		this.setType(TYPE_PURCHASE); //purchase
+		this.setUom(part.getUom());
 	}
 
 	@Override

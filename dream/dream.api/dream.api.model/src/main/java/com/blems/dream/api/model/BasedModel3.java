@@ -10,7 +10,18 @@ public abstract class BasedModel3 extends BasedModel {
 	private Date dateLastModified;
 	private int lastChangedUserId;
 
+	public BasedModel3() {
+	
+	}
+	
+	public BasedModel3(int id) {
+		super(id);
+	}
+	
 	public Date getDateCreated() {
+		if(dateCreated==null) {
+			dateCreated = new Date();
+		}
 		return dateCreated;
 	}
 
@@ -19,6 +30,9 @@ public abstract class BasedModel3 extends BasedModel {
 	}
 
 	public Date getDateLastModified() {
+		if(dateLastModified == null) {
+			dateLastModified = new Date();
+		}
 		return dateLastModified;
 	}
 
